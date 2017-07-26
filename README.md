@@ -42,6 +42,7 @@ Please make sure to read the [Contributing Guide](https://github.com/Wscats/vue-
 ## Dependencies
 
 * [vuejs 2.0](https://vuejs.org/)
+* [mui 3.5](https://github.com/dcloudio/mui)
 
 ## Licence
 
