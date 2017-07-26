@@ -18,7 +18,7 @@ npm install vue-awesome-mui -save
 
 ```javascript
 import Mui from 'vue-awesome-mui'
-import 'vue-awesome-mui/mui.css'
+import 'vue-awesome-mui/mui/dist/css/mui.css'
 Vue.use(Mui)
 ```
 
