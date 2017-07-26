@@ -1,4 +1,4 @@
-# Mui
+# vue-awesome-mui
 [![npm package](https://img.shields.io/npm/v/vue-awesome-mui.svg)](https://www.npmjs.com/package/vue-awesome-mui)
 [![NPM downloads](http://img.shields.io/npm/dm/vue-awesome-mui.svg)](https://www.npmjs.com/package/vue-awesome-mui)
 

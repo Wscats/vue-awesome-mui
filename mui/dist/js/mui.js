@@ -457,6 +457,13 @@ var mui = (function(document, undefined) {
 
 	return $;
 })(document);
+
+module.exports = {
+	install: function(Vue) {
+		window.mui = mui;
+		Vue.prototype.$mui = mui
+	}
+}
 //window.mui = mui;
 //'$' in window || (window.$ = mui);
 /**
@@ -8296,10 +8303,3 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return buttonApis.length === 1 ? buttonApis[0] : buttonApis;
 	};
 })(mui, window, document);
-
-module.exports = {
-	install: function(Vue) {
-		window.mui = mui;
-		Vue.prototype.$mui = mui
-	}
-}
