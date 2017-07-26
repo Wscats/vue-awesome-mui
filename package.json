@@ -1,13 +1,13 @@
 {
   "name": "vue-awesome-mui",
-  "version": "1.1.0",
-  "description": "最接近原生体验的高性能前端框架",
+  "version": "1.3.0",
+  "description": "A high-performance front end framework that is closest to native experience & design ui for vue2",
   "main": "mui/dist/js/mui.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Wscats&&Windiest",
-  "license": "ISC",
+  "author": "Wscats <kalone.cool@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2",
     "babel-core": "^6.25.0",
@@ -36,5 +36,16 @@
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.5.1",
     "weui": "^1.1.2"
-  }
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 5 versions",
+    "ios >= 7",
+    "android > 4.4",
+    "not ie <= 8"
+  ]
 }
