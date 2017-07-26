@@ -105,7 +105,7 @@
 	export default {
 		data(){
 			return {
-				src:require("../../../images/wscats.jpg")
+				src:require("../../images/wscats.jpg")
 			}
 		},
 		mounted() {

@@ -1,6 +1,6 @@
 {
   "name": "vue-awesome-mui",
-  "version": "1.7.0",
+  "version": "1.7.2",
   "description": "A high-performance front end framework that is closest to native experience & design ui for vue2",
   "main": "mui/dist/js/mui.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
     "vue": "^2.4.1",
-    "vue-awesome-mui": "^1.6.0",
+    "vue-awesome-mui": "^1.7.0",
     "vue-awesome-swiper": "^2.5.4",
     "vue-loader": "^12.2.2",
     "vue-resource": "^1.3.4",

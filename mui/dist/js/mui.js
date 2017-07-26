@@ -463,7 +463,7 @@ module.exports = {
 		window.mui = mui;
 		Vue.prototype.$mui = mui
 	}
-}
+};
 //window.mui = mui;
 //'$' in window || (window.$ = mui);
 /**
