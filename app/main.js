@@ -25,10 +25,16 @@ Vue.prototype.$ajax = axios;
 import index from "./components/index.vue";
 import accordion from "./components/examples/accordion.vue";
 import actionsheet from "./components/examples/actionsheet.vue";
+
 import badges from "./components/examples/badges.vue";
 import buttons from "./components/examples/buttons.vue";
 import buttonsWithIcons from "./components/examples/buttons-with-icons.vue";
-import buttonsWithBadges from "./components/examples/buttons-with-badges.vue"
+import buttonsWithBadges from "./components/examples/buttons-with-badges.vue";
+import buttonsWithBlock from "./components/examples/buttons-with-block.vue";
+import buttonsWithLoading from "./components/examples/buttons-with-loading.vue"
+
+import card from "./components/examples/card.vue"
+
 var router = new VueRouter({
 	routes: [{
 		path: '/index',
@@ -51,6 +57,15 @@ var router = new VueRouter({
 	}, {
 		path: '/buttons-with-badges',
 		component: buttonsWithBadges,
+	}, {
+		path: '/buttons-with-block',
+		component: buttonsWithBlock,
+	}, {
+		path: '/buttons-with-loading',
+		component: buttonsWithLoading,
+	}, {
+		path: '/card',
+		component: card,
 	}, {
 		path: '/',
 		redirect: '/index'

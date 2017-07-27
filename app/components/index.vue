@@ -59,19 +59,19 @@
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/buttons-with-block.html">
+							<a class="mui-navigate-right" data-title-type="native" href="#/buttons-with-block">
 								块级按钮
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/buttons-with-loading.html">
+							<a class="mui-navigate-right" data-title-type="native" href="#/buttons-with-loading">
 								加载中按钮
 							</a>
 						</li>
 					</ul>
 				</li>
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" data-title-type="native" href="examples/card.html">
+					<a class="mui-navigate-right" data-title-type="native" href="#/card">
 						cardview（卡片视图）
 					</a>
 				</li>
