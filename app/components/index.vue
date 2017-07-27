@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">Vue Mui</h1>
+			<h1 class="mui-title">Vue Awesome Mui</h1>
 		</header>
 		<div class="mui-content">
 			<ul id="list" class="mui-table-view mui-table-view-chevron">
@@ -16,7 +16,7 @@
 					</a>
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/actionsheet.html">
+							<a class="mui-navigate-right" href="#/actionsheet">
 								H5模式
 							</a>
 						</li>
@@ -34,7 +34,7 @@
 				</li>
 
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/badges.html">
+					<a class="mui-navigate-right" href="#/badges">
 						badge（数字角标）
 					</a>
 				</li>
@@ -44,17 +44,17 @@
 					</a>
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/buttons.html">
+							<a class="mui-navigate-right" href="#/buttons">
 								普通按钮
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/buttons-with-icons.html">
+							<a class="mui-navigate-right" href="#/buttons-with-icons">
 								带图标的按钮
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/buttons-with-badges.html">
+							<a class="mui-navigate-right" href="#/buttons-with-badges">
 								带数字的按钮
 							</a>
 						</li>

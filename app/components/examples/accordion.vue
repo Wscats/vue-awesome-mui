@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<router-link to="/index" class="mui-icon mui-icon-left-nav mui-pull-left"></router-link>
 			<h1 class="mui-title">折叠面板</h1>
 		</header>
 		<div class="mui-content">
@@ -103,15 +103,21 @@
 </template>
 <script>
 	export default {
-		data(){
-			return {
-				src:require("../../images/wscats.jpg")
+		data() {
+				return {
+					src: require("../../images/wscats.jpg")
+				}
+			},
+			mounted() {
+				this.$mui.init({
+					swipeBack: true //启用右滑关闭功能
+				});
+				//获得slider插件对象
+				//需要在动态生成完整DOM (包含mui-slider下所有DOM结构) 后，手动调用图片轮播的初始化方法
+				var gallery = mui('.mui-slider');
+				gallery.slider({
+					interval: 5000 //自动轮播周期，若为0则不自动播放，默认为0；
+				});
 			}
-		},
-		mounted() {
-			mui.init({
-				swipeBack: true //启用右滑关闭功能
-			});
-		}
 	}
 </script>

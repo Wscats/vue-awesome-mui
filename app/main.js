@@ -24,7 +24,11 @@ Vue.prototype.$ajax = axios;
 //引入组件
 import index from "./components/index.vue";
 import accordion from "./components/examples/accordion.vue";
-
+import actionsheet from "./components/examples/actionsheet.vue";
+import badges from "./components/examples/badges.vue";
+import buttons from "./components/examples/buttons.vue";
+import buttonsWithIcons from "./components/examples/buttons-with-icons.vue";
+import buttonsWithBadges from "./components/examples/buttons-with-badges.vue"
 var router = new VueRouter({
 	routes: [{
 		path: '/index',
@@ -32,6 +36,21 @@ var router = new VueRouter({
 	}, {
 		path: '/accordion',
 		component: accordion,
+	}, {
+		path: '/actionsheet',
+		component: actionsheet,
+	}, {
+		path: '/badges',
+		component: badges,
+	}, {
+		path: '/buttons',
+		component: buttons,
+	}, {
+		path: '/buttons-with-icons',
+		component: buttonsWithIcons,
+	}, {
+		path: '/buttons-with-badges',
+		component: buttonsWithBadges,
 	}, {
 		path: '/',
 		redirect: '/index'
