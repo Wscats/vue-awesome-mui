@@ -5,16 +5,19 @@
 > Design Mui library for Vuejs 2.0
 
 ## Links
-
-* [中文文档](https://github.com/Wscats/vue-awesome-mui)
+* [Demo Page](https://wscats.github.io/vue-awesome-mui/public/#/index)
+* [Mui中文文档](http://dev.dcloud.net.cn/mui/ui/)
 
 ## Install
 
+Install vue-awesome-mui
 ```bash
 npm install vue-awesome-mui -save
 ```
 
 ## Get Started
+
+Vue mount
 
 ```javascript
 // import or require
@@ -30,6 +33,15 @@ If you need icon, you can require `icon.css`
 import "vue-awesome-mui/mui/examples/hello-mui/css/icons-extra.css";
 ```
 
+## Example
+
+Give a few examples
+|Vue components|Mui document|
+|-|-|
+|[折叠面板](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/accordion.vue)|[Accordion](http://dev.dcloud.net.cn/mui/ui/#accordion)|
+|[操作表](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/actionsheet.vue)|[Actionsheet](http://dev.dcloud.net.cn/mui/ui/#actionsheet)|
+|[数字角标](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/badges.vue)|[Badges](http://dev.dcloud.net.cn/mui/ui/#badges)|
+|[按钮](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/buttons-with-badges.vue)|[Buttons](http://dev.dcloud.net.cn/mui/ui/#buttons)|
 
 ## Browser Support
 
