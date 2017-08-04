@@ -69,7 +69,7 @@ vue-awesome-mui is open source and released under the MIT Licence.
 
 Copyright (c) 2017 [Wscats](https://github.com/Wscats)
 
-# About author
+## About author
 
 * [Github](https://github.com/Wscats)
 * [Segmentfault](https://segmentfault.com/u/asw)
