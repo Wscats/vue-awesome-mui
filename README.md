@@ -25,6 +25,11 @@ import 'vue-awesome-mui/mui/dist/css/mui.css'
 Vue.use(Mui)
 ```
 
+If you need icon, you can require `icon.css`
+```javascript
+import "vue-awesome-mui/mui/examples/hello-mui/css/icons-extra.css";
+```
+
 
 ## Browser Support
 

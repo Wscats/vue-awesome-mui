@@ -76,30 +76,30 @@
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/checkbox.html">
+					<a class="mui-navigate-right" href="#/checkbox">
 						checkbox（复选框）
 					</a>
 				</li>
-				<li class="mui-table-view-cell mui-collapse">
+				<!--<li class="mui-table-view-cell mui-collapse">
 					<a class="mui-navigate-right" href="javascript:void(0);">
 						date time（日期时间）
 					</a>
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/dtpicker.html">
+							<a class="mui-navigate-right" data-title-type="native" href="#/dtpicker">
 								H5模式
 							</a>
 						</li>
 						<li class="mui-table-view-cell mui-plus-visible">
-							<a class="mui-navigate-right" href="examples/date.html">
+							<a class="mui-navigate-right" href="#/date">
 								native模式
 							</a>
 						</li>
 					</ul>
-				</li>
+				</li>-->
 
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/dialog.html">
+					<a class="mui-navigate-right" href="#/dialog">
 						dialog（消息框）
 					</a>
 				</li>
@@ -110,7 +110,7 @@
 					</a>
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/slider-default.html">
+							<a class="mui-navigate-right" href="#/sliderDefault">
 								默认样式（H5模式）
 							</a>
 						</li>
@@ -120,7 +120,7 @@
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/slider-with-title.html">
+							<a class="mui-navigate-right" href="#/sliderWithTitle">
 								下方悬浮标题
 							</a>
 						</li>
@@ -132,7 +132,7 @@
 					</a>
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/slider-table-default.html">
+							<a class="mui-navigate-right" href="#/sliderTableDefault">
 								默认样式
 							</a>
 						</li>
@@ -149,12 +149,12 @@
 					</a>
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/grid-default.html">
+							<a class="mui-navigate-right" href="#/gridDefault">
 								默认样式
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/grid-pagination.html">
+							<a class="mui-navigate-right" href="#/gridPagination">
 								可左右滑动的9宫导航
 							</a>
 						</li>
@@ -164,19 +164,19 @@
 					<a href="javascript:void(0);" class="mui-navigate-right">icon（图标）</a>
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/icons.html">
+							<a class="mui-navigate-right" data-title-type="native" href="#/icons">
 								内置图标
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/icons-extra.html">
+							<a class="mui-navigate-right" data-title-type="native" href="#/iconsExtra">
 								扩展图标
 							</a>
 						</li>
 					</ul>
 				</li>
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/input.html">
+					<a class="mui-navigate-right" href="#/input">
 						input（输入框）
 					</a>
 				</li>

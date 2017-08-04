@@ -1,0 +1,94 @@
+<template>
+	<div>
+		<header class="mui-bar mui-bar-nav">
+			<router-link to="/index" class="mui-icon mui-icon-left-nav mui-pull-left"></router-link>
+			<h1 class="mui-title">input（输入框）</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded" style="margin: 5px;">
+				<h5>默认搜索框：</h5>
+				<div class="mui-input-row mui-search">
+					<input type="search" class="mui-input-clear" placeholder="">
+				</div>
+				<h5 class="mui-plus-visible">语音输入搜索框：</h5>
+				<div class="mui-input-row mui-search mui-plus-visible">
+					<input id="search" type="search" class="mui-input-speech mui-input-clear" placeholder="带语音输入的搜索框">
+				</div>
+				<h5>密码框：</h5>
+				<div class="mui-input-row mui-password">
+					<input type="password" class="mui-input-password">
+				</div>
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>Input</label>
+						<input type="text" placeholder="普通输入框">
+					</div>
+					<div class="mui-input-row">
+						<label>Input</label>
+						<input type="text" class="mui-input-clear" placeholder="带清除按钮的输入框">
+					</div>
+
+					<div class="mui-input-row mui-plus-visible">
+						<label>Input</label>
+						<input type="text" class="mui-input-speech mui-input-clear" placeholder="语音输入">
+					</div>
+					<div class="mui-button-row">
+						<button type="button" class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+						<button type="button" class="mui-btn mui-btn-danger" onclick="return false;">取消</button>
+					</div>
+				</form>
+				<div class="mui-input-row" style="margin: 10px 5px;">
+					<textarea id="textarea" rows="5" placeholder="多行文本框"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+	export default {
+		mounted() {
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			//语音识别完成事件
+			document.getElementById("search").addEventListener('recognized', function(e) {
+				console.log(e.detail.value);
+			});
+
+			var nativeWebview, imm, InputMethodManager;
+			var initNativeObjects = function() {
+				if(mui.os.android) {
+					var main = plus.android.runtimeMainActivity();
+					var Context = plus.android.importClass("android.content.Context");
+					InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+					imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+				} else {
+					nativeWebview = plus.webview.currentWebview().nativeInstanceObject();
+				}
+			};
+			var showSoftInput = function() {
+				if(mui.os.android) {
+					imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+				} else {
+					nativeWebview.plusCallMethod({
+						"setKeyboardDisplayRequiresUserAction": false
+					});
+				}
+				setTimeout(function() {
+					var inputElem = document.querySelector('input');
+					inputElem.focus();
+					inputElem.parentNode.classList.add('mui-active'); //第一个是search，加上激活样式
+				}, 200);
+			};
+			mui.plusReady(function() {
+				initNativeObjects();
+				showSoftInput();
+			});
+		}
+	}
+</script>
+<style scoped>
+	h5 {
+		margin: 5px 7px;
+	}
+</style>

@@ -23,17 +23,33 @@ Vue.prototype.$ajax = axios;
 
 //引入组件
 import index from "./components/index.vue";
+//A
 import accordion from "./components/examples/accordion.vue";
 import actionsheet from "./components/examples/actionsheet.vue";
-
+//B
 import badges from "./components/examples/badges.vue";
 import buttons from "./components/examples/buttons.vue";
 import buttonsWithIcons from "./components/examples/buttons-with-icons.vue";
 import buttonsWithBadges from "./components/examples/buttons-with-badges.vue";
 import buttonsWithBlock from "./components/examples/buttons-with-block.vue";
 import buttonsWithLoading from "./components/examples/buttons-with-loading.vue"
-
+//C
 import card from "./components/examples/card.vue"
+import checkbox from "./components/examples/checkbox.vue"
+//D
+import dtpicker from "./components/examples/dtpicker.vue"
+import dialog from "./components/examples/dialog.vue"
+//S
+import sliderDefault from "./components/examples/slider-default.vue"
+import sliderTableDefault from "./components/examples/slider-table-default.vue"
+import sliderWithTitle from "./components/examples/slider-with-title.vue"
+//G
+import gridDefault from "./components/examples/grid-default.vue"
+import gridPagination from "./components/examples/grid-pagination.vue"
+//I
+import icons from "./components/examples/icons.vue"
+import iconsExtra from "./components/examples/icons-extra.vue"
+import input from "./components/examples/input.vue"
 
 var router = new VueRouter({
 	routes: [{
@@ -66,6 +82,39 @@ var router = new VueRouter({
 	}, {
 		path: '/card',
 		component: card,
+	}, {
+		path: '/checkbox',
+		component: checkbox,
+	}, {
+		path: '/dtpicker',
+		component: dtpicker,
+	}, {
+		path: '/dialog',
+		component: dialog,
+	}, {
+		path: '/sliderDefault',
+		component: sliderDefault,
+	}, {
+		path: '/sliderTableDefault',
+		component: sliderTableDefault,
+	}, {
+		path: '/sliderWithTitle',
+		component: sliderWithTitle,
+	}, {
+		path: '/gridDefault',
+		component: gridDefault,
+	}, {
+		path: '/gridPagination',
+		component: gridPagination,
+	}, {
+		path: '/icons',
+		component: icons,
+	}, {
+		path: '/iconsExtra',
+		component: iconsExtra,
+	}, {
+		path: '/input',
+		component: input,
 	}, {
 		path: '/',
 		redirect: '/index'
