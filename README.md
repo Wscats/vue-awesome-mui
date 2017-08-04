@@ -67,4 +67,11 @@ Please make sure to read the [Contributing Guide](https://github.com/Wscats/vue-
 
 vue-awesome-mui is open source and released under the MIT Licence.
 
-Copyright (c) 2017 [wscats](https://github.com/Wscats)
+Copyright (c) 2017 [Wscats](https://github.com/Wscats)
+
+# About author
+
+* [Github](https://github.com/Wscats)
+* [Segmentfault](https://segmentfault.com/u/asw)
+* [CSDN](http://blog.csdn.net/qq_27080247)
+* [Juejin](https://juejin.im/user/584c7f44ac502e0069275cd7)
