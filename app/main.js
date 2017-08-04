@@ -50,6 +50,11 @@ import gridPagination from "./components/examples/grid-pagination.vue"
 import icons from "./components/examples/icons.vue"
 import iconsExtra from "./components/examples/icons-extra.vue"
 import input from "./components/examples/input.vue"
+import mediaList from "./components/examples/media-list.vue"
+//N
+import nav from "./components/examples/nav.vue"
+import navTransparent from "./components/examples/nav_transparent.vue"
+import numbox from "./components/examples/numbox.vue"
 
 var router = new VueRouter({
 	routes: [{
@@ -115,6 +120,18 @@ var router = new VueRouter({
 	}, {
 		path: '/input',
 		component: input,
+	}, {
+		path: '/mediaList',
+		component: mediaList,
+	}, {
+		path: '/nav',
+		component: nav,
+	}, {
+		path: '/navTransparent',
+		component: navTransparent,
+	}, {
+		path: '/numbox',
+		component: numbox,
 	}, {
 		path: '/',
 		redirect: '/index'

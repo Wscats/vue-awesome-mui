@@ -1,0 +1,42 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'publish' ]
+2 info using npm@3.10.9
+3 info using node@v6.9.2
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: 'D:\\xampp\\htdocs\\1702\\vue\\19.mui',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory C:\Users\Administrator\AppData\Roaming\npm-cache\vue-awesome-mui\1.7.4\package.tgz not in flight; packing
+9 verbose correctMkdir C:\Users\Administrator\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+10 info lifecycle vue-awesome-mui@1.7.4~prepublish: vue-awesome-mui@1.7.4
+11 silly lifecycle vue-awesome-mui@1.7.4~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ 'C:\\Users\\Administrator\\AppData\\Roaming\\npm-cache\\vue-awesome-mui\\1.7.4\\package.tgz',
+12 verbose tar pack   'D:\\xampp\\htdocs\\1702\\vue\\19.mui' ]
+13 verbose tarball C:\Users\Administrator\AppData\Roaming\npm-cache\vue-awesome-mui\1.7.4\package.tgz
+14 verbose folder D:\xampp\htdocs\1702\vue\19.mui
+15 error tar.pack Could not write C:\Users\Administrator\AppData\Roaming\npm-cache\vue-awesome-mui\1.7.4\package.tgz
+16 error addLocalDirectory Could not pack D:\xampp\htdocs\1702\vue\19.mui to C:\Users\Administrator\AppData\Roaming\npm-cache\vue-awesome-mui\1.7.4\package.tgz
+17 error addLocal Could not install D:\xampp\htdocs\1702\vue\19.mui
+18 verbose stack Error: ENOSPC: no space left on device, write
+18 verbose stack     at Error (native)
+19 verbose cwd D:\xampp\htdocs\1702\vue\19.mui
+20 error Windows_NT 6.1.7601
+21 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "publish"
+22 error node v6.9.2
+23 error npm  v3.10.9
+24 error code ENOSPC
+25 error errno -4055
+26 error syscall write
+27 error nospc ENOSPC: no space left on device, write
+28 error nospc This is most likely not a problem with npm itself
+28 error nospc and is related to insufficient space on your system.
+29 verbose exit [ -4055, true ]

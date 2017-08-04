@@ -180,7 +180,7 @@
 						input（输入框）
 					</a>
 				</li>
-				<li class="mui-table-view-cell mui-collapse">
+				<!--<li class="mui-table-view-cell mui-collapse">
 					<a class="mui-navigate-right" href="javascript:void(0);">
 						list（列表）
 					</a>
@@ -216,9 +216,9 @@
 							</a>
 						</li>
 					</ul>
-				</li>
+				</li>-->
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" data-title-type="native" href="examples/media-list.html">
+					<a class="mui-navigate-right" data-title-type="native" href="#/mediaList">
 						media list（图文列表）
 					</a>
 				</li>
@@ -226,7 +226,7 @@
 					<a href="javascript:void(0);" class="mui-navigate-right">nav bar（导航栏）</a>
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/nav.html">
+							<a class="mui-navigate-right" href="#/nav">
 								默认标题（div模式）
 							</a>
 						</li>
@@ -236,7 +236,7 @@
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/nav_transparent.html">
+							<a class="mui-navigate-right" href="#/navTransparent">
 								透明渐变(div模式)
 							</a>
 						</li>
@@ -247,12 +247,12 @@
 						</li>
 					</ul>
 				</li>
-
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" data-title-type="native" href="examples/numbox.html">
+					<a class="mui-navigate-right" data-title-type="native" href="#/numbox">
 						number box（数字输入框）
 					</a>
 				</li>
+				<!--
 				<li class="mui-table-view-cell mui-collapse">
 					<a class="mui-navigate-right" href="javascript:void(0);">
 						off canvas（侧滑导航）
@@ -472,7 +472,7 @@
 					<a class="mui-navigate-right" data-title-type="native" href="examples/best-practices/list-to-detail/listview.html">
 						列表到详情最佳实践
 					</a>
-				</li>
+				</li>-->
 
 			</ul>
 		</div>
