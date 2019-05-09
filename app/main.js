@@ -11,10 +11,10 @@ import axios from "axios";
 import "mui/dist/css/mui.css"*/
 
 import Mui from "vue-awesome-mui";
-import "vue-awesome-mui/mui/dist/css/mui.css"
-Vue.use(Mui)
+import "vue-awesome-mui/mui/dist/css/mui.css";
+Vue.use(Mui);
 
-console.log(Vue.prototype)
+//console.log(Vue.prototype);
 Vue.use(Vuex);
 //通过 Vue.use()明确地安装路由功能
 Vue.use(VueRouter);
@@ -34,27 +34,27 @@ import buttonsWithBadges from "./components/examples/buttons-with-badges.vue";
 import buttonsWithBlock from "./components/examples/buttons-with-block.vue";
 import buttonsWithLoading from "./components/examples/buttons-with-loading.vue"
 //C
-import card from "./components/examples/card.vue"
-import checkbox from "./components/examples/checkbox.vue"
+import card from "./components/examples/card.vue";
+import checkbox from "./components/examples/checkbox.vue";
 //D
-import dtpicker from "./components/examples/dtpicker.vue"
-import dialog from "./components/examples/dialog.vue"
+import dtpicker from "./components/examples/dtpicker.vue";
+import dialog from "./components/examples/dialog.vue";
 //S
-import sliderDefault from "./components/examples/slider-default.vue"
-import sliderTableDefault from "./components/examples/slider-table-default.vue"
-import sliderWithTitle from "./components/examples/slider-with-title.vue"
+import sliderDefault from "./components/examples/slider-default.vue";
+import sliderTableDefault from "./components/examples/slider-table-default.vue";
+import sliderWithTitle from "./components/examples/slider-with-title.vue";
 //G
-import gridDefault from "./components/examples/grid-default.vue"
-import gridPagination from "./components/examples/grid-pagination.vue"
+import gridDefault from "./components/examples/grid-default.vue";
+import gridPagination from "./components/examples/grid-pagination.vue";
 //I
-import icons from "./components/examples/icons.vue"
-import iconsExtra from "./components/examples/icons-extra.vue"
-import input from "./components/examples/input.vue"
-import mediaList from "./components/examples/media-list.vue"
+import icons from "./components/examples/icons.vue";
+import iconsExtra from "./components/examples/icons-extra.vue";
+import input from "./components/examples/input.vue";
+import mediaList from "./components/examples/media-list.vue";
 //N
-import nav from "./components/examples/nav.vue"
-import navTransparent from "./components/examples/nav_transparent.vue"
-import numbox from "./components/examples/numbox.vue"
+import nav from "./components/examples/nav.vue";
+import navTransparent from "./components/examples/nav_transparent.vue";
+import numbox from "./components/examples/numbox.vue";
 
 var router = new VueRouter({
 	routes: [{
