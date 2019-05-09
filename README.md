@@ -2,7 +2,7 @@
 [![npm package](https://img.shields.io/npm/v/vue-awesome-mui.svg)](https://www.npmjs.com/package/vue-awesome-mui)
 [![NPM downloads](http://img.shields.io/npm/dm/vue-awesome-mui.svg)](https://www.npmjs.com/package/vue-awesome-mui)
 
-> Design Mui library for Vuejs 2.0
+> Design Mui library for Vuejs 2.x
 
 ## Links
 * [Demo Page](https://wscats.github.io/vue-awesome-mui/public/#/index)
@@ -60,7 +60,7 @@ Please make sure to read the [Contributing Guide](https://github.com/Wscats/vue-
 
 ## Dependencies
 
-* [vuejs 2.0](https://vuejs.org/)
+* [vuejs 2.x](https://vuejs.org/)
 * [mui 3.5](https://github.com/dcloudio/mui)
 
 ## Licence
