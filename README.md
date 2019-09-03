@@ -72,6 +72,6 @@ Copyright (c) 2017 [Wscats](https://github.com/Wscats)
 ## About author
 
 * [Github](https://github.com/Wscats)
-* [Segmentfault](https://segmentfault.com/u/asw)
+* [Segmentfault](https://segmentfault.com/u/enoy)
 * [CSDN](http://blog.csdn.net/qq_27080247)
 * [Juejin](https://juejin.im/user/584c7f44ac502e0069275cd7)
