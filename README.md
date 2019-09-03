@@ -1,6 +1,8 @@
 # vue-awesome-mui
 [![npm package](https://img.shields.io/npm/v/vue-awesome-mui.svg)](https://www.npmjs.com/package/vue-awesome-mui)
 [![NPM downloads](http://img.shields.io/npm/dm/vue-awesome-mui.svg)](https://www.npmjs.com/package/vue-awesome-mui)
+<a href="https://github.com/Wscats/vue-awesome-mui"><img src="https://img.shields.io/badge/Github Page-Wscats-yellow" alt="Github Page" /></a>
+<a href="https://github.com/Wscats/vue-awesome-mui"><img src="https://img.shields.io/badge/Author-Eno Yao-blueviolet" alt="Eno Yao" /></a>
 
 > Design Mui library for Vuejs 2.x
 
