@@ -4,7 +4,9 @@
   "description": "A high-performance front end framework that is closest to native experience & design ui for vue2",
   "main": "mui/dist/js/mui.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src --ext .ts,.tsx,.js,.jsx --fix",
+    "type-check": "tsc --noEmit"
   },
   "keywords": [
     "vue-awesome-mui",
