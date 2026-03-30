@@ -1,13 +1,15 @@
-var gulp = require("gulp");
-var pkg = require("./package.json");
-var uglify = require("gulp-uglify");
-var minifycss = require('gulp-minify-css');
-var del = require('del');
-var concat = require('gulp-concat');
-var rename = require('gulp-rename');
-var header = require('gulp-header');
+'use strict';
 
-//var banner = ['/**',
+const gulp = require("gulp");
+const pkg = require("./package.json");
+const uglify = require("gulp-uglify");
+const minifycss = require('gulp-minify-css');
+const del = require('del');
+const concat = require('gulp-concat');
+const rename = require('gulp-rename');
+const header = require('gulp-header');
+
+//const banner = ['/**',
 //	' * <%= pkg.name %> - <%= pkg.description %>',
 //	' * @version v<%= pkg.version %>',
 //	' * @link <%= pkg.homepage %>',
@@ -16,7 +18,7 @@ var header = require('gulp-header');
 //	''
 //].join('\r\n');
 
-var picker_banner = ['/**',
+const picker_banner = ['/**',
 	'* 选择列表插件',
 	'* varstion 2.0.0',
 	'* by Houfeng',

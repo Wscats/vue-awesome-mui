@@ -1,3 +1,5 @@
+'use strict';
+
 /*
 	A shim for non ES5 supporting browsers.
 	Adds function bind to Function prototype, so that you can do partial application.
@@ -6,12 +8,12 @@
 
 Function.prototype.bind = Function.prototype.bind || function(to) {
 	// Make an array of our arguments, starting from second argument
-	var partial = Array.prototype.splice.call(arguments, 1),
+	const partial = Array.prototype.splice.call(arguments, 1),
 		// We'll need the original function.
 		fn = this;
-	var bound = function() {
+	const bound = function() {
 			// Join the already applied arguments to the now called ones (after converting to an array again).
-			var args = partial.concat(Array.prototype.splice.call(arguments, 0));
+			const args = partial.concat(Array.prototype.splice.call(arguments, 0));
 			// If not being called as a constructor
 			if (!(this instanceof bound)) {
 				// return the result of the function called bound to target and partially applied.

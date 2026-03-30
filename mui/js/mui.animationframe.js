@@ -1,14 +1,16 @@
+'use strict';
+
 /**
  * mui animationFrame
  */
 (function($, window) {
 
-	var rAF = window.requestAnimationFrame;
-	var cAF = window.cancelAnimationFrame;
+	const rAF = window.requestAnimationFrame;
+	const cAF = window.cancelAnimationFrame;
 
-	var queues = {};
+	const queues = {};
 
-	var animationFrame = {
+	let animationFrame = {
 		queue : queue,
 		queueAfter : queueAfter,
 		cancel : cancel
@@ -23,7 +25,7 @@
 	}
 
 	function recursion(callback) {
-		var qid = animation_id();
+		let qid = animation_id();
 		(function wrapper() {
 			callback();
 			queues[qid] = rAF(function() {
@@ -35,7 +37,7 @@
 	}
 
 	function queue(callback) {
-		var qid = animation_id();
+		let qid = animation_id();
 
 		queues[qid] = rAF(function() {
 			delete queues[qid];

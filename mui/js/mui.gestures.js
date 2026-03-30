@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui gestures
  * @param {type} $
@@ -35,23 +37,23 @@
 
 	};
 
-	var round = Math.round;
-	var abs = Math.abs;
-	var sqrt = Math.sqrt;
-	var atan = Math.atan;
-	var atan2 = Math.atan2;
+	const round = Math.round;
+	const abs = Math.abs;
+	const sqrt = Math.sqrt;
+	const atan = Math.atan;
+	const atan2 = Math.atan2;
 	/**
 	 * distance
 	 * @param {type} p1
 	 * @param {type} p2
 	 * @returns {Number}
 	 */
-	var getDistance = function(p1, p2, props) {
+	const getDistance = function(p1, p2, props) {
 		if (!props) {
 			props = ['x', 'y'];
 		}
-		var x = p2[props[0]] - p1[props[0]];
-		var y = p2[props[1]] - p1[props[1]];
+		let x = p2[props[0]] - p1[props[0]];
+		let y = p2[props[1]] - p1[props[1]];
 		return sqrt((x * x) + (y * y));
 	};
 	/**
@@ -59,9 +61,9 @@
 	 * @param {Object} starts
 	 * @param {Object} moves
 	 */
-	var getScale = function(starts, moves) {
+	const getScale = function(starts, moves) {
 		if (starts.length >= 2 && moves.length >= 2) {
-			var props = ['pageX', 'pageY'];
+			let props = ['pageX', 'pageY'];
 			return getDistance(moves[1], moves[0], props) / getDistance(starts[1], starts[0], props);
 		}
 		return 1;
@@ -72,12 +74,12 @@
 	 * @param {type} p2
 	 * @returns {Number}
 	 */
-	var getAngle = function(p1, p2, props) {
+	const getAngle = function(p1, p2, props) {
 		if (!props) {
 			props = ['x', 'y'];
 		}
-		var x = p2[props[0]] - p1[props[0]];
-		var y = p2[props[1]] - p1[props[1]];
+		let x = p2[props[0]] - p1[props[0]];
+		let y = p2[props[1]] - p1[props[1]];
 		return atan2(y, x) * 180 / Math.PI;
 	};
 	/**
@@ -85,7 +87,7 @@
 	 * @param {Object} x
 	 * @param {Object} y
 	 */
-	var getDirection = function(x, y) {
+	const getDirection = function(x, y) {
 		if (x === y) {
 			return '';
 		}
@@ -99,8 +101,8 @@
 	 * @param {Object} start
 	 * @param {Object} end
 	 */
-	var getRotation = function(start, end) {
-		var props = ['pageX', 'pageY'];
+	const getRotation = function(start, end) {
+		const props = ['pageX', 'pageY'];
 		return getAngle(end[1], end[0], props) - getAngle(start[1], start[0], props);
 	};
 	/**
@@ -109,7 +111,7 @@
 	 * @param {Object} x
 	 * @param {Object} y
 	 */
-	var getVelocity = function(deltaTime, x, y) {
+	const getVelocity = function(deltaTime, x, y) {
 		return {
 			x: x / deltaTime || 0,
 			y: y / deltaTime || 0
@@ -121,7 +123,7 @@
 	 * @param {type} touch
 	 * @returns {undefined}
 	 */
-	var detect = function(event, touch) {
+	const detect = function(event, touch) {
 		if ($.gestures.stoped) {
 			return;
 		}
@@ -138,9 +140,9 @@
 	 * @param {Object} node
 	 * @param {Object} parent
 	 */
-	var hasParent = function(node, parent) {
+	const hasParent = function(node, parent) {
 		while (node) {
-			if (node == parent) {
+			if (node === parent) {
 				return true;
 			}
 			node = node.parentNode;
@@ -148,13 +150,13 @@
 		return false;
 	};
 
-	var uniqueArray = function(src, key, sort) {
-		var results = [];
-		var values = [];
-		var i = 0;
+	const uniqueArray = function(src, key, sort) {
+		let results = [];
+		const values = [];
+		let i = 0;
 
 		while (i < src.length) {
-			var val = key ? src[i][key] : src[i];
+			const val = key ? src[i][key] : src[i];
 			if (values.indexOf(val) < 0) {
 				results.push(src[i]);
 			}
@@ -174,8 +176,8 @@
 
 		return results;
 	};
-	var getMultiCenter = function(touches) {
-		var touchesLength = touches.length;
+	const getMultiCenter = function(touches) {
+		let touchesLength = touches.length;
 		if (touchesLength === 1) {
 			return {
 				x: round(touches[0].pageX),
@@ -183,9 +185,9 @@
 			};
 		}
 
-		var x = 0;
-		var y = 0;
-		var i = 0;
+		const x = 0;
+		const y = 0;
+		let i = 0;
 		while (i < touchesLength) {
 			x += touches[i].pageX;
 			y += touches[i].pageY;
@@ -197,12 +199,12 @@
 			y: round(y / touchesLength)
 		};
 	};
-	var multiTouch = function() {
+	const multiTouch = function() {
 		return $.options.gestureConfig.pinch;
 	};
-	var copySimpleTouchData = function(touch) {
-		var touches = [];
-		var i = 0;
+	const copySimpleTouchData = function(touch) {
+		let touches = [];
+		let i = 0;
 		while (i < touch.touches.length) {
 			touches[i] = {
 				pageX: round(touch.touches[i].pageX),
@@ -220,12 +222,12 @@
 		};
 	};
 
-	var calDelta = function(touch) {
-		var session = $.gestures.session;
-		var center = touch.center;
-		var offset = session.offsetDelta || {};
-		var prevDelta = session.prevDelta || {};
-		var prevTouch = session.prevTouch || {};
+	const calDelta = function(touch) {
+		let session = $.gestures.session;
+		let center = touch.center;
+		let offset = session.offsetDelta || {};
+		let prevDelta = session.prevDelta || {};
+		let prevTouch = session.prevTouch || {};
 
 		if (touch.gesture.type === $.EVENT_START || touch.gesture.type === $.EVENT_END) {
 			prevDelta = session.prevDelta = {
@@ -241,10 +243,10 @@
 		touch.deltaX = prevDelta.x + (center.x - offset.x);
 		touch.deltaY = prevDelta.y + (center.y - offset.y);
 	};
-	var calTouchData = function(touch) {
-		var session = $.gestures.session;
-		var touches = touch.touches;
-		var touchesLength = touches.length;
+	const calTouchData = function(touch) {
+		let session = $.gestures.session;
+		let touches = touch.touches;
+		let touchesLength = touches.length;
 
 		if (!session.firstTouch) {
 			session.firstTouch = copySimpleTouchData(touch);
@@ -256,11 +258,11 @@
 			session.firstMultiTouch = false;
 		}
 
-		var firstTouch = session.firstTouch;
-		var firstMultiTouch = session.firstMultiTouch;
-		var offsetCenter = firstMultiTouch ? firstMultiTouch.center : firstTouch.center;
+		const firstTouch = session.firstTouch;
+		const firstMultiTouch = session.firstMultiTouch;
+		const offsetCenter = firstMultiTouch ? firstMultiTouch.center : firstTouch.center;
 
-		var center = touch.center = getMultiCenter(touches);
+		let center = touch.center = getMultiCenter(touches);
 		touch.timestamp = $.now();
 		touch.deltaTime = touch.timestamp - firstTouch.timestamp;
 
@@ -277,21 +279,21 @@
 		calIntervalTouchData(touch);
 
 	};
-	var CAL_INTERVAL = 25;
-	var calIntervalTouchData = function(touch) {
-		var session = $.gestures.session;
-		var last = session.lastInterval || touch;
-		var deltaTime = touch.timestamp - last.timestamp;
+	const CAL_INTERVAL = 25;
+	const calIntervalTouchData = function(touch) {
+		let session = $.gestures.session;
+		const last = session.lastInterval || touch;
+		const deltaTime = touch.timestamp - last.timestamp;
 		var velocity;
 		var velocityX;
 		var velocityY;
 		var direction;
 
-		if (touch.gesture.type != $.EVENT_CANCEL && (deltaTime > CAL_INTERVAL || last.velocity === undefined)) {
-			var deltaX = last.deltaX - touch.deltaX;
-			var deltaY = last.deltaY - touch.deltaY;
+		if (touch.gesture.type !== $.EVENT_CANCEL && (deltaTime > CAL_INTERVAL || last.velocity === undefined)) {
+			const deltaX = last.deltaX - touch.deltaX;
+			const deltaY = last.deltaY - touch.deltaY;
 
-			var v = getVelocity(deltaTime, deltaX, deltaY);
+			const v = getVelocity(deltaTime, deltaX, deltaY);
 			velocityX = v.x;
 			velocityY = v.y;
 			velocity = (abs(v.x) > abs(v.y)) ? v.x : v.y;
@@ -310,20 +312,20 @@
 		touch.velocityY = velocityY;
 		touch.direction = direction;
 	};
-	var targetIds = {};
-	var convertTouches = function(touches) {
-		for (var i = 0; i < touches.length; i++) {
+	const targetIds = {};
+	const convertTouches = function(touches) {
+		for (let i = 0; i < touches.length; i++) {
 			!touches['identifier'] && (touches['identifier'] = 0);
 		}
 		return touches;
 	};
-	var getTouches = function(event, touch) {
-		var allTouches = convertTouches($.slice.call(event.touches || [event]));
+	const getTouches = function(event, touch) {
+		const allTouches = convertTouches($.slice.call(event.touches || [event]));
 
-		var type = event.type;
+		const type = event.type;
 
-		var targetTouches = [];
-		var changedTargetTouches = [];
+		let targetTouches = [];
+		let changedTargetTouches = [];
 
 		//当touchstart或touchmove且touches长度为1，直接获得all和changed
 		if ((type === $.EVENT_START || type === $.EVENT_MOVE) && allTouches.length === 1) {
@@ -332,13 +334,13 @@
 			changedTargetTouches = allTouches;
 			touch.target = event.target;
 		} else {
-			var i = 0;
-			var targetTouches = [];
-			var changedTargetTouches = [];
-			var changedTouches = convertTouches($.slice.call(event.changedTouches || [event]));
+			let i = 0;
+			let targetTouches = [];
+			const changedTargetTouches = [];
+			let changedTouches = convertTouches($.slice.call(event.changedTouches || [event]));
 
 			touch.target = event.target;
-			var sessionTarget = $.gestures.session.target || event.target;
+			const sessionTarget = $.gestures.session.target || event.target;
 			targetTouches = allTouches.filter(function(touch) {
 				return hasParent(touch.target, sessionTarget);
 			});
@@ -367,8 +369,8 @@
 			}
 		}
 		targetTouches = uniqueArray(targetTouches.concat(changedTargetTouches), 'identifier', true);
-		var touchesLength = targetTouches.length;
-		var changedTouchesLength = changedTargetTouches.length;
+		const touchesLength = targetTouches.length;
+		const changedTouchesLength = changedTargetTouches.length;
 		if (type === $.EVENT_START && touchesLength - changedTouchesLength === 0) { //first
 			touch.isFirst = true;
 			$.gestures.touch = $.gestures.session = {
@@ -382,11 +384,11 @@
 		return true;
 
 	};
-	var handleTouchEvent = function(event) {
-		var touch = {
+	const handleTouchEvent = function(event) {
+		let touch = {
 			gesture: event
 		};
-		var touches = getTouches(event, touch);
+		const touches = getTouches(event, touch);
 		if (!touches) {
 			return;
 		}
@@ -412,7 +414,7 @@
 
 	//增加原生滚动识别
 	$.isScrolling = false;
-	var scrollingTimeout = null;
+	let scrollingTimeout = null;
 	window.addEventListener('scroll', function() {
 		$.isScrolling = true;
 		scrollingTimeout && clearTimeout(scrollingTimeout);

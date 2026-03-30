@@ -1,8 +1,10 @@
+'use strict';
+
 /**
  * 5+ ajax
  */
 (function($) {
-	var originAnchor = document.createElement('a');
+	const originAnchor = document.createElement('a');
 	originAnchor.href = window.location.href;
 	$.plusReady(function() {
 		$.ajaxSettings = $.extend($.ajaxSettings, {
@@ -12,7 +14,7 @@
 				}
 				//仅在webview的url为远程文件，且ajax请求的资源不同源下使用plus.net.XMLHttpRequest
 				if (originAnchor.protocol !== 'file:') {
-					var urlAnchor = document.createElement('a');
+					const urlAnchor = document.createElement('a');
 					urlAnchor.href = settings.url;
 					urlAnchor.href = urlAnchor.href;
 					settings.crossDomain = (originAnchor.protocol + '//' + originAnchor.host) !== (urlAnchor.protocol + '//' + urlAnchor.host);

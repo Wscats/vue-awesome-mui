@@ -1,4 +1,6 @@
-var webviewGroup = function(id, options) {
+'use strict';
+
+const webviewGroup = function(id, options) {
 	this.id = id;
 	this.options = options;
 	this.styles = options.styles;
@@ -13,7 +15,7 @@ var webviewGroup = function(id, options) {
 	this._init();
 };
 
-var proto = webviewGroup.prototype;
+const proto = webviewGroup.prototype;
 
 proto._init = function() {
 	this._initParent();
@@ -38,20 +40,20 @@ proto._initNativeView = function() {
 	this.nativeView.show();
 };
 proto._initWebviewContexts = function() {
-	for(var len = this.items.length, i = len - 1; i >= 0; i--) {
-		var webviewOptions = this.items[i];
-		var id = webviewOptions.id;
-		var isFirst = i === 0;
-		var isLast = i === (len - 1);
-		var isCurrent = this.options.index === i;
-		var extras = webviewOptions.extras;
+	for(const len = this.items.length, i = len - 1; i >= 0; i--) {
+		const webviewOptions = this.items[i];
+		let id = webviewOptions.id;
+		const isFirst = i === 0;
+		const isLast = i === (len - 1);
+		const isCurrent = this.options.index === i;
+		const extras = webviewOptions.extras;
 		extras.__mui_url = webviewOptions.url;
 		extras.__mui_index = i;
 
 		extras.__mui_left = isFirst ? '' : this.items[i - 1].id;
 		extras.__mui_right = isLast ? '' : this.items[i + 1].id;
 
-		var styles = webviewOptions.styles || {};
+		let styles = webviewOptions.styles || {};
 
 		if(i > this.options.index) {
 			styles.left = '100%';
@@ -60,7 +62,7 @@ proto._initWebviewContexts = function() {
 		} else {
 			styles.left = '0';
 		}
-		var webviewContext = new webviewGroupContext(id, webviewOptions, this);
+		const webviewContext = new webviewGroupContext(id, webviewOptions, this);
 		this.webviewContexts[id] = webviewContext;
 		if(isCurrent) {
 			webviewContext.webview = plus.webview.getWebviewById(id);
@@ -81,7 +83,7 @@ proto._dragCallback = function(dir, fromWebview, view, viewId) {
 	if(view === this.nativeView) { //需要创建webview
 		//第一步:初始化目标webview
 		this.webviewContexts[viewId].createWebview('drag');
-		var targetWebview = this.webviewContexts[viewId].webview;
+		const targetWebview = this.webviewContexts[viewId].webview;
 		targetWebview.show();
 		this.nativeView.setStyle({
 			left: '100%'
@@ -97,13 +99,13 @@ proto._dragCallback = function(dir, fromWebview, view, viewId) {
 };
 
 proto._initDrag = function(webview, dir) {
-	var flag = ('__mui_drag_' + dir + '_flag');
+	const flag = ('__mui_drag_' + dir + '_flag');
 	if(webview[flag]) {
 		return;
 	}
-	var viewId = webview['__mui_' + (dir === 'left' ? 'right' : 'left')];
+	const viewId = webview['__mui_' + (dir === 'left' ? 'right' : 'left')];
 	if(viewId) {
-		var view = plus.webview.getWebviewById(viewId);
+		let view = plus.webview.getWebviewById(viewId);
 		if(!view) { //如果目标webview不存在,使用nativeView替换
 			view = this.nativeView;
 		} else {
@@ -131,16 +133,16 @@ proto._initDrags = function(webview) {
 	this._initDrag(webview, 'right');
 };
 proto._checkDrags = function(webview) {
-	var left = webview.__mui_left;
-	var right = webview.__mui_right;
+	let left = webview.__mui_left;
+	const right = webview.__mui_right;
 	if(left) {
-		var leftWebview = plus.webview.getWebviewById(left);
+		const leftWebview = plus.webview.getWebviewById(left);
 		if(leftWebview && !leftWebview.__mui_drag_left_flag) {
 			this._initDrag(leftWebview, 'left');
 		}
 	}
 	if(right) {
-		var rightWebview = plus.webview.getWebviewById(right);
+		const rightWebview = plus.webview.getWebviewById(right);
 		if(rightWebview && !rightWebview.__mui_drag_right_flag) {
 			this._initDrag(rightWebview, 'right');
 		}
@@ -157,19 +159,19 @@ proto.getCurrentWebviewContext = function() {
 };
 proto.switchTab = function(id) {
 	id = id.replace('_0', ''); //首页需要替换为appid
-	var fromWebview = this.currentWebview;
+	const fromWebview = this.currentWebview;
 	if(id === fromWebview.id) {
 		return;
 	}
-	var toWebviewContext = this.webviewContexts[id];
-	var toWebview = toWebviewContext.webview;
-	var fromToLeft = '100%';
-	var toFromLeft = '-100%';
+	const toWebviewContext = this.webviewContexts[id];
+	let toWebview = toWebviewContext.webview;
+	let fromToLeft = '100%';
+	let toFromLeft = '-100%';
 	if(toWebviewContext.options.extras.__mui_index > fromWebview.__mui_index) {
 		fromToLeft = '-100%';
 		toFromLeft = '100%';
 	}
-	var isNew = false;
+	let isNew = false;
 	if(!toWebview) {
 		isNew = true;
 		toWebviewContext.createWebview('startAnimation');
@@ -179,7 +181,7 @@ proto.switchTab = function(id) {
 		this._initDrags(toWebview);
 		this._checkDrags(toWebview); //新建的时候均需校验
 	}
-	var self = this;
+	let self = this;
 //	console.log("current:" + fromWebview.id + ",to:" + fromToLeft);
 //	console.log("next:" + toWebview.id + ",from:" + toFromLeft);
 
@@ -215,7 +217,7 @@ proto.switchTab = function(id) {
  * @param {Object} id
  * @param {Object} webviewOptions
  */
-var webviewGroupContext = function(id, webviewOptions, groupContext) {
+const webviewGroupContext = function(id, webviewOptions, groupContext) {
 	this.id = id;
 	this.url = webviewOptions.url;
 	this.options = webviewOptions;
@@ -225,10 +227,10 @@ var webviewGroupContext = function(id, webviewOptions, groupContext) {
 	this.inited = false;
 };
 
-var _proto = webviewGroupContext.prototype;
+const _proto = webviewGroupContext.prototype;
 
 _proto.createWebview = function(from) {
-	var options = this.options;
+	let options = this.options;
 	options.styles = options.styles || {
 		top: "83px",
 		bottom: "0px",
@@ -254,7 +256,7 @@ _proto.createWebview = function(from) {
 	this.inited = true;
 };
 _proto._initWebview = function() {
-	var options = this.options;
+	const options = this.options;
 	if(!this.webview) {
 		return;
 	}
@@ -264,13 +266,13 @@ _proto._initWebview = function() {
 		}, 500);
 	});
 	if(options.pullToRefresh && options.pullToRefresh.support && support.pullToRefresh()) {
-		var callback = options.pullToRefresh.callback;
+		const callback = options.pullToRefresh.callback;
 		this.webview.setPullToRefresh(options.pullToRefresh, function() {
 			if(callback) { //如果指定了下拉回调
 				callback(this.webview);
 			} else { //下拉刷新回调，默认reload当前页面
-				var self = this;
-				var titleUpdate = function() {
+				const self = this;
+				const titleUpdate = function() {
 					setTimeout(function() {
 						self.webview.endPullToRefresh();
 					}.bind(this), 1000);

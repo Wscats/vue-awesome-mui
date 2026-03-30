@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * off-canvas
  * @param {type} $
@@ -7,21 +9,21 @@
  * @returns {undefined}
  */
 (function($, window, document, name) {
-	var CLASS_OFF_CANVAS_LEFT = $.className('off-canvas-left');
-	var CLASS_OFF_CANVAS_RIGHT = $.className('off-canvas-right');
-	var CLASS_ACTION_BACKDROP = $.className('off-canvas-backdrop');
-	var CLASS_OFF_CANVAS_WRAP = $.className('off-canvas-wrap');
+	const CLASS_OFF_CANVAS_LEFT = $.className('off-canvas-left');
+	const CLASS_OFF_CANVAS_RIGHT = $.className('off-canvas-right');
+	const CLASS_ACTION_BACKDROP = $.className('off-canvas-backdrop');
+	const CLASS_OFF_CANVAS_WRAP = $.className('off-canvas-wrap');
 
-	var CLASS_SLIDE_IN = $.className('slide-in');
-	var CLASS_ACTIVE = $.className('active');
-
-
-	var CLASS_TRANSITIONING = $.className('transitioning');
-
-	var SELECTOR_INNER_WRAP = $.classSelector('.inner-wrap');
+	const CLASS_SLIDE_IN = $.className('slide-in');
+	const CLASS_ACTIVE = $.className('active');
 
 
-	var OffCanvas = $.Class.extend({
+	const CLASS_TRANSITIONING = $.className('transitioning');
+
+	const SELECTOR_INNER_WRAP = $.classSelector('.inner-wrap');
+
+
+	const OffCanvas = $.Class.extend({
 		init: function(element, options) {
 			this.wrapper = this.element = element;
 			this.scroller = this.wrapper.querySelector(SELECTOR_INNER_WRAP);
@@ -104,7 +106,7 @@
 					}
 					break;
 				case 'drag':
-					var detail = e.detail;
+					let detail = e.detail;
 					if (!this.startX) {
 						this.startX = detail.center.x;
 						this.lastX = this.startX;
@@ -173,13 +175,13 @@
 					break;
 				case 'dragend':
 					if (this.isDragging) {
-						var detail = e.detail;
-						var direction = detail.direction;
+						const detail = e.detail;
+						let direction = detail.direction;
 						this.isDragging = false;
 						this.offCanvas.classList.add(CLASS_TRANSITIONING);
 						this.scroller.classList.add(CLASS_TRANSITIONING);
-						var ratio = 0;
-						var x = this.getTranslateX();
+						let ratio = 0;
+						let x = this.getTranslateX();
 						if (!this.slideIn) {
 							if (x >= 0) {
 								ratio = (this.offCanvasLeftWidth && (x / this.offCanvasLeftWidth)) || 0;
@@ -267,7 +269,7 @@
 			}
 		},
 		initEvent: function() {
-			var self = this;
+			let self = this;
 			if (self.backdrop) {
 				self.backdrop.addEventListener('tap', function(e) {
 					self.close();
@@ -282,7 +284,7 @@
 			this.wrapper.addEventListener('webkitTransitionEnd', this);
 		},
 		openPercentage: function(percentage) {
-			var p = percentage / 100;
+			let p = percentage / 100;
 			if (!this.slideIn) {
 				if (this.offCanvasLeft && percentage >= 0) {
 					this.updateTranslate(this.offCanvasLeftWidth * p);
@@ -382,11 +384,11 @@
 		setTranslateX: $.animationFrame(function(x) {
 			if (this.scroller) {
 				if (this.scalable && this.offCanvas.parentNode === this.wrapper) {
-					var percent = Math.abs(x) / this.offCanvasWidth;
-					var zoomOutScale = 1 - (1 - this.options.scale) * percent;
-					var zoomInScale = this.options.scale + (1 - this.options.scale) * percent;
-					var zoomOutOpacity = 1 - (1 - this.options.opacity) * percent;
-					var zoomInOpacity = this.options.opacity + (1 - this.options.opacity) * percent;
+					const percent = Math.abs(x) / this.offCanvasWidth;
+					const zoomOutScale = 1 - (1 - this.options.scale) * percent;
+					const zoomInScale = this.options.scale + (1 - this.options.scale) * percent;
+					const zoomOutOpacity = 1 - (1 - this.options.opacity) * percent;
+					const zoomInOpacity = this.options.opacity + (1 - this.options.opacity) * percent;
 					if (this.offCanvas.classList.contains(CLASS_OFF_CANVAS_LEFT)) {
 						this.offCanvas.style.webkitTransformOrigin = '-100%';
 						this.scroller.style.webkitTransformOrigin = 'left';
@@ -408,16 +410,16 @@
 		}),
 		getTranslateX: function() {
 			if (this.offCanvas) {
-				var scroller = this.slideIn ? this.offCanvas : this.scroller;
-				var result = $.parseTranslateMatrix($.getStyles(scroller, 'webkitTransform'));
+				const scroller = this.slideIn ? this.offCanvas : this.scroller;
+				const result = $.parseTranslateMatrix($.getStyles(scroller, 'webkitTransform'));
 				return (result && result.x) || 0;
 			}
 			return 0;
 		},
 		isShown: function(direction) {
-			var shown = false;
+			let shown = false;
 			if (!this.slideIn) {
-				var x = this.getTranslateX();
+				const x = this.getTranslateX();
 				if (direction === 'right') {
 					shown = this.classList.contains(CLASS_ACTIVE) && x < 0;
 				} else if (direction === 'left') {
@@ -471,7 +473,7 @@
 			return true;
 		},
 		toggle: function(directionOrOffCanvas) {
-			var direction = directionOrOffCanvas;
+			let direction = directionOrOffCanvas;
 			if (directionOrOffCanvas && directionOrOffCanvas.classList) {
 				direction = directionOrOffCanvas.classList.contains(CLASS_OFF_CANVAS_LEFT) ? 'left' : 'right';
 				this.refresh(directionOrOffCanvas);
@@ -483,7 +485,7 @@
 	});
 
 	//hash to offcanvas
-	var findOffCanvasContainer = function(target) {
+	const findOffCanvasContainer = function(target) {
 		parentNode = target.parentNode;
 		if (parentNode) {
 			if (parentNode.classList.contains(CLASS_OFF_CANVAS_WRAP)) {
@@ -496,11 +498,11 @@
 			}
 		}
 	};
-	var handle = function(event, target) {
+	const handle = function(event, target) {
 		if (target.tagName === 'A' && target.hash) {
-			var offcanvas = document.getElementById(target.hash.replace('#', ''));
+			let offcanvas = document.getElementById(target.hash.replace('#', ''));
 			if (offcanvas) {
-				var container = findOffCanvasContainer(offcanvas);
+				const container = findOffCanvasContainer(offcanvas);
 				if (container) {
 					$.targets._container = container;
 					return offcanvas;
@@ -524,7 +526,7 @@
 			return;
 		}
 		//TODO 此处类型的代码后续考虑统一优化(target机制)，现在的实现费力不讨好
-		var target = e.target;
+		let target = e.target;
 		for (; target && target !== document; target = target.parentNode) {
 			if (target.tagName === 'A' && target.hash && target.hash === ('#' + $.targets.offcanvas.id)) {
 				e.detail && e.detail.gesture && e.detail.gesture.preventDefault(); //fixed hashchange
@@ -536,15 +538,15 @@
 	});
 
 	$.fn.offCanvas = function(options) {
-		var offCanvasApis = [];
+		const offCanvasApis = [];
 		this.each(function() {
-			var offCanvasApi = null;
-			var self = this;
+			let offCanvasApi = null;
+			let self = this;
 			//hack old version
 			if (!self.classList.contains(CLASS_OFF_CANVAS_WRAP)) {
 				self = findOffCanvasContainer(self);
 			}
-			var id = self.getAttribute('data-offCanvas');
+			let id = self.getAttribute('data-offCanvas');
 			if (!id) {
 				id = ++$.uuid;
 				$.data[id] = offCanvasApi = new OffCanvas(self, options);

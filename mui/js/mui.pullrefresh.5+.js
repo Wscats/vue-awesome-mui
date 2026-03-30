@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * pullRefresh 5+
  * @param {type} $
@@ -11,17 +13,17 @@
         if (window.__NWin_Enable__ === false) { //不支持多webview，则不用5+下拉刷新
             return;
         }
-        var CLASS_PLUS_PULLREFRESH = $.className('plus-pullrefresh');
-        var CLASS_VISIBILITY = $.className('visibility');
-        var CLASS_HIDDEN = $.className('hidden');
-        var CLASS_BLOCK = $.className('block');
+        const CLASS_PLUS_PULLREFRESH = $.className('plus-pullrefresh');
+        const CLASS_VISIBILITY = $.className('visibility');
+        const CLASS_HIDDEN = $.className('hidden');
+        const CLASS_BLOCK = $.className('block');
 
-        var CLASS_PULL_CAPTION = $.className('pull-caption');
-        var CLASS_PULL_CAPTION_DOWN = $.className('pull-caption-down');
-        var CLASS_PULL_CAPTION_REFRESH = $.className('pull-caption-refresh');
-        var CLASS_PULL_CAPTION_NOMORE = $.className('pull-caption-nomore');
+        const CLASS_PULL_CAPTION = $.className('pull-caption');
+        const CLASS_PULL_CAPTION_DOWN = $.className('pull-caption-down');
+        const CLASS_PULL_CAPTION_REFRESH = $.className('pull-caption-refresh');
+        const CLASS_PULL_CAPTION_NOMORE = $.className('pull-caption-nomore');
 
-        var PlusPullRefresh = $.Class.extend({
+        const PlusPullRefresh = $.Class.extend({
             init: function(element, options) {
                 this.element = element;
                 this.options = options;
@@ -30,7 +32,7 @@
                 this._initPulldownRefreshEvent();
             },
             _init: function() {
-                var self = this;
+                let self = this;
                 //document.addEventListener('plusscrollbottom', this);
                 window.addEventListener('dragup', self);
                 document.addEventListener("plusscrollbottom", self);
@@ -46,9 +48,9 @@
                 }, 100);
             },
             _initPulldownRefreshEvent: function() {
-                var self = this;
+                let self = this;
                 $.plusReady(function() {
-                		if(self.options.down.style == "circle"){
+                		if(self.options.down.style === "circle"){
 	                		//单webview、原生转圈
 	                		self.options.webview = plus.webview.currentWebview();
 						self.options.webview.setPullToRefresh({
@@ -62,15 +64,15 @@
 							self.options.down.callback();
 						});
 	               }else if (self.topPocket && self.options.webviewId) {
-                        var webview = plus.webview.getWebviewById(self.options.webviewId);//子窗口
+                        let webview = plus.webview.getWebviewById(self.options.webviewId);//子窗口
                         if (!webview) {
                             return;
                         }
                         self.options.webview = webview;
-                        var downOptions = self.options.down;
-                        var height = downOptions.height;
+                        const downOptions = self.options.down;
+                        let height = downOptions.height;
                         webview.addEventListener('close', function() {
-                            var attrWebviewId = self.options.webviewId && self.options.webviewId.replace(/\//g, "_"); //替换所有"/" 
+                            let attrWebviewId = self.options.webviewId && self.options.webviewId.replace(/\//g, "_"); //替换所有"/" 
                             self.element.removeAttribute('data-pullrefresh-plus-' + attrWebviewId);
                         });
                         webview.addEventListener("dragBounce", function(e) {
@@ -109,7 +111,7 @@
                 });
             },
             handleEvent: function(e) {
-                var self = this;
+                let self = this;
                 if (self.stopped) {
                     return;
                 }
@@ -125,7 +127,7 @@
             setStopped: function(stopped) { //该方法是子页面调用的
                 this.stopped = !!stopped;
                 //TODO 此处需要设置当前webview的bounce为none,目前5+有BUG
-                var webview = plus.webview.currentWebview();
+                let webview = plus.webview.currentWebview();
                 if (this.stopped) {
                     webview.setStyle({
                         bounce: 'none'
@@ -136,7 +138,7 @@
                         }
                     });
                 } else {
-                    var height = this.options.down.height;
+                    const height = this.options.down.height;
                     webview.setStyle({
                         bounce: 'vertical'
                     });
@@ -151,14 +153,14 @@
                 }
             },
             beginPulldown:function() { 
-            		var self = this;
+            		let self = this;
                 $.plusReady(function() {
                 		//这里延时的目的是为了保证下拉刷新组件初始化完成，后续应该做成有状态的
                 		setTimeout(function () {
-                			if(self.options.down.style == "circle"){//单webview下拉刷新
+                			if(self.options.down.style === "circle"){//单webview下拉刷新
 	                			plus.webview.currentWebview().beginPullToRefresh();
 	                		}else{//双webview模式
-	                			var webview = self.options.webview;
+	                			const webview = self.options.webview;
 	                			if(webview){
 	                				webview.setBounce({
 			                        offset: {
@@ -174,9 +176,9 @@
             		this.beginPulldown();
             },
             _pulldownLoading: function() { //该方法是父页面调用的
-                var self = this;
+                let self = this;
                 $.plusReady(function() {
-                    var childWebview = plus.webview.getWebviewById(self.options.webviewId);
+                    const childWebview = plus.webview.getWebviewById(self.options.webviewId);
                    	childWebview && childWebview.setBounce({
                         offset: {
                             top: self.options.down.height + "px"
@@ -185,7 +187,7 @@
                 });
             },
             endPulldown:function(){
-            		var _wv = plus.webview.currentWebview();
+            		const _wv = plus.webview.currentWebview();
                 //双webview的下拉刷新，需要修改父窗口提示信息
                 if(_wv.parent() && this.options.down.style !== "circle"){
 	                	_wv.parent().evalJS("mui&&mui(document.querySelector('.mui-content')).pullRefresh('" + JSON.stringify({
@@ -199,7 +201,7 @@
            	 	this.endPulldown();
             }, 
             _endPulldownToRefresh: function() { //该方法是父页面调用的
-                var self = this;
+                let self = this;
                 if (self.topPocket && self.options.webview) {
                     self.options.webview.endPullToRefresh(); //下拉刷新所在webview回弹
                     self.loading = false;
@@ -210,7 +212,7 @@
                 }
             },
             beginPullup:function(callback) {//开始上拉加载
-                var self = this;
+                let self = this;
                 if (self.isLoading) return;
                 self.isLoading = true;
                 if (self.pulldown !== false) {
@@ -232,7 +234,7 @@
             		this.beginPullup(callback);
             },
             endPullup:function(finished) {//上拉加载结束
-                var self = this;
+                let self = this;
                 if (self.pullLoading) {
                     self.pullLoading.classList.remove(CLASS_VISIBILITY);
                     self.pullLoading.classList.add(CLASS_HIDDEN);
@@ -290,16 +292,16 @@
             } else {
                 self = this[0];
             }
-            var args = options;
+            const args = options;
             //一个父需要支持多个子下拉刷新
             options = options || {}
             if (typeof options === 'string') {
                 options = $.parseJSON(options);
             };
             !options.webviewId && (options.webviewId = (plus.webview.currentWebview().id || plus.webview.currentWebview().getURL()));
-            var pullRefreshApi = null;
-            var attrWebviewId = options.webviewId && options.webviewId.replace(/\//g, "_"); //替换所有"/"
-            var id = self.getAttribute('data-pullrefresh-plus-' + attrWebviewId);
+            let pullRefreshApi = null;
+            const attrWebviewId = options.webviewId && options.webviewId.replace(/\//g, "_"); //替换所有"/"
+            let id = self.getAttribute('data-pullrefresh-plus-' + attrWebviewId);
             if (!id && typeof args === 'undefined') {
                 return false;
             }

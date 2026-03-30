@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 演示程序当前的 “注册/登录” 等操作，是基于 “本地存储” 完成的
  * 当您要参考这个演示程序进行相关 app 的开发时，
@@ -18,9 +20,9 @@
 		if (loginInfo.password.length < 6) {
 			return callback('密码最短为 6 个字符');
 		}
-		var users = JSON.parse(localStorage.getItem('$users') || '[]');
-		var authed = users.some(function(user) {
-			return loginInfo.account == user.account && loginInfo.password == user.password;
+		let users = JSON.parse(localStorage.getItem('$users') || '[]');
+		const authed = users.some(function(user) {
+			return loginInfo.account === user.account && loginInfo.password === user.password;
 		});
 		if (authed) {
 			return owner.createState(loginInfo.account, callback);
@@ -30,7 +32,7 @@
 	};
 
 	owner.createState = function(name, callback) {
-		var state = owner.getState();
+		let state = owner.getState();
 		state.account = name;
 		state.token = "token123456789";
 		owner.setState(state);
@@ -54,7 +56,7 @@
 		if (!checkEmail(regInfo.email)) {
 			return callback('邮箱地址不合法');
 		}
-		var users = JSON.parse(localStorage.getItem('$users') || '[]');
+		const users = JSON.parse(localStorage.getItem('$users') || '[]');
 		users.push(regInfo);
 		localStorage.setItem('$users', JSON.stringify(users));
 		return callback();
@@ -64,7 +66,7 @@
 	 * 获取当前状态
 	 **/
 	owner.getState = function() {
-		var stateText = localStorage.getItem('$state') || "{}";
+		const stateText = localStorage.getItem('$state') || "{}";
 		return JSON.parse(stateText);
 	};
 
@@ -74,12 +76,12 @@
 	owner.setState = function(state) {
 		state = state || {};
 		localStorage.setItem('$state', JSON.stringify(state));
-		//var settings = owner.getSettings();
+		//let settings = owner.getSettings();
 		//settings.gestures = '';
 		//owner.setSettings(settings);
 	};
 
-	var checkEmail = function(email) {
+	const checkEmail = function(email) {
 		email = email || '';
 		return (email.length > 3 && email.indexOf('@') > -1);
 	};
@@ -107,7 +109,7 @@
 	 * 设置应用本地配置
 	 **/
 	owner.getSettings = function() {
-			var settingsText = localStorage.getItem('$settings') || "{}";
+			const settingsText = localStorage.getItem('$settings') || "{}";
 			return JSON.parse(settingsText);
 		}
 		/**
@@ -118,10 +120,10 @@
 			return true;
 		}
 		if (mui.os.android) {
-			var main = plus.android.runtimeMainActivity();
-			var packageManager = main.getPackageManager();
-			var PackageManager = plus.android.importClass(packageManager)
-			var packageName = {
+			const main = plus.android.runtimeMainActivity();
+			const packageManager = main.getPackageManager();
+			const PackageManager = plus.android.importClass(packageManager)
+			const packageName = {
 				"qq": "com.tencent.mobileqq",
 				"weixin": "com.tencent.mm",
 				"sinaweibo": "com.sina.weibo"
@@ -132,13 +134,13 @@
 		} else {
 			switch (id) {
 				case "qq":
-					var TencentOAuth = plus.ios.import("TencentOAuth");
+					const TencentOAuth = plus.ios.import("TencentOAuth");
 					return TencentOAuth.iphoneQQInstalled();
 				case "weixin":
-					var WXApi = plus.ios.import("WXApi");
+					const WXApi = plus.ios.import("WXApi");
 					return WXApi.isWXAppInstalled()
 				case "sinaweibo":
-					var SinaAPI = plus.ios.import("WeiboSDK");
+					const SinaAPI = plus.ios.import("WeiboSDK");
 					return SinaAPI.isWeiboAppInstalled()
 				default:
 					break;

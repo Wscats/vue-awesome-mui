@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui gesture pinch
  * @param {type} $
@@ -5,9 +7,9 @@
  * @returns {undefined}
  */
 (function($, name) {
-	var handle = function(event, touch) {
-		var options = this.options;
-		var session = $.gestures.session;
+	const handle = function(event, touch) {
+		const options = this.options;
+		const session = $.gestures.session;
 		switch (event.type) {
 			case $.EVENT_START:
 				break;
@@ -21,10 +23,10 @@
 						$.trigger(session.target, name + 'start', touch);
 					}
 					$.trigger(session.target, name, touch);
-					var scale = touch.scale;
-					var rotation = touch.rotation;
-					var lastScale = typeof touch.lastScale === 'undefined' ? 1 : touch.lastScale;
-					var scaleDiff = 0.000000000001; //防止scale与lastScale相等，不触发事件的情况。
+					const scale = touch.scale;
+					const rotation = touch.rotation;
+					let lastScale = typeof touch.lastScale === 'undefined' ? 1 : touch.lastScale;
+					const scaleDiff = 0.000000000001; //防止scale与lastScale相等，不触发事件的情况。
 					if (scale > lastScale) { //out
 						lastScale = scale - scaleDiff;
 						$.trigger(session.target, name + 'out', touch);

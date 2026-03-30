@@ -1,21 +1,23 @@
+'use strict';
+
 (function($, feedback, window, document) {
 
 	/*************** 环信配置开始 ****************/
 	//以后信息更改后，需卸载 “调试 app” 重新调用运行
-	var APP_KEY = 'dcloudio#mui';
-	var CUSTOM_ID = 'customer';
+	const APP_KEY = 'dcloudio#mui';
+	const CUSTOM_ID = 'customer';
 	/*************** 环信配置结束 ****************/
 
 	//一组 “常量”
-	var PASSWORD = 'pass01!';
-	var LOCAL_STORE_KEY = 'mui://user';
-	var USER_PREFIX = 'mui-user-';
+	const PASSWORD = 'pass01!';
+	const LOCAL_STORE_KEY = 'mui://user';
+	const USER_PREFIX = 'mui-user-';
 
 
 	/**
 	 * 生成一个 IM 用户名
 	 **/
-	var createUsername = function() {
+	const createUsername = function() {
 		return USER_PREFIX + (new Date()).getTime();
 	};
 
@@ -24,18 +26,18 @@
 	 * 否则，注册新的用户
 	 **/
 	feedback.getUser = function(callback) {
-		var storeUserText = localStorage.getItem(LOCAL_STORE_KEY);
+		const storeUserText = localStorage.getItem(LOCAL_STORE_KEY);
 		if (storeUserText) {
 			if (callback) callback(JSON.parse(storeUserText));
 			return;
 		}
-		var newUsername = createUsername();
+		const newUsername = createUsername();
 		Easemob.im.Helper.registerUser({
 			username: newUsername,
 			password: PASSWORD,
 			appKey: APP_KEY,
 			success: function(result) {
-				var userInfo = {
+				const userInfo = {
 					username: newUsername,
 					password: PASSWORD
 				};
@@ -53,7 +55,7 @@
 	 **/
 	feedback.login = function(callback) {
 		feedback.getUser(function(user) {
-			var conn = new Easemob.im.Connection();
+			const conn = new Easemob.im.Connection();
 			conn.init({
 				onOpened: function() {
 					//alert("成功登录");
@@ -75,7 +77,7 @@
 	feedback.send = function(content, callback) {
 		feedback.login(function(user, conn) {
 			//发送文本消息
-			var msgText = '问题:' + content.question;
+			const msgText = '问题:' + content.question;
 			if (content.contact) {
 				msgText += '; 联系方式:' + content.contact + ';'
 			}
@@ -90,8 +92,8 @@
 				return;
 			}
 			//如果有截图
-			var sendImageCount = 0;
-			var hasError = false;
+			let sendImageCount = 0;
+			let hasError = false;
 			content.images.forEach(function(fileInputId) {
 				//alert(fileInputId)
 				conn.sendPicture({

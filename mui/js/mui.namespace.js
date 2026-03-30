@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui namespace(optimization)
  * @param {type} $

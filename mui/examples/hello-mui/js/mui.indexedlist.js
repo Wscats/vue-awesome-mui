@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * IndexedList
  * 类似联系人应用中的联系人列表，可以按首字母分组
@@ -9,16 +11,16 @@
 
 (function($, window, document) {
 
-	var classSelector = function(name) {
+	const classSelector = function(name) {
 		return '.' + $.className(name);
 	}
 
-	var IndexedList = $.IndexedList = $.Class.extend({
+	let IndexedList = $.IndexedList = $.Class.extend({
 		/**
 		 * 通过 element 和 options 构造 IndexedList 实例
 		 **/
 		init: function(holder, options) {
-			var self = this;
+			let self = this;
 			self.options = options || {};
 			self.box = holder;
 			if (!self.box) {
@@ -30,14 +32,14 @@
 			self.bindEvent();
 		},
 		createDom: function() {
-			var self = this;
+			let self = this;
 			self.el = self.el || {};
 			//styleForSearch 用于搜索，此方式能在数据较多时获取很好的性能
 			self.el.styleForSearch = document.createElement('style');
 			(document.head || document.body).appendChild(self.el.styleForSearch);
 		},
 		findElements: function() {
-			var self = this;
+			let self = this;
 			self.el = self.el || {};
 			self.el.search = self.box.querySelector(classSelector('indexed-list-search'));
 			self.el.searchInput = self.box.querySelector(classSelector('indexed-list-search-input'));
@@ -50,38 +52,38 @@
 			self.el.alert = self.box.querySelector(classSelector('indexed-list-alert'));
 		},
 		caleLayout: function() {
-			var self = this;
-			var withoutSearchHeight = (self.box.offsetHeight - self.el.search.offsetHeight) + 'px';
+			let self = this;
+			const withoutSearchHeight = (self.box.offsetHeight - self.el.search.offsetHeight) + 'px';
 			self.el.bar.style.height = withoutSearchHeight;
 			self.el.inner.style.height = withoutSearchHeight;
-			var barItemHeight = ((self.el.bar.offsetHeight - 40) / self.el.barItems.length) + 'px';
+			const barItemHeight = ((self.el.bar.offsetHeight - 40) / self.el.barItems.length) + 'px';
 			self.el.barItems.forEach(function(item) {
 				item.style.height = barItemHeight;
 				item.style.lineHeight = barItemHeight;
 			});
 		},
 		scrollTo: function(group) {
-			var self = this;
-			var groupElement = self.el.inner.querySelector('[data-group="' + group + '"]');
+			let self = this;
+			const groupElement = self.el.inner.querySelector('[data-group="' + group + '"]');
 			if (!groupElement || (self.hiddenGroups && self.hiddenGroups.indexOf(groupElement) > -1)) {
 				return;
 			}
 			self.el.inner.scrollTop = groupElement.offsetTop;
 		},
 		bindBarEvent: function() {
-			var self = this;
-			var pointElement = null;
-			var findStart = function(event) {
+			let self = this;
+			let pointElement = null;
+			const findStart = function(event) {
 				if (pointElement) {
 					pointElement.classList.remove('active');
 					pointElement = null;
 				}
 				self.el.bar.classList.add('active');
-				var point = event.changedTouches ? event.changedTouches[0] : event;
+				const point = event.changedTouches ? event.changedTouches[0] : event;
 				pointElement = document.elementFromPoint(point.pageX, point.pageY);
 				if (pointElement) {
-					var group = pointElement.innerText;
-					if (group && group.length == 1) {
+					const group = pointElement.innerText;
+					if (group && group.length === 1) {
 						pointElement.classList.add('active');
 						self.el.alert.innerText = group;
 						self.el.alert.classList.add('active');
@@ -90,7 +92,7 @@
 				}
 				event.preventDefault();
 			};
-			var findEnd = function(event) {
+			const findEnd = function(event) {
 				self.el.alert.classList.remove('active');
 				self.el.bar.classList.remove('active');
 				if (pointElement) {
@@ -112,15 +114,15 @@
 			}, false);
 		},
 		search: function(keyword) {
-			var self = this;
+			let self = this;
 			keyword = (keyword || '').toLowerCase();
-			var selectorBuffer = [];
-			var groupIndex = -1;
-			var itemCount = 0;
-			var liArray = self.el.liArray;
-			var itemTotal = liArray.length;
+			const selectorBuffer = [];
+			let groupIndex = -1;
+			let itemCount = 0;
+			const liArray = self.el.liArray;
+			const itemTotal = liArray.length;
 			self.hiddenGroups = [];
-			var checkGroup = function(currentIndex, last) {
+			const checkGroup = function(currentIndex, last) {
 				if (itemCount >= currentIndex - groupIndex - (last ? 0 : 1)) {
 					selectorBuffer.push(classSelector('indexed-list-inner li') + ':nth-child(' + (groupIndex + 1) + ')');
 					self.hiddenGroups.push(liArray[groupIndex]);
@@ -129,13 +131,13 @@
 				itemCount = 0;
 			}
 			liArray.forEach(function(item) {
-				var currentIndex = liArray.indexOf(item);
+				const currentIndex = liArray.indexOf(item);
 				if (item.classList.contains($.className('indexed-list-group'))) {
 					checkGroup(currentIndex, false);
 				} else {
-					var text = (item.innerText || '').toLowerCase();
-					var value = (item.getAttribute('data-value') || '').toLowerCase();
-					var tags = (item.getAttribute('data-tags') || '').toLowerCase();
+					const text = (item.innerText || '').toLowerCase();
+					const value = (item.getAttribute('data-value') || '').toLowerCase();
+					const tags = (item.getAttribute('data-tags') || '').toLowerCase();
 					if (keyword && text.indexOf(keyword) < 0 &&
 						value.indexOf(keyword) < 0 &&
 						tags.indexOf(keyword) < 0) {
@@ -158,9 +160,9 @@
 			}
 		},
 		bindSearchEvent: function() {
-			var self = this;
+			let self = this;
 			self.el.searchInput.addEventListener('input', function() {
-				var keyword = this.value;
+				const keyword = this.value;
 				self.search(keyword);
 			}, false);
 			$(self.el.search).on('tap', classSelector('icon-clear'), function() {
@@ -168,7 +170,7 @@
 			}, false);
 		},
 		bindEvent: function() {
-			var self = this;
+			const self = this;
 			self.bindBarEvent();
 			self.bindSearchEvent();
 		}

@@ -1,8 +1,10 @@
+'use strict';
+
 (function($, window, document) {
-	var mid = 0;
+	let mid = 0;
 	$.Lazyload = $.Class.extend({
 		init: function(element, options) {
-			var self = this;
+			let self = this;
 			this.container = this.element = element;
 			//			placeholder //默认图片
 			this.options = $.extend({
@@ -33,9 +35,9 @@
 			this.resume();
 		},
 		_initLoadFn: function() {
-			var self = this;
+			let self = this;
 			self._loadFn = this._buffer(function() { // 加载延迟项
-				if(self.options.autoDestroy && self._counter == 0 && $.isEmptyObject(self._callbacks)) {
+				if(self.options.autoDestroy && self._counter === 0 && $.isEmptyObject(self._callbacks)) {
 					self.destroy();
 				}
 				self._loadItems();
@@ -75,9 +77,9 @@
 		},
 		_buffer: function(fn, ms, context) {
 			var timer;
-			var lastStart = 0;
-			var lastEnd = 0;
-			var ms = ms || 150;
+			let lastStart = 0;
+			let lastEnd = 0;
+			const ms = ms || 150;
 
 			function run() {
 				if(timer) {
@@ -117,7 +119,7 @@
 			if(c !== undefined) {
 				vh = c.offsetHeight;
 				vw = c.offsetWidth;
-				var offset = $.offset(c);
+				const offset = $.offset(c);
 				left = offset.left;
 				top = offset.top;
 			} else {
@@ -127,18 +129,18 @@
 				top = window.pageYOffset;
 			}
 
-			var diff = this.options.diff;
+			const diff = this.options.diff;
 
-			var diffX = diff === false ? vw : diff;
-			var diffX0 = 0;
-			var diffX1 = diffX;
+			const diffX = diff === false ? vw : diff;
+			const diffX0 = 0;
+			const diffX1 = diffX;
 
-			var diffY = diff === false ? vh : diff;
-			var diffY0 = 0;
-			var diffY1 = diffY;
+			const diffY = diff === false ? vh : diff;
+			const diffY0 = 0;
+			const diffY1 = diffY;
 
-			var right = left + vw;
-			var bottom = top + vh;
+			let right = left + vw;
+			let bottom = top + vh;
 
 			left -= diffX0;
 			right += diffX1;
@@ -164,7 +166,7 @@
 			return el._mui_lazy_height = el.offsetHeight;
 		},
 		_isCross: function(r1, r2) {
-			var r = {};
+			const r = {};
 			r.top = Math.max(r1.top, r2.top);
 			r.bottom = Math.min(r1.bottom, r2.bottom);
 			r.left = Math.max(r1.left, r2.left);
@@ -176,12 +178,12 @@
 			if(!elem.offsetWidth) {
 				return false;
 			}
-			var elemOffset = $.offset(elem);
-			var inContainer = true;
+			const elemOffset = $.offset(elem);
+			let inContainer = true;
 			var inWin;
-			var left = elemOffset.left;
-			var top = elemOffset.top;
-			var elemRegion = {
+			const left = elemOffset.left;
+			const top = elemOffset.top;
+			const elemRegion = {
 				left: left,
 				top: top,
 				right: left + this._cacheWidth(elem),
@@ -198,7 +200,7 @@
 			return inContainer && inWin;
 		},
 		_loadItems: function() {
-			var self = this;
+			let self = this;
 			// container is display none
 			if(self._containerIsNotDocument && !self.container.offsetWidth) {
 				return;
@@ -213,14 +215,14 @@
 			});
 		},
 		_loadItem: function(key, callback) {
-			var self = this;
+			let self = this;
 			callback = callback || self._callbacks[key];
 			if(!callback) {
 				return true;
 			}
-			var el = callback.el;
-			var remove = false;
-			var fn = callback.fn;
+			const el = callback.el;
+			let remove = false;
+			const fn = callback.fn;
 			if(self.options.force || self._elementInViewport(el, self._windowRegion, self._containerRegion)) {
 				try {
 					remove = fn.call(self, el, key);
@@ -236,13 +238,13 @@
 			return remove;
 		},
 		addCallback: function(el, fn) {
-			var self = this;
-			var callbacks = self._callbacks;
-			var callback = {
+			let self = this;
+			const callbacks = self._callbacks;
+			const callback = {
 				el: el,
 				fn: fn || $.noop
 			};
-			var key = ++this._key;
+			const key = ++this._key;
 			callbacks[key] = callback;
 
 			// add 立即检测，防止首屏元素问题
@@ -253,9 +255,9 @@
 			}
 		},
 		addElements: function(elements) {
-			var self = this;
+			let self = this;
 			self._counter = self._counter || 0;
-			var lazyloads = [];
+			let lazyloads = [];
 			if(!elements && self.options.selector) {
 				lazyloads = self.container.querySelectorAll(self.options.selector);
 			} else {
@@ -289,7 +291,7 @@
 			this._loadFn();
 		},
 		pause: function() {
-			var load = this._loadFn;
+			let load = this._loadFn;
 			if(this._destroyed) {
 				return;
 			}
@@ -303,7 +305,7 @@
 			}
 		},
 		resume: function() {
-			var load = this._loadFn;
+			const load = this._loadFn;
 			if(this._destroyed) {
 				return;
 			}
@@ -317,7 +319,7 @@
 			}
 		},
 		destroy: function() {
-			var self = this;
+			const self = this;
 			self.pause();
 			self._callbacks = {};
 			$.trigger(this.container, 'destroy', self);

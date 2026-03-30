@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui fixed classList
  * @param {type} document
@@ -8,10 +10,10 @@
 
         Object.defineProperty(HTMLElement.prototype, 'classList', {
             get: function() {
-                var self = this;
+                const self = this;
                 function update(fn) {
                     return function(value) {
-                        var classes = self.className.split(/\s+/),
+                        const classes = self.className.split(/\s+/),
                                 index = classes.indexOf(value);
 
                         fn(classes, index, value);
@@ -19,7 +21,7 @@
                     };
                 }
 
-                var ret = {
+                const ret = {
                     add: update(function(classes, index, value) {
                         ~index || classes.push(value);
                     }),

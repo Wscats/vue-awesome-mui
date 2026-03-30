@@ -1,10 +1,12 @@
+'use strict';
+
 (function($, window) {
-	var CLASS_ACTIVE = $.className('active');
+	const CLASS_ACTIVE = $.className('active');
 	/**
 	 * 自动消失提示框
 	 */
 	$.toast = function(message,options) {
-		var durations = {
+		const durations = {
 		    'long': 3500,
 		    'short': 2000
 		};
@@ -32,7 +34,7 @@
 		    if (!duration) {
 		        duration = durations['short'];
 		    }
-			var toast = document.createElement('div');
+			let toast = document.createElement('div');
 			toast.classList.add($.className('toast-container'));
 			toast.innerHTML = '<div class="' + $.className('toast-message') + '">' + message + '</div>';
 			toast.addEventListener('webkitTransitionEnd', function() {

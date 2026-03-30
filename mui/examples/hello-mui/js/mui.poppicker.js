@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 弹出选择列表插件
  * 此组件依赖 listpcker ，请在页面中先引入 mui.picker.css + mui.picker.js
@@ -24,7 +26,7 @@
 		return [].slice.call($.__create_dom_div__.childNodes);
 	};
 
-	var panelBuffer = '<div class="mui-poppicker">\
+	const panelBuffer = '<div class="mui-poppicker">\
 		<div class="mui-poppicker-header">\
 			<button class="mui-btn mui-poppicker-btn-cancel">取消</button>\
 			<button class="mui-btn mui-btn-blue mui-poppicker-btn-ok">确定</button>\
@@ -34,7 +36,7 @@
 		</div>\
 	</div>';
 
-	var pickerBuffer = '<div class="mui-picker">\
+	const pickerBuffer = '<div class="mui-picker">\
 		<div class="mui-picker-inner">\
 			<div class="mui-pciker-rule mui-pciker-rule-ft"></div>\
 			<ul class="mui-pciker-list">\
@@ -44,10 +46,10 @@
 	</div>';
 
 	//定义弹出选择器类
-	var PopPicker = $.PopPicker = $.Class.extend({
+	let PopPicker = $.PopPicker = $.Class.extend({
 		//构造函数
 		init: function(options) {
-			var self = this;
+			let self = this;
 			self.options = options || {};
 			self.options.buttons = self.options.buttons || ['取消', '确定'];
 			self.panel = $.dom(panelBuffer)[0];
@@ -63,7 +65,7 @@
 			}, false);
 			self.ok.addEventListener('tap', function(event) {
 				if (self.callback) {
-					var rs = self.callback(self.getSelectedItems());
+					const rs = self.callback(self.getSelectedItems());
 					if (rs !== false) {
 						self.hide();
 					}
@@ -82,21 +84,21 @@
 			}, false);
 		},
 		_createPicker: function() {
-			var self = this;
-			var layer = self.options.layer || 1;
-			var width = (100 / layer) + '%';
+			let self = this;
+			const layer = self.options.layer || 1;
+			let width = (100 / layer) + '%';
 			self.pickers = [];
-			for (var i = 1; i <= layer; i++) {
-				var pickerElement = $.dom(pickerBuffer)[0];
+			for (let i = 1; i <= layer; i++) {
+				const pickerElement = $.dom(pickerBuffer)[0];
 				pickerElement.style.width = width;
 				self.body.appendChild(pickerElement);
-				var picker = $(pickerElement).picker();
+				let picker = $(pickerElement).picker();
 				self.pickers.push(picker);
 				pickerElement.addEventListener('change', function(event) {
-					var nextPickerElement = this.nextSibling;
+					const nextPickerElement = this.nextSibling;
 					if (nextPickerElement && nextPickerElement.picker) {
-						var eventData = event.detail || {};
-						var preItem = eventData.item || {};
+						const eventData = event.detail || {};
+						const preItem = eventData.item || {};
 						nextPickerElement.picker.setItems(preItem.children);
 					}
 				}, false);
@@ -104,23 +106,23 @@
 		},
 		//填充数据
 		setData: function(data) {
-			var self = this;
+			let self = this;
 			data = data || [];
 			self.pickers[0].setItems(data);
 		},
 		//获取选中的项（数组）
 		getSelectedItems: function() {
-			var self = this;
-			var items = [];
+			let self = this;
+			const items = [];
 			for (var i in self.pickers) {
-				var picker = self.pickers[i];
+				const picker = self.pickers[i];
 				items.push(picker.getSelectedItem() || {});
 			}
 			return items;
 		},
 		//显示
 		show: function(callback) {
-			var self = this;
+			let self = this;
 			self.callback = callback;
 			self.mask.show();
 			document.body.classList.add($.className('poppicker-active-for-page'));
@@ -133,7 +135,7 @@
 		},
 		//隐藏
 		hide: function() {
-			var self = this;
+			let self = this;
 			if (self.disposed) return;
 			self.panel.classList.remove($.className('active'));
 			self.mask.close();
@@ -142,7 +144,7 @@
 			$.back=self.__back;
 		},
 		dispose: function() {
-			var self = this;
+			const self = this;
 			self.hide();
 			setTimeout(function() {
 				self.panel.parentNode.removeChild(self.panel);

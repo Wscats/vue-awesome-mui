@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui target(action>popover>modal>tab>toggle)
  */
@@ -28,12 +30,12 @@
 		return $.targetHandles;
 	};
 	window.addEventListener($.EVENT_START, function(event) {
-		var target = event.target;
-		var founds = {};
+		let target = event.target;
+		const founds = {};
 		for (; target && target !== document; target = target.parentNode) {
-			var isFound = false;
+			let isFound = false;
 			$.each($.targetHandles, function(index, targetHandle) {
-				var name = targetHandle.name;
+				let name = targetHandle.name;
 				if (!isFound && !founds[name] && targetHandle.hasOwnProperty('handle')) {
 					$.targets[name] = targetHandle.handle(event, target);
 					if ($.targets[name]) {
@@ -55,12 +57,12 @@
 		}
 	});
 	window.addEventListener('click', function(event) { //解决touch与click的target不一致的问题(比如链接边缘点击时，touch的target为html，而click的target为A)
-		var target = event.target;
-		var isFound = false;
+		let target = event.target;
+		let isFound = false;
 		for (; target && target !== document; target = target.parentNode) {
 			if (target.tagName === 'A') {
 				$.each($.targetHandles, function(index, targetHandle) {
-					var name = targetHandle.name;
+					const name = targetHandle.name;
 					if (targetHandle.hasOwnProperty('handle')) {
 						if (targetHandle.handle(event, target)) {
 							isFound = true;

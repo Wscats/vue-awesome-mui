@@ -1,10 +1,12 @@
+'use strict';
+
 /**
  * mui.init 5+
  * @param {type} $
  * @returns {undefined}
  */
 (function($) {
-	var defaultOptions = {
+	const defaultOptions = {
 		swipeBack: false,
 		preloadPages: [], //5+ lazyLoad webview
 		preloadLimit: 10, //预加载窗口的数量限制(一旦超出，先进先出)
@@ -56,7 +58,7 @@
 	};
 
 	//默认页面动画
-	var defaultShow = {
+	let defaultShow = {
 		event:"titleUpdate",
 		autoShow: true,
 		duration: 300,
@@ -156,30 +158,30 @@
 			$.trigger(document, eventType, data);
 		}
 	};
-	var triggerPreload = function(webview) {
+	const triggerPreload = function(webview) {
 		if(!webview.preloaded) { //保证仅触发一次
 			$.fire(webview, 'preload');
-			var list = webview.children();
-			for(var i = 0; i < list.length; i++) {
+			let list = webview.children();
+			for(let i = 0; i < list.length; i++) {
 				$.fire(list[i], 'preload');
 			}
 			webview.preloaded = true;
 		}
 	};
-	var trigger = function(webview, eventType, timeChecked) {
+	const trigger = function(webview, eventType, timeChecked) {
 		if(timeChecked) {
 			if(!webview[eventType + 'ed']) {
 				$.fire(webview, eventType);
-				var list = webview.children();
-				for(var i = 0; i < list.length; i++) {
+				let list = webview.children();
+				for(let i = 0; i < list.length; i++) {
 					$.fire(list[i], eventType);
 				}
 				webview[eventType + 'ed'] = true;
 			}
 		} else {
 			$.fire(webview, eventType);
-			var list = webview.children();
-			for(var i = 0; i < list.length; i++) {
+			const list = webview.children();
+			for(let i = 0; i < list.length; i++) {
 				$.fire(list[i], eventType);
 			}
 		}
@@ -218,8 +220,8 @@
 		}
 
 		options = options || {};
-		var params = options.params || {};
-		var webview = null,
+		let params = options.params || {};
+		let webview = null,
 			webviewCache = null,
 			nShow, nWaiting;
 
@@ -252,7 +254,7 @@
 			}
 
 			//显示waiting
-			var waitingConfig = $.waitingOptions(options.waiting);
+			let waitingConfig = $.waitingOptions(options.waiting);
 			if(waitingConfig.autoShow) {
 				nWaiting = plus.nativeUI.showWaiting(waitingConfig.title, waitingConfig.options);
 			}
@@ -268,7 +270,7 @@
 			//显示
 			nShow = $.showOptions(options.show);
 			if(nShow.autoShow) {
-				var showWebview = function() {
+				const showWebview = function() {
 					//关闭等待框
 					if(nWaiting) {
 						nWaiting.close();
@@ -291,8 +293,8 @@
 
 	$.openWindowWithTitle = function(options, titleConfig) {
 		options = options || {};
-		var url = options.url;
-		var id = options.id || url;
+		const url = options.url;
+		let id = options.id || url;
 
 		if(!$.os.plus) {
 			//TODO 先临时这么处理：手机上顶层跳，PC上parent跳
@@ -307,8 +309,8 @@
 			return;
 		}
 
-		var params = options.params || {};
-		var webview = null,
+		const params = options.params || {};
+		let webview = null,
 			webviewCache = null,
 			nShow, nWaiting;
 
@@ -341,7 +343,7 @@
 			}
 
 			//显示waiting
-			var waitingConfig = $.waitingOptions(options.waiting);
+			const waitingConfig = $.waitingOptions(options.waiting);
 			if(waitingConfig.autoShow) {
 				nWaiting = plus.nativeUI.showWaiting(waitingConfig.title, waitingConfig.options);
 			}
@@ -356,8 +358,8 @@
 
 			if(titleConfig) { //处理原生头
 				$.extend(true, $.options.titleConfig, titleConfig);
-				var tid = $.options.titleConfig.id ? $.options.titleConfig.id : id + "_title";
-				var view = new plus.nativeObj.View(tid, {
+				const tid = $.options.titleConfig.id ? $.options.titleConfig.id : id + "_title";
+				const view = new plus.nativeObj.View(tid, {
 					top: 0,
 					height: $.options.titleConfig.height,
 					width: "100%",
@@ -365,7 +367,7 @@
 					position: "dock"
 				});
 				view.drawRect($.options.titleConfig.backgroundColor); //绘制背景色
-				var _b = parseInt($.options.titleConfig.height) - 1;
+				const _b = parseInt($.options.titleConfig.height) - 1;
 				view.drawRect($.options.titleConfig.bottomBorderColor, {
 					top: _b + "px",
 					left: "0px"
@@ -373,24 +375,24 @@
 
 				//绘制文字
 				if($.options.titleConfig.title.text){
-					var _title = $.options.titleConfig.title;
+					const _title = $.options.titleConfig.title;
 					view.drawText(_title.text,_title.position , _title.styles);
 				}
 				
 				//返回图标绘制
-				var _back = $.options.titleConfig.back;
-				var backClick = null;
+				const _back = $.options.titleConfig.back;
+				let backClick = null;
 				//优先字体
 
 				//其次是图片
-				var _backImage = _back.image;
+				const _backImage = _back.image;
 				if(_backImage.base64Data || _backImage.imgSrc) {
 					//TODO 此处需要处理百分比的情况
 					backClick = {
 						left:parseInt(_backImage.position.left),
 						right:parseInt(_backImage.position.left) + parseInt(_backImage.position.width)
 					};
-					var bitmap = new plus.nativeObj.Bitmap(id + "_back");
+					const bitmap = new plus.nativeObj.Bitmap(id + "_back");
 					if(_backImage.base64Data) { //优先base64编码字符串
 						bitmap.loadBase64Data(_backImage.base64Data);
 					} else { //其次加载图片文件
@@ -408,7 +410,7 @@
 				});
 				view.interceptTouchEvent(true);
 				view.addEventListener("click", function(e) {
-					var x = e.clientX;
+					const x = e.clientX;
 					
 					//返回按钮点击
 					if(backClick&& x > backClick.left && x < backClick.right){
@@ -450,7 +452,7 @@
 		if(!window.plus) {
 			return;
 		}
-		var id = options.id || options.url;
+		let id = options.id || options.url;
 		var webview;
 		if(options.preload) {
 			if($.webviews[id] && $.webviews[id].webview.getURL()) { //已经cache
@@ -468,9 +470,9 @@
 					}, options.extras));
 					if(options.subpages) {
 						$.each(options.subpages, function(index, subpage) {
-							var subpageId = subpage.id || subpage.url;
+							let subpageId = subpage.id || subpage.url;
 							if(subpageId) { //过滤空对象
-								var subWebview = plus.webview.getWebviewById(subpageId);
+								let subWebview = plus.webview.getWebviewById(subpageId);
 								if(!subWebview) { //如果该webview不存在，则创建
 									subWebview = plus.webview.create(subpage.url, subpageId, $.windowOptions(subpage.styles), $.extend({
 										preload: true
@@ -491,16 +493,16 @@
 				afterShowMethodName: options.afterShowMethodName //就不应该用evalJS。应该是通过事件消息通讯
 			};
 			//索引该预加载窗口
-			var preloads = $.data.preloads;
-			var index = preloads.indexOf(id);
+			let preloads = $.data.preloads;
+			const index = preloads.indexOf(id);
 			if(~index) { //删除已存在的(变相调整插入位置)
 				preloads.splice(index, 1);
 			}
 			preloads.push(id);
 			if(preloads.length > $.options.preloadLimit) {
 				//先进先出
-				var first = $.data.preloads.shift();
-				var webviewCache = $.webviews[first];
+				const first = $.data.preloads.shift();
+				const webviewCache = $.webviews[first];
 				if(webviewCache && webviewCache.webview) {
 					//需要将自己打开的所有页面，全部close；
 					//关闭该预加载webview	
@@ -514,8 +516,8 @@
 				webview = plus.webview.create(options.url, id, $.windowOptions(options.styles), options.extras);
 				if(options.subpages) {
 					$.each(options.subpages, function(index, subpage) {
-						var subpageId = subpage.id || subpage.url;
-						var subWebview = plus.webview.getWebviewById(subpageId);
+						const subpageId = subpage.id || subpage.url;
+						let subWebview = plus.webview.getWebviewById(subpageId);
 						if(!subWebview) {
 							subWebview = plus.webview.create(subpage.url, subpageId, $.windowOptions(subpage.styles), subpage.extras);
 						}
@@ -542,11 +544,11 @@
 	 *关闭当前webview打开的所有webview；
 	 */
 	$.closeOpened = function(webview) {
-		var opened = webview.opened();
+		const opened = webview.opened();
 		if(opened) {
-			for(var i = 0, len = opened.length; i < len; i++) {
-				var openedWebview = opened[i];
-				var open_open = openedWebview.opened();
+			for(let i = 0, len = opened.length; i < len; i++) {
+				const openedWebview = opened[i];
+				const open_open = openedWebview.opened();
 				if(open_open && open_open.length > 0) {
 					//关闭打开的webview
 					$.closeOpened(openedWebview);
@@ -590,7 +592,7 @@
 		if(!window.plus) {
 			return;
 		}
-		var id = options.id || options.url;
+		const id = options.id || options.url;
 		var webview;
 		if(!$.webviews[id]) { //保证执行一遍
 			//TODO 这里也有隐患，比如某个webview不是作为subpage创建的，而是作为target webview的话；
@@ -623,8 +625,8 @@
 		name: '5+',
 		index: 100,
 		handle: function() {
-			var options = $.options;
-			var subpages = options.subpages || [];
+			const options = $.options;
+			const subpages = options.subpages || [];
 			if($.os.plus) {
 				$.plusReady(function() {
 					//TODO  这里需要判断一下，最好等子窗口加载完毕后，再调用主窗口的show方法；
@@ -646,9 +648,9 @@
 					}
 					if($.os.android && parseFloat($.os.version) < 4.4) {
 						//解决Android平台4.4版本以下，resume后，父窗体标题延迟渲染的问题；
-						if(plus.webview.currentWebview().parent() == null) {
+						if(plus.webview.currentWebview().parent() === null) {
 							document.addEventListener("resume", function() {
-								var body = document.body;
+								const body = document.body;
 								body.style.display = 'none';
 								setTimeout(function() {
 									body.style.display = '';
@@ -660,13 +662,13 @@
 			} else {
 				//已支持iframe嵌入
 				//				if (subpages.length > 0) {
-				//					var err = document.createElement('div');
+				//					const err = document.createElement('div');
 				//					err.className = 'mui-error';
 				//					//文字描述
-				//					var span = document.createElement('span');
+				//					const span = document.createElement('span');
 				//					span.innerHTML = '在该浏览器下，不支持创建子页面，具体参考';
 				//					err.appendChild(span);
-				//					var a = document.createElement('a');
+				//					const a = document.createElement('a');
 				//					a.innerHTML = '"mui框架适用场景"';
 				//					a.href = 'http://ask.dcloud.net.cn/article/113';
 				//					err.appendChild(a);
@@ -680,7 +682,7 @@
 	});
 	window.addEventListener('preload', function() {
 		//处理预加载部分
-		var webviews = $.options.preloadPages || [];
+		const webviews = $.options.preloadPages || [];
 		$.plusReady(function() {
 			$.each(webviews, function(index, webview) {
 				$.createWindow($.extend(webview, {

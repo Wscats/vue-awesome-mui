@@ -1,20 +1,22 @@
+'use strict';
+
 (function($, window) {
-	var CLASS_ZOOM = $.className('zoom');
-	var CLASS_ZOOM_SCROLLER = $.className('zoom-scroller');
+	const CLASS_ZOOM = $.className('zoom');
+	const CLASS_ZOOM_SCROLLER = $.className('zoom-scroller');
 
-	var SELECTOR_ZOOM = '.' + CLASS_ZOOM;
-	var SELECTOR_ZOOM_SCROLLER = '.' + CLASS_ZOOM_SCROLLER;
+	const SELECTOR_ZOOM = '.' + CLASS_ZOOM;
+	const SELECTOR_ZOOM_SCROLLER = '.' + CLASS_ZOOM_SCROLLER;
 
-	var EVENT_PINCH_START = 'pinchstart';
-	var EVENT_PINCH = 'pinch';
-	var EVENT_PINCH_END = 'pinchend';
+	let EVENT_PINCH_START = 'pinchstart';
+	let EVENT_PINCH = 'pinch';
+	let EVENT_PINCH_END = 'pinchend';
 	if ('ongesturestart' in window) {
 		EVENT_PINCH_START = 'gesturestart';
 		EVENT_PINCH = 'gesturechange';
 		EVENT_PINCH_END = 'gestureend';
 	}
 	$.Zoom = function(element, options) {
-		var zoom = this;
+		let zoom = this;
 
 		zoom.options = $.extend($.Zoom.defaults, options);
 
@@ -33,8 +35,8 @@
 		};
 
 		zoom.initEvents = function(detach) {
-			var action = detach ? 'removeEventListener' : 'addEventListener';
-			var target = zoom.scroller;
+			const action = detach ? 'removeEventListener' : 'addEventListener';
+			const target = zoom.scroller;
 
 			target[action](EVENT_PINCH_START, zoom.onPinchstart);
 			target[action](EVENT_PINCH, zoom.onPinch);
@@ -86,7 +88,7 @@
 		};
 
 		// Gestures
-		var scale = 1,
+		let scale = 1,
 			currentScale = 1,
 			isScaling = false,
 			isGesturing = false;
@@ -130,11 +132,11 @@
 			} else {
 				scale = currentScale = zoom.options.maxZoom;
 				if (position) {
-					var offset = $.offset(zoom.zoomer);
-					var top = offset.top;
-					var left = offset.left;
-					var offsetX = (position.x - left) * scale;
-					var offsetY = (position.y - top) * scale;
+					const offset = $.offset(zoom.zoomer);
+					const top = offset.top;
+					const left = offset.left;
+					let offsetX = (position.x - left) * scale;
+					let offsetY = (position.y - top) * scale;
 					this._cal();
 					if (offsetX >= imageMaxX && offsetX <= (imageMaxX + wrapperWidth)) { //center
 						offsetX = imageMaxX - offsetX + wrapperWidth / 2;
@@ -165,8 +167,8 @@
 			wrapperHeight = zoom.wrapper.offsetHeight;
 			imageWidth = zoom.zoomer.offsetWidth;
 			imageHeight = zoom.zoomer.offsetHeight;
-			var scaledWidth = imageWidth * scale;
-			var scaledHeight = imageHeight * scale;
+			let scaledWidth = imageWidth * scale;
+			let scaledHeight = imageHeight * scale;
 			imageMinX = Math.min((wrapperWidth / 2 - scaledWidth / 2), 0);
 			imageMaxX = -imageMinX;
 			imageMinY = Math.min((wrapperHeight / 2 - scaledHeight / 2), 0);
@@ -191,13 +193,13 @@
 				wrapperHeight = zoom.wrapper.offsetHeight;
 				imageWidth = zoom.zoomer.offsetWidth;
 				imageHeight = zoom.zoomer.offsetHeight;
-				var translate = $.parseTranslateMatrix($.getStyles(zoom.scroller, 'webkitTransform'));
+				const translate = $.parseTranslateMatrix($.getStyles(zoom.scroller, 'webkitTransform'));
 				imageStartX = translate.x || 0;
 				imageStartY = translate.y || 0;
 				zoom.scrollerTransition(0);
 			}
-			var scaledWidth = imageWidth * scale;
-			var scaledHeight = imageHeight * scale;
+			let scaledWidth = imageWidth * scale;
+			let scaledHeight = imageHeight * scale;
 
 			if (scaledWidth < wrapperWidth && scaledHeight < wrapperHeight) return;
 
@@ -264,22 +266,22 @@
 			}
 			imageIsTouched = false;
 			imageIsMoved = false;
-			var momentumDurationX = 300;
-			var momentumDurationY = 300;
-			var momentumDistanceX = velocityX * momentumDurationX;
-			var newPositionX = imageCurrentX + momentumDistanceX;
-			var momentumDistanceY = velocityY * momentumDurationY;
-			var newPositionY = imageCurrentY + momentumDistanceY;
+			let momentumDurationX = 300;
+			let momentumDurationY = 300;
+			const momentumDistanceX = velocityX * momentumDurationX;
+			const newPositionX = imageCurrentX + momentumDistanceX;
+			const momentumDistanceY = velocityY * momentumDurationY;
+			const newPositionY = imageCurrentY + momentumDistanceY;
 
 			if (velocityX !== 0) momentumDurationX = Math.abs((newPositionX - imageCurrentX) / velocityX);
 			if (velocityY !== 0) momentumDurationY = Math.abs((newPositionY - imageCurrentY) / velocityY);
-			var momentumDuration = Math.max(momentumDurationX, momentumDurationY);
+			const momentumDuration = Math.max(momentumDurationX, momentumDurationY);
 
 			imageCurrentX = newPositionX;
 			imageCurrentY = newPositionY;
 
-			var scaledWidth = imageWidth * scale;
-			var scaledHeight = imageHeight * scale;
+			const scaledWidth = imageWidth * scale;
+			const scaledHeight = imageHeight * scale;
 			imageMinX = Math.min((wrapperWidth / 2 - scaledWidth / 2), 0);
 			imageMaxX = -imageMinX;
 			imageMinY = Math.min((wrapperHeight / 2 - scaledHeight / 2), 0);
@@ -303,11 +305,11 @@
 		minZoom: 1,
 	};
 	$.fn.zoom = function(options) {
-		var zoomApis = [];
+		const zoomApis = [];
 		this.each(function() {
-			var zoomApi = null;
-			var self = this;
-			var id = self.getAttribute('data-zoomer');
+			let zoomApi = null;
+			const self = this;
+			let id = self.getAttribute('data-zoomer');
 			if (!id) {
 				id = ++$.uuid;
 				$.data[id] = zoomApi = new $.Zoom(self, options);

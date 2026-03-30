@@ -1,3 +1,5 @@
+'use strict';
+
 //webpack 全局安装
 //npm install webpack -g
 module.exports = {

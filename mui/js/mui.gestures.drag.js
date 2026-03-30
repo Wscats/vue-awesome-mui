@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui gesture drag[start|left|right|up|down|end]
  * @param {type} $
@@ -5,8 +7,8 @@
  * @returns {undefined}
  */
 (function($, name) {
-	var handle = function(event, touch) {
-		var session = $.gestures.session;
+	const handle = function(event, touch) {
+		const session = $.gestures.session;
 		switch (event.type) {
 			case $.EVENT_START:
 				break;

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui back
  * @param {type} $
@@ -39,14 +41,14 @@
 		$.doAction('backs');
 	};
 	window.addEventListener('tap', function(e) {
-		var action = $.targets.action;
+		let action = $.targets.action;
 		if (action && action.classList.contains($.className('action-back'))) {
 			$.back();
 			$.targets.action = false;
 		}
 	});
 	window.addEventListener('swiperight', function(e) {
-		var detail = e.detail;
+		const detail = e.detail;
 		if ($.options.swipeBack === true && Math.abs(detail.angle) < 3) {
 			$.back();
 		}

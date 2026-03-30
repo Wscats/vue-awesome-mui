@@ -1,28 +1,30 @@
+'use strict';
+
 (function($, document, undefined) {
-    var CLASS_PULL_TOP_POCKET = $.className('pull-top-pocket');
-    var CLASS_PULL_BOTTOM_POCKET = $.className('pull-bottom-pocket');
-    var CLASS_PULL = $.className('pull');
-    var CLASS_PULL_LOADING = $.className('pull-loading');
-    var CLASS_PULL_CAPTION = $.className('pull-caption');
-    var CLASS_PULL_CAPTION_DOWN = $.className('pull-caption-down');
-    var CLASS_PULL_CAPTION_REFRESH = $.className('pull-caption-refresh');
-    var CLASS_PULL_CAPTION_NOMORE = $.className('pull-caption-nomore');
+    const CLASS_PULL_TOP_POCKET = $.className('pull-top-pocket');
+    const CLASS_PULL_BOTTOM_POCKET = $.className('pull-bottom-pocket');
+    const CLASS_PULL = $.className('pull');
+    const CLASS_PULL_LOADING = $.className('pull-loading');
+    const CLASS_PULL_CAPTION = $.className('pull-caption');
+    const CLASS_PULL_CAPTION_DOWN = $.className('pull-caption-down');
+    const CLASS_PULL_CAPTION_REFRESH = $.className('pull-caption-refresh');
+    const CLASS_PULL_CAPTION_NOMORE = $.className('pull-caption-nomore');
 
-    var CLASS_ICON = $.className('icon');
-    var CLASS_SPINNER = $.className('spinner');
-    var CLASS_ICON_PULLDOWN = $.className('icon-pulldown');
+    const CLASS_ICON = $.className('icon');
+    const CLASS_SPINNER = $.className('spinner');
+    const CLASS_ICON_PULLDOWN = $.className('icon-pulldown');
 
-    var CLASS_BLOCK = $.className('block');
-    var CLASS_HIDDEN = $.className('hidden');
-    var CLASS_VISIBILITY = $.className('visibility');
+    const CLASS_BLOCK = $.className('block');
+    const CLASS_HIDDEN = $.className('hidden');
+    const CLASS_VISIBILITY = $.className('visibility');
 
-    var CLASS_LOADING_UP = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_ICON_PULLDOWN;
-    var CLASS_LOADING_DOWN = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_ICON_PULLDOWN;
-    var CLASS_LOADING = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_SPINNER;
+    const CLASS_LOADING_UP = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_ICON_PULLDOWN;
+    const CLASS_LOADING_DOWN = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_ICON_PULLDOWN;
+    const CLASS_LOADING = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_SPINNER;
 
-    var pocketHtml = ['<div class="' + CLASS_PULL + '">', '<div class="{icon}"></div>', '<div class="' + CLASS_PULL_CAPTION + '">{contentrefresh}</div>', '</div>'].join('');
+    const pocketHtml = ['<div class="' + CLASS_PULL + '">', '<div class="{icon}"></div>', '<div class="' + CLASS_PULL_CAPTION + '">{contentrefresh}</div>', '</div>'].join('');
 
-    var PullRefresh = {
+    let PullRefresh = {
         init: function(element, options) {
             this._super(element, $.extend(true, {
                 scrollY: true,
@@ -72,7 +74,7 @@
             }
         },
         _initPocket: function() {
-            var options = this.options;
+            let options = this.options;
             if (options.down && options.down.hasOwnProperty('callback')) {
                 this.topPocket = this.scroller.querySelector('.' + CLASS_PULL_TOP_POCKET);
                 if (!this.topPocket) {
@@ -95,13 +97,13 @@
             }
         },
         _createPocket: function(clazz, options, iconClass) {
-            var pocket = document.createElement('div');
+            let pocket = document.createElement('div');
             pocket.className = clazz;
             pocket.innerHTML = pocketHtml.replace('{contentrefresh}', options.contentinit).replace('{icon}', iconClass);
             return pocket;
         },
         _resetPullDownLoading: function() {
-            var loading = this.pullLoading;
+            let loading = this.pullLoading;
             if (loading) {
                 this.pullCaption.innerHTML = this.options.down.contentdown;
                 loading.style.webkitTransition = "";
@@ -129,12 +131,12 @@
             if (this.loading) {
                 return;
             }
-            var options = this.options;
-            var pocket = this.pullPocket;
-            var caption = this.pullCaption;
-            var loading = this.pullLoading;
-            var isPulldown = this.pulldown;
-            var self = this;
+            const options = this.options;
+            const pocket = this.pullPocket;
+            const caption = this.pullCaption;
+            const loading = this.pullLoading;
+            const isPulldown = this.pulldown;
+            const self = this;
             if (pocket) {
                 if (reset) {
                     setTimeout(function() {

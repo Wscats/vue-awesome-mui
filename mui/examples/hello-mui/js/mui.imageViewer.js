@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 图片预览组件
  * varstion 0.4.0
@@ -19,10 +21,10 @@
 		}
 	});
 
-	var touchSupport = ('ontouchstart' in document);
-	var tapEventName = touchSupport ? 'tap' : 'click';
-	var enterEventName = touchSupport ? 'tap' : 'click';
-	var imageClassName = $.className('image');
+	const touchSupport = ('ontouchstart' in document);
+	const tapEventName = touchSupport ? 'tap' : 'click';
+	let enterEventName = touchSupport ? 'tap' : 'click';
+	const imageClassName = $.className('image');
 
 
 	//创建DOM (此函数是否可放在 mui.js 中)
@@ -35,10 +37,10 @@
 	};
 
 	//图片预览组件类
-	var ImageViewer = $.ImageViewer = $.Class.extend({
+	let ImageViewer = $.ImageViewer = $.Class.extend({
 		//构造函数
 		init: function(selector, options) {
-			var self = this;
+			let self = this;
 			self.options = options || {};
 			self.selector = selector || 'img';
 			if (self.options.dbl) {
@@ -50,7 +52,7 @@
 		},
 		//创建图片预览组件的整体 UI
 		createViewer: function() {
-			var self = this;
+			let self = this;
 			self.viewer = $.dom("<div class='mui-imageviewer'><div class='mui-imageviewer-mask'></div><div class='mui-imageviewer-header'><i class='mui-icon mui-icon-closeempty mui-imageviewer-close'></i><span class='mui-imageviewer-state'></span></div><i class='mui-icon mui-icon-arrowleft  mui-imageviewer-left'></i><i class='mui-icon mui-icon-arrowright mui-imageviewer-right'></i></div>");
 			self.viewer = self.viewer[0] || self.viewer;
 			//self.viewer.style.height = screen.height;
@@ -63,24 +65,24 @@
 		},
 		//查找所有符合的图片
 		findAllImage: function() {
-			var self = this;
+			let self = this;
 			self.images = [].slice.call($(self.selector));
 		},
 		//检查图片是否为启动预览的图片
 		checkImage: function(target) {
-			var self = this;
+			let self = this;
 			if (target.tagName !== 'IMG') return false;
 			return self.images.some(function(image) {
-				return image == target;
+				return image === target;
 			});
 		},
 		//绑定事件
 		bindEvent: function() {
-			var self = this;
+			let self = this;
 			//绑定图片 tap 事件
 			document.addEventListener(enterEventName, function(event) {
 				if (!self.viewer) return;
-				var target = event.target;
+				const target = event.target;
 				if (!self.checkImage(target)) return;
 				self.viewer.style.display = 'block';
 				setTimeout(function() {
@@ -112,23 +114,23 @@
 				event.cancelBubble = true;
 			}, false);
 			self.viewer.addEventListener('swipeleft', function(event) {
-				if (self.scaleValue == 1) self.next();
+				if (self.scaleValue === 1) self.next();
 				event.preventDefault();
 				event.cancelBubble = true;
 			}, false);
 			self.viewer.addEventListener('swiperight', function(event) {
-				if (self.scaleValue == 1) self.prev();
+				if (self.scaleValue === 1) self.prev();
 				event.preventDefault();
 				event.cancelBubble = true;
 			}, false);
 			//处理缩放开始
 			self.viewer.addEventListener($.EVENT_START, function(event) {
-				var touches = event.touches;
-				if (touches.length == 2) {
-					var p1 = touches[0];
-					var p2 = touches[1];
-					var x = p1.pageX - p2.pageX; //x1-x2
-					var y = p1.pageY - p2.pageY; //y1-y2
+				let touches = event.touches;
+				if (touches.length === 2) {
+					let p1 = touches[0];
+					let p2 = touches[1];
+					let x = p1.pageX - p2.pageX; //x1-x2
+					let y = p1.pageY - p2.pageY; //y1-y2
 					self.scaleStart = Math.sqrt(x * x + y * y);
 					self.isMultiTouch = true;
 				} else if (touches.length = 1) {
@@ -136,20 +138,20 @@
 				}
 			}, false);
 			self.viewer.addEventListener($.EVENT_MOVE, function(event) {
-				var img = self.currentItem.querySelector('img');
-				var touches = event.changedTouches;
-				if (touches.length == 2) {
+				let img = self.currentItem.querySelector('img');
+				let touches = event.changedTouches;
+				if (touches.length === 2) {
 					event.preventDefault();
 					event.cancelBubble = true;
-					var p1 = touches[0];
-					var p2 = touches[1];
-					var x = p1.pageX - p2.pageX;
-					var y = p1.pageY - p2.pageY;
+					const p1 = touches[0];
+					const p2 = touches[1];
+					const x = p1.pageX - p2.pageX;
+					const y = p1.pageY - p2.pageY;
 					self.scaleEnd = Math.sqrt(x * x + y * y);
 					self._scaleValue = (self.scaleValue * (self.scaleEnd / self.scaleStart));
 					//self.state.innerText = self._scaleValue;
 					img.style.webkitTransform = "scale(" + self._scaleValue + "," + self._scaleValue + ") "; // + " translate(" + self.dragX || 0 + "px," + self.dragY || 0 + "px)";
-				} else if (!self.isMultiTouch && touches.length == 1 && self.scaleValue != 1) {
+				} else if (!self.isMultiTouch && touches.length === 1 && self.scaleValue !== 1) {
 					event.preventDefault();
 					event.cancelBubble = true;
 					self.dragEnd = touches[0];
@@ -167,12 +169,12 @@
 				self.dragY = self._dragY;
 				self._dragX = null;
 				self._dragY = null;
-				var touches = event.touches;
-				self.isMultiTouch = (touches.length != 0);
+				const touches = event.touches;
+				self.isMultiTouch = (touches.length !== 0);
 			});
 			// doubletap 好像不能用
 			self.viewer.addEventListener('doubletap', function() {
-				var img = self.currentItem.querySelector('img');
+				const img = self.currentItem.querySelector('img');
 				if (self.scaleValue === 1) {
 					self.scaleValue = 2;
 				} else {
@@ -189,10 +191,10 @@
 		},
 		//下一张图片
 		next: function() {
-			var self = this;
+			let self = this;
 			self.mask.style.display = 'block';
 			self.index++;
-			var newItem = self.createImage(self.index, 'right');
+			let newItem = self.createImage(self.index, 'right');
 			setTimeout(function() {
 				self.currentItem.classList.remove('mui-imageviewer-item-center');
 				self.currentItem.classList.add('mui-imageviewer-item-left');
@@ -209,10 +211,10 @@
 		},
 		//上一张图片
 		prev: function() {
-			var self = this;
+			let self = this;
 			self.mask.style.display = 'block';
 			self.index--;
-			var newItem = self.createImage(self.index, 'left');
+			const newItem = self.createImage(self.index, 'left');
 			setTimeout(function() {
 				self.currentItem.classList.remove('mui-imageviewer-item-center');
 				self.currentItem.classList.add('mui-imageviewer-item-right');
@@ -229,9 +231,9 @@
 		},
 		//释放不显示的图片
 		disposeImage: function(all) {
-			var sel = '.mui-imageviewer-item-left,.mui-imageviewer-item-right';
+			const sel = '.mui-imageviewer-item-left,.mui-imageviewer-item-right';
 			if (all) sel += ",.mui-imageviewer-item";
-			var willdisposes = $(sel);
+			const willdisposes = $(sel);
 			willdisposes.each(function(i, item) {
 				if (item.parentNode && item.parentNode.removeChild)
 					item.parentNode.removeChild(item, true);
@@ -239,12 +241,12 @@
 		},
 		//创建一个图片
 		createImage: function(index, type) {
-			var self = this;
+			const self = this;
 			type = type || 'center';
 			if (index < 0) index = self.images.length - 1;
 			if (index > self.images.length - 1) index = 0;
 			self.index = index;
-			var item = $.dom("<div class='mui-imageviewer-item'></div>")[0];
+			const item = $.dom("<div class='mui-imageviewer-item'></div>")[0];
 			item.appendChild($.dom('<span><img src="' + self.images[self.index].src + '"/></span>')[0]);
 			item.classList.add('mui-imageviewer-item-' + type);
 			self.viewer.appendChild(item);

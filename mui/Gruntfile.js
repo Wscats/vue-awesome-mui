@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 		return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 	};
 
-	var generateNamespace = require('./grunt/mui-namespace-generator.js');
+	const generateNamespace = require('./grunt/mui-namespace-generator.js');
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -219,7 +219,7 @@ module.exports = function(grunt) {
 		sed: {
 			versionNumber: {
 				pattern: (function() {
-					var old = grunt.option('oldver');
+					const old = grunt.option('oldver');
 					return old ? RegExp.quote(old) : old;
 				})(),
 				replacement: grunt.option('newver'),

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui gesture tap and doubleTap
  * @param {type} $
@@ -7,15 +9,15 @@
 (function($, name) {
 	var lastTarget;
 	var lastTapTime;
-	var handle = function(event, touch) {
-		var session = $.gestures.session;
-		var options = this.options;
+	const handle = function(event, touch) {
+		const session = $.gestures.session;
+		const options = this.options;
 		switch (event.type) {
 			case $.EVENT_END:
 				if (!touch.isFinal) {
 					return;
 				}
-				var target = session.target;
+				const target = session.target;
 				if (!target || (target.disabled || (target.classList && target.classList.contains($.className('disabled'))))) {
 					return;
 				}

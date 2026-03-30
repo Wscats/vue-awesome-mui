@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Toggles switch
  * @param {type} $
@@ -7,16 +9,16 @@
  */
 (function($, window, name) {
 
-	var CLASS_SWITCH = $.className('switch');
-	var CLASS_SWITCH_HANDLE = $.className('switch-handle');
-	var CLASS_ACTIVE = $.className('active');
-	var CLASS_DRAGGING = $.className('dragging');
+	const CLASS_SWITCH = $.className('switch');
+	const CLASS_SWITCH_HANDLE = $.className('switch-handle');
+	const CLASS_ACTIVE = $.className('active');
+	const CLASS_DRAGGING = $.className('dragging');
 
-	var CLASS_DISABLED = $.className('disabled');
+	const CLASS_DISABLED = $.className('disabled');
 
-	var SELECTOR_SWITCH_HANDLE = '.' + CLASS_SWITCH_HANDLE;
+	const SELECTOR_SWITCH_HANDLE = '.' + CLASS_SWITCH_HANDLE;
 
-	var handle = function(event, target) {
+	let handle = function(event, target) {
 		if (target.classList && target.classList.contains(CLASS_SWITCH)) {
 			return target;
 		}
@@ -31,7 +33,7 @@
 	});
 
 
-	var Toggle = function(element) {
+	const Toggle = function(element) {
 		this.element = element;
 		this.classList = this.element.classList;
 		this.handle = this.element.querySelector(SELECTOR_SWITCH_HANDLE);
@@ -79,7 +81,7 @@
 		}
 	};
 	Toggle.prototype.drag = function(e) {
-		var detail = e.detail;
+		const detail = e.detail;
 		if (!this.isDragging) {
 			if (detail.direction === 'left' || detail.direction === 'right') {
 				this.isDragging = true;
@@ -111,7 +113,7 @@
 		}
 	};
 	Toggle.prototype.toggle = function(animate) {
-		var classList = this.classList;
+		const classList = this.classList;
 		if (animate === false) {
 			this.handle.style.webkitTransitionDuration = this.element.style.webkitTransitionDuration = '0s';
 		} else {
@@ -132,7 +134,7 @@
 		if (!this.isDragging) {
 			return;
 		}
-		var isChanged = false;
+		let isChanged = false;
 		if ((this.initialState && -x > (this.handleX / 2)) || (!this.initialState && x > (this.handleX / 2))) {
 			isChanged = true;
 		}
@@ -150,10 +152,10 @@
 	});
 
 	$.fn['switch'] = function(options) {
-		var switchApis = [];
+		const switchApis = [];
 		this.each(function() {
-			var switchApi = null;
-			var id = this.getAttribute('data-switch');
+			let switchApi = null;
+			let id = this.getAttribute('data-switch');
 			if (!id) {
 				id = ++$.uuid;
 				$.data[id] = new Toggle(this);

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Tableviews
  * @param {type} $
@@ -7,37 +9,37 @@
  */
 (function($, window, document) {
 
-	var CLASS_ACTIVE = $.className('active');
-	var CLASS_SELECTED = $.className('selected');
-	var CLASS_GRID_VIEW = $.className('grid-view');
-	var CLASS_RADIO_VIEW = $.className('table-view-radio');
-	var CLASS_TABLE_VIEW_CELL = $.className('table-view-cell');
-	var CLASS_COLLAPSE_CONTENT = $.className('collapse-content');
-	var CLASS_DISABLED = $.className('disabled');
-	var CLASS_TOGGLE = $.className('switch');
-	var CLASS_BTN = $.className('btn');
+	const CLASS_ACTIVE = $.className('active');
+	const CLASS_SELECTED = $.className('selected');
+	const CLASS_GRID_VIEW = $.className('grid-view');
+	const CLASS_RADIO_VIEW = $.className('table-view-radio');
+	const CLASS_TABLE_VIEW_CELL = $.className('table-view-cell');
+	const CLASS_COLLAPSE_CONTENT = $.className('collapse-content');
+	const CLASS_DISABLED = $.className('disabled');
+	const CLASS_TOGGLE = $.className('switch');
+	const CLASS_BTN = $.className('btn');
 
-	var CLASS_SLIDER_HANDLE = $.className('slider-handle');
-	var CLASS_SLIDER_LEFT = $.className('slider-left');
-	var CLASS_SLIDER_RIGHT = $.className('slider-right');
-	var CLASS_TRANSITIONING = $.className('transitioning');
+	const CLASS_SLIDER_HANDLE = $.className('slider-handle');
+	const CLASS_SLIDER_LEFT = $.className('slider-left');
+	const CLASS_SLIDER_RIGHT = $.className('slider-right');
+	const CLASS_TRANSITIONING = $.className('transitioning');
 
 
-	var SELECTOR_SLIDER_HANDLE = '.' + CLASS_SLIDER_HANDLE;
-	var SELECTOR_SLIDER_LEFT = '.' + CLASS_SLIDER_LEFT;
-	var SELECTOR_SLIDER_RIGHT = '.' + CLASS_SLIDER_RIGHT;
-	var SELECTOR_SELECTED = '.' + CLASS_SELECTED;
-	var SELECTOR_BUTTON = '.' + CLASS_BTN;
-	var overFactor = 0.8;
+	const SELECTOR_SLIDER_HANDLE = '.' + CLASS_SLIDER_HANDLE;
+	const SELECTOR_SLIDER_LEFT = '.' + CLASS_SLIDER_LEFT;
+	const SELECTOR_SLIDER_RIGHT = '.' + CLASS_SLIDER_RIGHT;
+	const SELECTOR_SELECTED = '.' + CLASS_SELECTED;
+	const SELECTOR_BUTTON = '.' + CLASS_BTN;
+	const overFactor = 0.8;
 	var cell, a;
 
-	var isMoved = isOpened = openedActions = progress = false;
-	var sliderHandle = sliderActionLeft = sliderActionRight = buttonsLeft = buttonsRight = sliderDirection = sliderRequestAnimationFrame = false;
-	var timer = translateX = lastTranslateX = sliderActionLeftWidth = sliderActionRightWidth = 0;
+	let isMoved = isOpened = openedActions = progress = false;
+	let sliderHandle = sliderActionLeft = sliderActionRight = buttonsLeft = buttonsRight = sliderDirection = sliderRequestAnimationFrame = false;
+	let timer = translateX = lastTranslateX = sliderActionLeftWidth = sliderActionRightWidth = 0;
 
 
 
-	var toggleActive = function(isActive) {
+	const toggleActive = function(isActive) {
 		if (isActive) {
 			if (a) {
 				a.classList.add(CLASS_ACTIVE);
@@ -54,15 +56,15 @@
 		}
 	};
 
-	var updateTranslate = function() {
+	const updateTranslate = function() {
 		if (translateX !== lastTranslateX) {
 			if (buttonsRight && buttonsRight.length > 0) {
 				progress = translateX / sliderActionRightWidth;
 				if (translateX < -sliderActionRightWidth) {
 					translateX = -sliderActionRightWidth - Math.pow(-translateX - sliderActionRightWidth, overFactor);
 				}
-				for (var i = 0, len = buttonsRight.length; i < len; i++) {
-					var buttonRight = buttonsRight[i];
+				for (let i = 0, len = buttonsRight.length; i < len; i++) {
+					let buttonRight = buttonsRight[i];
 					if (typeof buttonRight._buttonOffset === 'undefined') {
 						buttonRight._buttonOffset = buttonRight.offsetLeft;
 					}
@@ -75,8 +77,8 @@
 				if (translateX > sliderActionLeftWidth) {
 					translateX = sliderActionLeftWidth + Math.pow(translateX - sliderActionLeftWidth, overFactor);
 				}
-				for (var i = 0, len = buttonsLeft.length; i < len; i++) {
-					var buttonLeft = buttonsLeft[i];
+				for (let i = 0, len = buttonsLeft.length; i < len; i++) {
+					let buttonLeft = buttonsLeft[i];
 					if (typeof buttonLeft._buttonOffset === 'undefined') {
 						buttonLeft._buttonOffset = sliderActionLeftWidth - buttonLeft.offsetLeft - buttonLeft.offsetWidth;
 					}
@@ -94,7 +96,7 @@
 			updateTranslate();
 		});
 	};
-	var setTranslate = function(element, x) {
+	const setTranslate = function(element, x) {
 		if (element) {
 			element.style.webkitTransform = 'translate(' + x + 'px,0)';
 		}
@@ -106,11 +108,11 @@
 		}
 		cell = a = false;
 		isMoved = isOpened = openedActions = false;
-		var target = event.target;
-		var isDisabled = false;
+		let target = event.target;
+		let isDisabled = false;
 		for (; target && target !== document; target = target.parentNode) {
 			if (target.classList) {
-				var classList = target.classList;
+				let classList = target.classList;
 				if ((target.tagName === 'INPUT' && target.type !== 'radio' && target.type !== 'checkbox') || target.tagName === 'BUTTON' || classList.contains(CLASS_TOGGLE) || classList.contains(CLASS_BTN) || classList.contains(CLASS_DISABLED)) {
 					isDisabled = true;
 				}
@@ -120,19 +122,19 @@
 				if (classList.contains(CLASS_TABLE_VIEW_CELL)) {
 					cell = target;
 					//TODO swipe to delete close
-					var selected = cell.parentNode.querySelector(SELECTOR_SELECTED);
+					let selected = cell.parentNode.querySelector(SELECTOR_SELECTED);
 					if (!cell.parentNode.classList.contains(CLASS_RADIO_VIEW) && selected && selected !== cell) {
 						$.swipeoutClose(selected);
 						cell = isDisabled = false;
 						return;
 					}
 					if (!cell.parentNode.classList.contains(CLASS_GRID_VIEW)) {
-						var link = cell.querySelector('a');
+						const link = cell.querySelector('a');
 						if (link && link.parentNode === cell) { //li>a
 							a = link;
 						}
 					}
-					var handle = cell.querySelector(SELECTOR_SLIDER_HANDLE);
+					const handle = cell.querySelector(SELECTOR_SLIDER_HANDLE);
 					if (handle) {
 						toggleEvents(cell);
 						event.stopPropagation();
@@ -158,7 +160,7 @@
 		toggleActive(false);
 	});
 
-	var handleEvent = {
+	const handleEvent = {
 		handleEvent: function(event) {
 			switch (event.type) {
 				case 'drag':
@@ -203,9 +205,9 @@
 					}
 				}
 			}
-			var detail = event.detail;
-			var direction = detail.direction;
-			var angle = detail.angle;
+			let detail = event.detail;
+			let direction = detail.direction;
+			const angle = detail.angle;
 			if (direction === 'left' && (angle > 150 || angle < -150)) {
 				if (buttonsRight || (buttonsLeft && isOpened)) { //存在右侧按钮或存在左侧按钮且是已打开状态
 					isMoved = true;
@@ -218,7 +220,7 @@
 			if (isMoved) {
 				event.stopPropagation();
 				event.detail.gesture.preventDefault();
-				var translate = event.detail.deltaX;
+				let translate = event.detail.deltaX;
 				if (isOpened) {
 					if (openedActions === 'right') {
 						translate = translate - sliderActionRightWidth;
@@ -271,11 +273,11 @@
 				cancelAnimationFrame(sliderRequestAnimationFrame);
 				sliderRequestAnimationFrame = null;
 			}
-			var detail = event.detail;
+			const detail = event.detail;
 			isMoved = false;
-			var action = 'close';
-			var actionsWidth = sliderDirection === 'toLeft' ? sliderActionRightWidth : sliderActionLeftWidth;
-			var isToggle = detail.swipe || (Math.abs(translateX) > actionsWidth / 2);
+			let action = 'close';
+			const actionsWidth = sliderDirection === 'toLeft' ? sliderActionRightWidth : sliderActionLeftWidth;
+			const isToggle = detail.swipe || (Math.abs(translateX) > actionsWidth / 2);
 			if (isToggle) {
 				if (!isOpened) {
 					action = 'open';
@@ -289,12 +291,12 @@
 			cell.classList.add(CLASS_TRANSITIONING);
 			var buttons;
 			if (action === 'open') {
-				var newTranslate = sliderDirection === 'toLeft' ? -actionsWidth : actionsWidth;
+				const newTranslate = sliderDirection === 'toLeft' ? -actionsWidth : actionsWidth;
 				setTranslate(sliderHandle, newTranslate);
 				buttons = sliderDirection === 'toLeft' ? buttonsRight : buttonsLeft;
 				if (typeof buttons !== 'undefined') {
-					var button = null;
-					for (var i = 0; i < buttons.length; i++) {
+					let button = null;
+					for (let i = 0; i < buttons.length; i++) {
 						button = buttons[i];
 						setTranslate(button, newTranslate);
 					}
@@ -312,8 +314,8 @@
 			}
 			var buttonOffset;
 			if (buttonsLeft && buttonsLeft.length > 0 && buttonsLeft !== buttons) {
-				for (var i = 0, len = buttonsLeft.length; i < len; i++) {
-					var buttonLeft = buttonsLeft[i];
+				for (let i = 0, len = buttonsLeft.length; i < len; i++) {
+					const buttonLeft = buttonsLeft[i];
 					buttonOffset = buttonLeft._buttonOffset;
 					if (typeof buttonOffset === 'undefined') {
 						buttonLeft._buttonOffset = sliderActionLeftWidth - buttonLeft.offsetLeft - buttonLeft.offsetWidth;
@@ -322,8 +324,8 @@
 				}
 			}
 			if (buttonsRight && buttonsRight.length > 0 && buttonsRight !== buttons) {
-				for (var i = 0, len = buttonsRight.length; i < len; i++) {
-					var buttonRight = buttonsRight[i];
+				for (let i = 0, len = buttonsRight.length; i < len; i++) {
+					const buttonRight = buttonsRight[i];
 					buttonOffset = buttonRight._buttonOffset;
 					if (typeof buttonOffset === 'undefined') {
 						buttonRight._buttonOffset = buttonRight.offsetLeft;
@@ -335,7 +337,7 @@
 	};
 
 	function toggleEvents(element, isRemove) {
-		var method = !!isRemove ? 'removeEventListener' : 'addEventListener';
+		const method = !!isRemove ? 'removeEventListener' : 'addEventListener';
 		element[method]('drag', handleEvent);
 		element[method]('dragend', handleEvent);
 		element[method]('swiperight', handleEvent);
@@ -349,7 +351,7 @@
 	 */
 	$.swipeoutOpen = function(el, direction) {
 		if (!el) return;
-		var classList = el.classList;
+		let classList = el.classList;
 		if (classList.contains(CLASS_SELECTED)) return;
 		if (!direction) {
 			if (el.querySelector(SELECTOR_SLIDER_RIGHT)) {
@@ -358,17 +360,17 @@
 				direction = 'left';
 			}
 		}
-		var swipeoutAction = el.querySelector($.classSelector(".slider-" + direction));
+		let swipeoutAction = el.querySelector($.classSelector(".slider-" + direction));
 		if (!swipeoutAction) return;
 		swipeoutAction.classList.add(CLASS_SELECTED);
 		classList.add(CLASS_SELECTED);
 		classList.remove(CLASS_TRANSITIONING);
-		var buttons = swipeoutAction.querySelectorAll(SELECTOR_BUTTON);
-		var swipeoutWidth = swipeoutAction.offsetWidth;
-		var translate = (direction === 'right') ? -swipeoutWidth : swipeoutWidth;
-		var length = buttons.length;
+		let buttons = swipeoutAction.querySelectorAll(SELECTOR_BUTTON);
+		let swipeoutWidth = swipeoutAction.offsetWidth;
+		const translate = (direction === 'right') ? -swipeoutWidth : swipeoutWidth;
+		let length = buttons.length;
 		var button;
-		for (var i = 0; i < length; i++) {
+		for (let i = 0; i < length; i++) {
 			button = buttons[i];
 			if (direction === 'right') {
 				setTranslate(button, -button.offsetLeft);
@@ -377,7 +379,7 @@
 			}
 		}
 		classList.add(CLASS_TRANSITIONING);
-		for (var i = 0; i < length; i++) {
+		for (let i = 0; i < length; i++) {
 			setTranslate(buttons[i], translate);
 		}
 		setTranslate(el.querySelector(SELECTOR_SLIDER_HANDLE), translate);
@@ -388,20 +390,20 @@
 	 */
 	$.swipeoutClose = function(el) {
 		if (!el) return;
-		var classList = el.classList;
+		let classList = el.classList;
 		if (!classList.contains(CLASS_SELECTED)) return;
-		var direction = el.querySelector(SELECTOR_SLIDER_RIGHT + SELECTOR_SELECTED) ? 'right' : 'left';
-		var swipeoutAction = el.querySelector($.classSelector(".slider-" + direction));
+		const direction = el.querySelector(SELECTOR_SLIDER_RIGHT + SELECTOR_SELECTED) ? 'right' : 'left';
+		const swipeoutAction = el.querySelector($.classSelector(".slider-" + direction));
 		if (!swipeoutAction) return;
 		swipeoutAction.classList.remove(CLASS_SELECTED);
 		classList.remove(CLASS_SELECTED);
 		classList.add(CLASS_TRANSITIONING);
-		var buttons = swipeoutAction.querySelectorAll(SELECTOR_BUTTON);
-		var swipeoutWidth = swipeoutAction.offsetWidth;
-		var length = buttons.length;
+		const buttons = swipeoutAction.querySelectorAll(SELECTOR_BUTTON);
+		const swipeoutWidth = swipeoutAction.offsetWidth;
+		const length = buttons.length;
 		var button;
 		setTranslate(el.querySelector(SELECTOR_SLIDER_HANDLE), 0);
-		for (var i = 0; i < length; i++) {
+		for (let i = 0; i < length; i++) {
 			button = buttons[i];
 			if (direction === 'right') {
 				setTranslate(button, (-button.offsetLeft));
@@ -425,14 +427,14 @@
 		toggleActive(false);
 		sliderHandle && toggleEvents(cell, true);
 	});
-	var radioOrCheckboxClick = function(event) {
-		var type = event.target && event.target.type || '';
+	const radioOrCheckboxClick = function(event) {
+		let type = event.target && event.target.type || '';
 		if (type === 'radio' || type === 'checkbox') {
 			return;
 		}
-		var classList = cell.classList;
+		let classList = cell.classList;
 		if (classList.contains($.className('radio'))) {
-			var input = cell.querySelector('input[type=radio]');
+			let input = cell.querySelector('input[type=radio]');
 			if (input) {
 				//				input.click();
 				if (!input.disabled && !input.readOnly) {
@@ -441,7 +443,7 @@
 				}
 			}
 		} else if (classList.contains($.className('checkbox'))) {
-			var input = cell.querySelector('input[type=checkbox]');
+			const input = cell.querySelector('input[type=checkbox]');
 			if (input) {
 				//				input.click();
 				if (!input.disabled && !input.readOnly) {
@@ -462,19 +464,19 @@
 			radioOrCheckboxClick(event);
 		}
 	});
-	var preventDefaultException = /^(INPUT|TEXTAREA|BUTTON|SELECT)$/;
+	const preventDefaultException = /^(INPUT|TEXTAREA|BUTTON|SELECT)$/;
 	window.addEventListener('tap', function(event) {
 		if (!cell) {
 			return;
 		}
-		var isExpand = false;
-		var classList = cell.classList;
-		var ul = cell.parentNode;
+		let isExpand = false;
+		const classList = cell.classList;
+		const ul = cell.parentNode;
 		if (ul && ul.classList.contains(CLASS_RADIO_VIEW)) {
 			if (classList.contains(CLASS_SELECTED)) {
 				return;
 			}
-			var selected = ul.querySelector('li' + SELECTOR_SELECTED);
+			const selected = ul.querySelector('li' + SELECTOR_SELECTED);
 			if (selected) {
 				selected.classList.remove(CLASS_SELECTED);
 			}
@@ -490,7 +492,7 @@
 			}
 
 			if (!classList.contains(CLASS_ACTIVE)) { //展开时,需要收缩其他同类
-				var collapse = cell.parentNode.querySelector($.classSelector('.collapse.active'));
+				const collapse = cell.parentNode.querySelector($.classSelector('.collapse.active'));
 				if (collapse) {
 					collapse.classList.remove(CLASS_ACTIVE);
 				}
@@ -503,11 +505,11 @@
 
 				//scroll
 				//暂不滚动
-				// var offsetTop = $.offset(cell).top;
-				// var scrollTop = document.body.scrollTop;
-				// var height = window.innerHeight;
-				// var offsetHeight = cell.offsetHeight;
-				// var cellHeight = (offsetTop - scrollTop + offsetHeight);
+				// const offsetTop = $.offset(cell).top;
+				// const scrollTop = document.body.scrollTop;
+				// const height = window.innerHeight;
+				// const offsetHeight = cell.offsetHeight;
+				// const cellHeight = (offsetTop - scrollTop + offsetHeight);
 				// if (offsetHeight > height) {
 				// 	$.scrollTo(offsetTop, 300);
 				// } else if (cellHeight > height) {

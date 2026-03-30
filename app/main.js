@@ -56,7 +56,7 @@ import nav from "./components/examples/nav.vue";
 import navTransparent from "./components/examples/nav_transparent.vue";
 import numbox from "./components/examples/numbox.vue";
 
-var router = new VueRouter({
+const router = new VueRouter({
 	routes: [{
 		path: '/index',
 		component: index,
@@ -139,7 +139,7 @@ var router = new VueRouter({
 });
 
 //新建一个状态管理
-var store = new Vuex.Store({
+const store = new Vuex.Store({
 	//定义一个状态
 	//所有组件的状态，也就是数据源
 	state: {

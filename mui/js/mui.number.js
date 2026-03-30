@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 数字输入框
  * varstion 1.0.1
@@ -7,20 +9,20 @@
 
 (function($) {
 
-    var touchSupport = ('ontouchstart' in document);
-    var tapEventName = touchSupport ? 'tap' : 'click';
-    var changeEventName = 'change';
-    var holderClassName = $.className('numbox');
-    var plusClassSelector = $.classSelector('.btn-numbox-plus,.numbox-btn-plus');
-    var minusClassSelector = $.classSelector('.btn-numbox-minus,.numbox-btn-minus');
-    var inputClassSelector = $.classSelector('.input-numbox,.numbox-input');
+    const touchSupport = ('ontouchstart' in document);
+    const tapEventName = touchSupport ? 'tap' : 'click';
+    const changeEventName = 'change';
+    const holderClassName = $.className('numbox');
+    const plusClassSelector = $.classSelector('.btn-numbox-plus,.numbox-btn-plus');
+    const minusClassSelector = $.classSelector('.btn-numbox-minus,.numbox-btn-minus');
+    const inputClassSelector = $.classSelector('.input-numbox,.numbox-input');
 
-    var Numbox = $.Numbox = $.Class.extend({
+    let Numbox = $.Numbox = $.Class.extend({
         /**
          * 构造函数
          **/
         init: function(holder, options) {
-            var self = this;
+            let self = this;
             if (!holder) {
                 throw "构造 numbox 时缺少容器元素";
             }
@@ -38,20 +40,20 @@
          * 初始化事件绑定
          **/
         initEvent: function() {
-            var self = this;
+            let self = this;
             self.plus.addEventListener(tapEventName, function(event) {
-                var val = parseInt(self.input.value) + self.options.step;
+                let val = parseInt(self.input.value) + self.options.step;
                 self.input.value = val.toString();
                 $.trigger(self.input, changeEventName, null);
             });
             self.minus.addEventListener(tapEventName, function(event) {
-                var val = parseInt(self.input.value) - self.options.step;
+                let val = parseInt(self.input.value) - self.options.step;
                 self.input.value = val.toString();
                 $.trigger(self.input, changeEventName, null);
             });
             self.input.addEventListener(changeEventName, function(event) {
                 self.checkValue();
-                var val = parseInt(self.input.value);
+                let val = parseInt(self.input.value);
                 //触发顶层容器
                 $.trigger(self.holder, changeEventName, {
                     value: val
@@ -62,27 +64,27 @@
          * 获取当前值
          **/
         getValue: function() {
-            var self = this;
+            let self = this;
             return parseInt(self.input.value);
         },
         /**
          * 验证当前值是法合法
          **/
         checkValue: function() {
-            var self = this;
-            var val = self.input.value;
-            if (val == null || val == '' || isNaN(val)) {
+            let self = this;
+            let val = self.input.value;
+            if (val === null || val === '' || isNaN(val)) {
                 self.input.value = self.options.min || 0;
-                self.minus.disabled = self.options.min != null;
+                self.minus.disabled = self.options.min !== null;
             } else {
-                var val = parseInt(val);
-                if (self.options.max != null && !isNaN(self.options.max) && val >= parseInt(self.options.max)) {
+                let val = parseInt(val);
+                if (self.options.max !== null && !isNaN(self.options.max) && val >= parseInt(self.options.max)) {
                     val = self.options.max;
                     self.plus.disabled = true;
                 } else {
                     self.plus.disabled = false;
                 }
-                if (self.options.min != null && !isNaN(self.options.min) && val <= parseInt(self.options.min)) {
+                if (self.options.min !== null && !isNaN(self.options.min) && val <= parseInt(self.options.min)) {
                     val = self.options.min;
                     self.minus.disabled = true;
                 } else {
@@ -95,7 +97,7 @@
          * 更新选项
          **/
         setOption: function(name, value) {
-            var self = this;
+            const self = this;
             self.options[name] = value;
         },
         /**
@@ -108,7 +110,7 @@
     });
 
     $.fn.numbox = function(options) {
-        var instanceArray = [];
+        const instanceArray = [];
         //遍历选择的元素
         this.each(function(i, element) {
             if (element.numbox) {
@@ -117,8 +119,8 @@
             if (options) {
                 element.numbox = new Numbox(element, options);
             } else {
-                var optionsText = element.getAttribute('data-numbox-options');
-                var options = optionsText ? JSON.parse(optionsText) : {};
+                const optionsText = element.getAttribute('data-numbox-options');
+                const options = optionsText ? JSON.parse(optionsText) : {};
                 options.step = element.getAttribute('data-numbox-step') || options.step;
                 options.min = element.getAttribute('data-numbox-min') || options.min;
                 options.max = element.getAttribute('data-numbox-max') || options.max;

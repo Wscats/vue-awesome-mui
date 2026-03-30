@@ -1,4 +1,6 @@
-var util = {
+'use strict';
+
+const util = {
 	options: {
 		active_color:'#007aff',
 		normal_color:'#000',
@@ -9,14 +11,14 @@ var util = {
 	 *  绘制内容支持font（文本，字体图标）,图片img , 矩形区域rect
 	 */
 	drawNative: function(id, styles, tags) {
-		var view = new plus.nativeObj.View(id, styles, tags);
+		const view = new plus.nativeObj.View(id, styles, tags);
 		return view;
 	},
 	/**
 	 * 初始化首个tab窗口 和 创建子webview窗口 
 	 */
 	initSubpage: function() {
-		var subpage_style = {
+		const subpage_style = {
 				top: '0px',
 				bottom: '51px'
 			},
@@ -29,10 +31,10 @@ var util = {
 			// 初始化绘制首个tab按钮
 			util.toggleNview(self.getStyle().subNViews[0], 0);
 			
-		for(var i = 0, len = subpages.length; i < len; i++) {
+		for(let i = 0, len = subpages.length; i < len; i++) {
 			
 			if(!plus.webview.getWebviewById(subpages[i])) {
-				var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+				const sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
 				//初始化隐藏
 				sub.hide();
 				// append到当前父webview
@@ -49,7 +51,7 @@ var util = {
 			plus.webview.show(targetPage);
 		} else {
 			//否则，使用fade-in动画，且保存变量
-			var temp = {};
+			const temp = {};
 			temp[targetPage] = "true";
 			mui.extend(aniShow, temp);
 			plus.webview.show(targetPage, "fade-in", 300);
@@ -63,7 +65,7 @@ var util = {
 	 * 点击重绘底部tab （view控件）
 	 */
 	toggleNview: function(currObj, currIndex) {
-		var self = plus.webview.currentWebview();
+		let self = plus.webview.currentWebview();
 		// 重绘当前nview
 		self.updateSubNViews([{
 			id: currObj.id,
@@ -83,8 +85,8 @@ var util = {
 		}])
 
 		// 重绘兄弟nview
-		for(var i = 0; i < 4; i++) {
-			var viewObj = self.getStyle().subNViews[i];
+		for(let i = 0; i < 4; i++) {
+			const viewObj = self.getStyle().subNViews[i];
 
 			if(i !== currIndex) {
 				util.updateSubNView(viewObj);
@@ -102,7 +104,7 @@ var util = {
 	 * 利用 webview 提供的 updateSubNViews 方法更新 view 控件
 	 */
 	updateSubNView: function(obj) {
-		var self = plus.webview.currentWebview();
+		const self = plus.webview.currentWebview();
 		self.updateSubNViews([{
 			id: obj.id,
 			tags: [{

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui ajax
  * @param {type} $
@@ -5,12 +7,12 @@
  */
 (function($, window, undefined) {
 
-	var jsonType = 'application/json';
-	var htmlType = 'text/html';
-	var rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
-	var scriptTypeRE = /^(?:text|application)\/javascript/i;
-	var xmlTypeRE = /^(?:text|application)\/xml/i;
-	var blankRE = /^\s*$/;
+	const jsonType = 'application/json';
+	const htmlType = 'text/html';
+	const rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+	const scriptTypeRE = /^(?:text|application)\/javascript/i;
+	const xmlTypeRE = /^(?:text|application)\/xml/i;
+	const blankRE = /^\s*$/;
 
 	$.ajaxSettings = {
 		type: 'GET',
@@ -33,27 +35,27 @@
 		processData: true,
 		cache: true
 	};
-	var ajaxBeforeSend = function(xhr, settings) {
-		var context = settings.context
+	const ajaxBeforeSend = function(xhr, settings) {
+		const context = settings.context
 		if(settings.beforeSend.call(context, xhr, settings) === false) {
 			return false;
 		}
 	};
-	var ajaxSuccess = function(data, xhr, settings) {
+	const ajaxSuccess = function(data, xhr, settings) {
 		settings.success.call(settings.context, data, 'success', xhr);
 		ajaxComplete('success', xhr, settings);
 	};
 	// type: "timeout", "error", "abort", "parsererror"
-	var ajaxError = function(error, type, xhr, settings) {
+	const ajaxError = function(error, type, xhr, settings) {
 		settings.error.call(settings.context, xhr, type, error);
 		ajaxComplete(type, xhr, settings);
 	};
 	// status: "success", "notmodified", "error", "timeout", "abort", "parsererror"
-	var ajaxComplete = function(status, xhr, settings) {
+	const ajaxComplete = function(status, xhr, settings) {
 		settings.complete.call(settings.context, xhr, status);
 	};
 
-	var serialize = function(params, obj, traditional, scope) {
+	const serialize = function(params, obj, traditional, scope) {
 		var type, array = $.isArray(obj),
 			hash = $.isPlainObject(obj);
 		$.each(obj, function(key, value) {
@@ -74,9 +76,9 @@
 			}
 		});
 	};
-	var serializeData = function(options) {
+	const serializeData = function(options) {
 		if(options.processData && options.data && typeof options.data !== "string") {
-			var contentType = options.contentType;
+			let contentType = options.contentType;
 			if(!contentType && options.headers) {
 				contentType = options.headers['Content-Type'];
 			}
@@ -91,13 +93,13 @@
 			options.data = undefined;
 		}
 	};
-	var appendQuery = function(url, query) {
+	const appendQuery = function(url, query) {
 		if(query === '') {
 			return url;
 		}
 		return(url + '&' + query).replace(/[&?]{1,2}/, '?');
 	};
-	var mimeToDataType = function(mime) {
+	const mimeToDataType = function(mime) {
 		if(mime) {
 			mime = mime.split(';', 2)[0];
 		}
@@ -106,7 +108,7 @@
 			scriptTypeRE.test(mime) ? 'script' :
 			xmlTypeRE.test(mime) && 'xml') || 'text';
 	};
-	var parseArguments = function(url, data, success, dataType) {
+	const parseArguments = function(url, data, success, dataType) {
 		if($.isFunction(data)) {
 			dataType = success, success = data, data = undefined;
 		}
@@ -125,7 +127,7 @@
 			options = url;
 			url = undefined;
 		}
-		var settings = options || {};
+		const settings = options || {};
 		settings.url = url || settings.url;
 		for(var key in $.ajaxSettings) {
 			if(settings[key] === undefined) {
@@ -133,19 +135,19 @@
 			}
 		}
 		serializeData(settings);
-		var dataType = settings.dataType;
+		let dataType = settings.dataType;
 
 		if(settings.cache === false || ((!options || options.cache !== true) && ('script' === dataType))) {
 			settings.url = appendQuery(settings.url, '_=' + $.now());
 		}
-		var mime = settings.accepts[dataType && dataType.toLowerCase()];
-		var headers = {};
-		var setHeader = function(name, value) {
+		let mime = settings.accepts[dataType && dataType.toLowerCase()];
+		const headers = {};
+		const setHeader = function(name, value) {
 			headers[name.toLowerCase()] = [name, value];
 		};
-		var protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol;
-		var xhr = settings.xhr(settings);
-		var nativeSetHeader = xhr.setRequestHeader;
+		const protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol;
+		const xhr = settings.xhr(settings);
+		const nativeSetHeader = xhr.setRequestHeader;
 		var abortTimeout;
 
 		setHeader('X-Requested-With', 'XMLHttpRequest');
@@ -170,7 +172,7 @@
 				xhr.onreadystatechange = $.noop;
 				clearTimeout(abortTimeout);
 				var result, error = false;
-				var isLocal = protocol === 'file:';
+				const isLocal = protocol === 'file:';
 				if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 || (xhr.status === 0 && isLocal && xhr.responseText)) {
 					dataType = dataType || mimeToDataType(settings.mimeType || xhr.getResponseHeader('content-type'));
 					result = xhr.responseText;
@@ -193,8 +195,8 @@
 						ajaxSuccess(result, xhr, settings);
 					}
 				} else {
-					var status = xhr.status ? 'error' : 'abort';
-					var statusText = xhr.statusText || null;
+					let status = xhr.status ? 'error' : 'abort';
+					let statusText = xhr.statusText || null;
 					if(isLocal) {
 						status = 'error';
 						statusText = '404';
@@ -215,7 +217,7 @@
 			}
 		}
 
-		var async = 'async' in settings ? settings.async : true;
+		const async = 'async' in settings ? settings.async : true;
 
 		xhr.open(settings.type.toUpperCase(), settings.url, async, settings.username, settings.password);
 
@@ -236,7 +238,7 @@
 	};
 
 	$.param = function(obj, traditional) {
-		var params = [];
+		const params = [];
 		params.add = function(k, v) {
 			this.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
 		};
@@ -248,13 +250,13 @@
 	};
 
 	$.post = function( /* url, data, success, dataType */ ) {
-		var options = parseArguments.apply(null, arguments);
+		let options = parseArguments.apply(null, arguments);
 		options.type = 'POST';
 		return $.ajax(options);
 	};
 
 	$.getJSON = function( /* url, data, success */ ) {
-		var options = parseArguments.apply(null, arguments);
+		let options = parseArguments.apply(null, arguments);
 		options.dataType = 'json';
 		return $.ajax(options);
 	};
@@ -262,7 +264,7 @@
 	$.fn.load = function(url, data, success) {
 		if(!this.length)
 			return this;
-		var self = this,
+		const self = this,
 			parts = url.split(/\s/),
 			selector,
 			options = parseArguments(url, data, success),
@@ -271,12 +273,12 @@
 			options.url = parts[0], selector = parts[1];
 		options.success = function(response) {
 			if(selector) {
-				var div = document.createElement('div');
+				const div = document.createElement('div');
 				div.innerHTML = response.replace(rscript, "");
-				var selectorDiv = document.createElement('div');
-				var childs = div.querySelectorAll(selector);
+				const selectorDiv = document.createElement('div');
+				const childs = div.querySelectorAll(selector);
 				if(childs && childs.length > 0) {
-					for(var i = 0, len = childs.length; i < len; i++) {
+					for(let i = 0, len = childs.length; i < len; i++) {
 						selectorDiv.appendChild(childs[i]);
 					}
 				}

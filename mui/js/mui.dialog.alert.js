@@ -1,3 +1,5 @@
+'use strict';
+
 (function($, window) {
 	/**
 	 * 警告消息框

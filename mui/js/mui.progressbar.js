@@ -1,22 +1,24 @@
+'use strict';
+
 (function($, document) {
-	var CLASS_PROGRESSBAR = $.className('progressbar');
-	var CLASS_PROGRESSBAR_IN = $.className('progressbar-in');
-	var CLASS_PROGRESSBAR_OUT = $.className('progressbar-out');
-	var CLASS_PROGRESSBAR_INFINITE = $.className('progressbar-infinite');
+	const CLASS_PROGRESSBAR = $.className('progressbar');
+	const CLASS_PROGRESSBAR_IN = $.className('progressbar-in');
+	const CLASS_PROGRESSBAR_OUT = $.className('progressbar-out');
+	const CLASS_PROGRESSBAR_INFINITE = $.className('progressbar-infinite');
 
-	var SELECTOR_PROGRESSBAR = $.classSelector('.progressbar');
+	const SELECTOR_PROGRESSBAR = $.classSelector('.progressbar');
 
-	var _findProgressbar = function(container) {
+	const _findProgressbar = function(container) {
 		container = $(container || 'body');
 		if (container.length === 0) return;
 		container = container[0];
 		if (container.classList.contains(CLASS_PROGRESSBAR)) {
 			return container;
 		}
-		var progressbars = container.querySelectorAll(SELECTOR_PROGRESSBAR);
+		let progressbars = container.querySelectorAll(SELECTOR_PROGRESSBAR);
 		if (progressbars) {
-			for (var i = 0, len = progressbars.length; i < len; i++) {
-				var progressbar = progressbars[i];
+			for (let i = 0, len = progressbars.length; i < len; i++) {
+				let progressbar = progressbars[i];
 				if (progressbar.parentNode === container) {
 					return progressbar;
 				}
@@ -29,7 +31,7 @@
 	 * @param {Object} progress 可选，undefined表示循环，数字表示具体进度
 	 * @param {Object} color 可选，指定颜色样式(目前暂未提供实际样式，可暂时不暴露此参数)
 	 */
-	var showProgressbar = function(container, progress, color) {
+	let showProgressbar = function(container, progress, color) {
 		if (typeof container === 'number') {
 			color = progress;
 			progress = container;
@@ -42,10 +44,10 @@
 		if (container.classList.contains(CLASS_PROGRESSBAR)) {
 			progressbar = container;
 		} else {
-			var progressbars = container.querySelectorAll(SELECTOR_PROGRESSBAR + ':not(.' + CLASS_PROGRESSBAR_OUT + ')');
+			const progressbars = container.querySelectorAll(SELECTOR_PROGRESSBAR + ':not(.' + CLASS_PROGRESSBAR_OUT + ')');
 			if (progressbars) {
-				for (var i = 0, len = progressbars.length; i < len; i++) {
-					var _progressbar = progressbars[i];
+				for (let i = 0, len = progressbars.length; i < len; i++) {
+					const _progressbar = progressbars[i];
 					if (_progressbar.parentNode === container) {
 						progressbar = _progressbar;
 						break;
@@ -70,12 +72,12 @@
 	 * 关闭进度条 
 	 * @param {Object} container 可选，默认body，支持selector,DOM Node,mui wrapper
 	 */
-	var hideProgressbar = function(container) {
-		var progressbar = _findProgressbar(container);
+	let hideProgressbar = function(container) {
+		let progressbar = _findProgressbar(container);
 		if (!progressbar) {
 			return;
 		}
-		var classList = progressbar.classList;
+		const classList = progressbar.classList;
 		if (!classList.contains(CLASS_PROGRESSBAR_IN) || classList.contains(CLASS_PROGRESSBAR_OUT)) {
 			return;
 		}
@@ -93,21 +95,21 @@
 	 * @param {Object} progress 可选，默认0 取值范围[0-100]
 	 * @param {Object} speed 进度条动画时间
 	 */
-	var setProgressbar = function(container, progress, speed) {
+	let setProgressbar = function(container, progress, speed) {
 		if (typeof container === 'number') {
 			speed = progress;
 			progress = container;
 			container = false;
 		}
-		var progressbar = _findProgressbar(container);
+		let progressbar = _findProgressbar(container);
 		if (!progressbar || progressbar.classList.contains(CLASS_PROGRESSBAR_INFINITE)) {
 			return;
 		}
 		if (progress) progress = Math.min(Math.max(progress, 0), 100);
 		progressbar.offsetHeight;
-		var span = progressbar.querySelector('span');
+		const span = progressbar.querySelector('span');
 		if (span) {
-			var style = span.style;
+			const style = span.style;
 			style.webkitTransform = 'translate3d(' + (-100 + progress) + '%,0,0)';
 			if (typeof speed !== 'undefined') {
 				style.webkitTransitionDuration = speed + 'ms';
@@ -118,11 +120,11 @@
 		return progressbar;
 	};
 	$.fn.progressbar = function(options) {
-		var progressbarApis = [];
+		const progressbarApis = [];
 		options = options || {};
 		this.each(function() {
-			var self = this;
-			var progressbarApi = self.mui_plugin_progressbar;
+			const self = this;
+			let progressbarApi = self.mui_plugin_progressbar;
 			if (!progressbarApi) {
 				self.mui_plugin_progressbar = progressbarApi = {
 					options: options,

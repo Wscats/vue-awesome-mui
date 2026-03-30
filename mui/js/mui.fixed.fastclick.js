@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * fastclick(only for radio,checkbox)
  */
@@ -9,7 +11,7 @@
 		return;
 	}
 
-	var handle = function(event, target) {
+	const handle = function(event, target) {
 		if (target.tagName === 'LABEL') {
 			if (target.parentNode) {
 				target = target.parentNode.querySelector('input');
@@ -29,8 +31,8 @@
 		handle: handle,
 		target: false
 	});
-	var dispatchEvent = function(event) {
-		var targetElement = $.targets.click;
+	const dispatchEvent = function(event) {
+		const targetElement = $.targets.click;
 		if (targetElement) {
 			var clickEvent, touch;
 			// On some Android devices activeElement needs to be blurred otherwise the synthetic click will have no effect

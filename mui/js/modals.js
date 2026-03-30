@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Modals
  * @param {type} $
@@ -7,11 +9,11 @@
  * @returns {undefined}
  */
 (function($, window, document, name) {
-	var CLASS_MODAL = $.className('modal');
+	const CLASS_MODAL = $.className('modal');
 
-	var handle = function(event, target) {
+	const handle = function(event, target) {
 		if (target.tagName === 'A' && target.hash) {
-			var modal = document.getElementById(target.hash.replace('#', ''));
+			const modal = document.getElementById(target.hash.replace('#', ''));
 			if (modal && modal.classList.contains(CLASS_MODAL)) {
 				return modal;
 			}

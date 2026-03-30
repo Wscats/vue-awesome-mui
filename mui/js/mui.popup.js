@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Popup(alert,confirm,prompt)  
  * @param {Object} $
@@ -5,23 +7,23 @@
  * @param {Object} document
  */
 (function($, window, document) {
-    var CLASS_POPUP = $.className('popup');
-    var CLASS_POPUP_BACKDROP = $.className('popup-backdrop');
-    var CLASS_POPUP_IN = $.className('popup-in');
-    var CLASS_POPUP_OUT = $.className('popup-out');
-    var CLASS_POPUP_INNER = $.className('popup-inner');
-    var CLASS_POPUP_TITLE = $.className('popup-title');
-    var CLASS_POPUP_TEXT = $.className('popup-text');
-    var CLASS_POPUP_INPUT = $.className('popup-input');
-    var CLASS_POPUP_BUTTONS = $.className('popup-buttons');
-    var CLASS_POPUP_BUTTON = $.className('popup-button');
-    var CLASS_POPUP_BUTTON_BOLD = $.className('popup-button-bold');
-    var CLASS_POPUP_BACKDROP = $.className('popup-backdrop');
-    var CLASS_ACTIVE = $.className('active');
+    const CLASS_POPUP = $.className('popup');
+    let CLASS_POPUP_BACKDROP = $.className('popup-backdrop');
+    const CLASS_POPUP_IN = $.className('popup-in');
+    const CLASS_POPUP_OUT = $.className('popup-out');
+    const CLASS_POPUP_INNER = $.className('popup-inner');
+    const CLASS_POPUP_TITLE = $.className('popup-title');
+    const CLASS_POPUP_TEXT = $.className('popup-text');
+    const CLASS_POPUP_INPUT = $.className('popup-input');
+    const CLASS_POPUP_BUTTONS = $.className('popup-buttons');
+    const CLASS_POPUP_BUTTON = $.className('popup-button');
+    const CLASS_POPUP_BUTTON_BOLD = $.className('popup-button-bold');
+    const CLASS_POPUP_BACKDROP = $.className('popup-backdrop');
+    const CLASS_ACTIVE = $.className('active');
 
-    var popupStack = [];
-    var backdrop = (function() {
-        var element = document.createElement('div');
+    const popupStack = [];
+    const backdrop = (function() {
+        const element = document.createElement('div');
         element.classList.add(CLASS_POPUP_BACKDROP);
         element.addEventListener($.EVENT_MOVE, $.preventDefault);
         element.addEventListener('webkitTransitionEnd', function() {
@@ -32,26 +34,26 @@
         return element;
     }());
 
-    var createInput = function(placeholder) {
+    const createInput = function(placeholder) {
         return '<div class="' + CLASS_POPUP_INPUT + '"><input type="text" autofocus placeholder="' + (placeholder || '') + '"/></div>';
     };
-    var createInner = function(message, title, extra) {
+    const createInner = function(message, title, extra) {
         return '<div class="' + CLASS_POPUP_INNER + '"><div class="' + CLASS_POPUP_TITLE + '">' + title + '</div><div class="' + CLASS_POPUP_TEXT + '">' + message.replace(/\r\n/g, "<br/>").replace(/\n/g, "<br/>") + '</div>' + (extra || '') + '</div>';
     };
-    var createButtons = function(btnArray) {
-        var length = btnArray.length;
-        var btns = [];
-        for (var i = 0; i < length; i++) {
+    const createButtons = function(btnArray) {
+        const length = btnArray.length;
+        let btns = [];
+        for (let i = 0; i < length; i++) {
             btns.push('<span class="' + CLASS_POPUP_BUTTON + (i === length - 1 ? (' ' + CLASS_POPUP_BUTTON_BOLD) : '') + '">' + btnArray[i] + '</span>');
         }
         return '<div class="' + CLASS_POPUP_BUTTONS + '">' + btns.join('') + '</div>';
     };
 
-    var createPopup = function(html, callback) {
-        var popupElement = document.createElement('div');
+    const createPopup = function(html, callback) {
+        let popupElement = document.createElement('div');
         popupElement.className = CLASS_POPUP;
         popupElement.innerHTML = html;
-        var removePopupElement = function() {
+        const removePopupElement = function() {
             popupElement.parentNode && popupElement.parentNode.removeChild(popupElement);
             popupElement = null;
         };
@@ -72,13 +74,13 @@
             backdrop.offsetHeight;
             backdrop.classList.add(CLASS_ACTIVE);
         }
-        var btns = $.qsa('.' + CLASS_POPUP_BUTTON, popupElement);
-        var input = popupElement.querySelector('.' + CLASS_POPUP_INPUT + ' input');
-        var popup = {
+        const btns = $.qsa('.' + CLASS_POPUP_BUTTON, popupElement);
+        const input = popupElement.querySelector('.' + CLASS_POPUP_INPUT + ' input');
+        const popup = {
             element: popupElement,
             close: function(index, animate) {
                 if (popupElement) {
-                    var result = callback && callback({
+                    const result = callback && callback({
                         index: index || 0,
                         value: input && input.value || ''
                     });
@@ -101,7 +103,7 @@
                 }
             }
         };
-        var handleEvent = function(e) {
+        const handleEvent = function(e) {
             popup.close(btns.indexOf(e.target));
         };
         $(popupElement).on('tap', '.' + CLASS_POPUP_BUTTON, handleEvent);
@@ -122,7 +124,7 @@
         });
         return popup;
     };
-    var createAlert = function(message, title, btnValue, callback, type) {
+    const createAlert = function(message, title, btnValue, callback, type) {
         if (typeof message === 'undefined') {
             return;
         } else {
@@ -142,7 +144,7 @@
         }
         return plus.nativeUI.alert(message, callback, title || '提示', btnValue || '确定');
     };
-    var createConfirm = function(message, title, btnArray, callback, type) {
+    const createConfirm = function(message, title, btnArray, callback, type) {
         if (typeof message === 'undefined') {
             return;
         } else {
@@ -162,7 +164,7 @@
         }
         return plus.nativeUI.confirm(message, callback, title, btnArray || ['取消', '确认']);
     };
-    var createPrompt = function(message, placeholder, title, btnArray, callback, type) {
+    const createPrompt = function(message, placeholder, title, btnArray, callback, type) {
         if (typeof message === 'undefined') {
             return;
         } else {
@@ -188,7 +190,7 @@
         }
         return plus.nativeUI.prompt(message, callback, title || '提示', placeholder, btnArray || ['取消', '确认']);
     };
-    var closePopup = function() {
+    let closePopup = function() {
         if (popupStack.length) {
             popupStack[popupStack.length - 1]['close']();
             return true;
@@ -196,7 +198,7 @@
             return false;
         }
     };
-    var closePopups = function() {
+    let closePopups = function() {
         while (popupStack.length) {
             popupStack[popupStack.length - 1]['close']();
         }

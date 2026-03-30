@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * fixed trim
  * @param {type} undefined
@@ -26,8 +28,8 @@
 				cancelable: false,
 				detail: undefined
 			};
-			var evt = document.createEvent('Events');
-			var bubbles = true;
+			const evt = document.createEvent('Events');
+			let bubbles = true;
 			for (var name in params) {
 				(name === 'bubbles') ? (bubbles = !!params[name]) : (evt[name] = params[name]);
 			}

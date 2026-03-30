@@ -1,25 +1,27 @@
+'use strict';
+
 (function($, window, document) {
-	var STATE_BEFORECHANGEOFFSET = 'beforeChangeOffset';
-	var STATE_AFTERCHANGEOFFSET = 'afterChangeOffset';
+	const STATE_BEFORECHANGEOFFSET = 'beforeChangeOffset';
+	const STATE_AFTERCHANGEOFFSET = 'afterChangeOffset';
 
-	var EVENT_PULLSTART = 'pullstart';
-	var EVENT_PULLING = 'pulling';
-	var EVENT_BEFORECHANGEOFFSET = STATE_BEFORECHANGEOFFSET;
-	var EVENT_AFTERCHANGEOFFSET = STATE_AFTERCHANGEOFFSET;
-	var EVENT_DRAGENDAFTERCHANGEOFFSET = 'dragEndAfterChangeOffset';
+	const EVENT_PULLSTART = 'pullstart';
+	const EVENT_PULLING = 'pulling';
+	const EVENT_BEFORECHANGEOFFSET = STATE_BEFORECHANGEOFFSET;
+	const EVENT_AFTERCHANGEOFFSET = STATE_AFTERCHANGEOFFSET;
+	const EVENT_DRAGENDAFTERCHANGEOFFSET = 'dragEndAfterChangeOffset';
 
-	var CLASS_TRANSITIONING = $.className('transitioning');
-	var CLASS_PULL_TOP_TIPS = $.className('pull-top-tips');
-	var CLASS_PULL_BOTTOM_TIPS = $.className('pull-bottom-tips');
-	var CLASS_PULL_LOADING = $.className('pull-loading');
-	var CLASS_SCROLL = $.className('scroll');
+	const CLASS_TRANSITIONING = $.className('transitioning');
+	const CLASS_PULL_TOP_TIPS = $.className('pull-top-tips');
+	const CLASS_PULL_BOTTOM_TIPS = $.className('pull-bottom-tips');
+	const CLASS_PULL_LOADING = $.className('pull-loading');
+	const CLASS_SCROLL = $.className('scroll');
 
-	var CLASS_PULL_TOP_ARROW = $.className('pull-loading') + ' ' + $.className('icon') + ' ' + $.className('icon-pulldown');
-	var CLASS_PULL_TOP_ARROW_REVERSE = CLASS_PULL_TOP_ARROW + ' ' + $.className('reverse');
-	var CLASS_PULL_TOP_SPINNER = $.className('pull-loading') + ' ' + $.className('spinner');
-	var CLASS_HIDDEN = $.className('hidden');
+	const CLASS_PULL_TOP_ARROW = $.className('pull-loading') + ' ' + $.className('icon') + ' ' + $.className('icon-pulldown');
+	const CLASS_PULL_TOP_ARROW_REVERSE = CLASS_PULL_TOP_ARROW + ' ' + $.className('reverse');
+	const CLASS_PULL_TOP_SPINNER = $.className('pull-loading') + ' ' + $.className('spinner');
+	const CLASS_HIDDEN = $.className('hidden');
 
-	var SELECTOR_PULL_LOADING = '.' + CLASS_PULL_LOADING;
+	const SELECTOR_PULL_LOADING = '.' + CLASS_PULL_LOADING;
 	$.PullToRefresh = $.Class.extend({
 		init: function(element, options) {
 			this.element = element;
@@ -98,10 +100,10 @@
 			}
 		},
 		initPullDownTips: function() {
-			var self = this;
+			let self = this;
 			if ($.isFunction(self.options.down.callback)) {
 				self.pullDownTips = (function() {
-					var element = document.querySelector('.' + CLASS_PULL_TOP_TIPS);
+					let element = document.querySelector('.' + CLASS_PULL_TOP_TIPS);
 					if (element) {
 						element.parentNode.removeChild(element);
 					}
@@ -118,10 +120,10 @@
 			}
 		},
 		initPullUpTips: function() {
-			var self = this;
+			let self = this;
 			if ($.isFunction(self.options.up.callback)) {
 				self.pullUpTips = (function() {
-					var element = self.element.querySelector('.' + CLASS_PULL_BOTTOM_TIPS);
+					let element = self.element.querySelector('.' + CLASS_PULL_BOTTOM_TIPS);
 					if (!element) {
 						element = document.createElement('div');
 						element.classList.add(CLASS_PULL_BOTTOM_TIPS);
@@ -142,7 +144,7 @@
 			}
 		},
 		_dragup: function(e) {
-			var self = this;
+			let self = this;
 			if (self.loading) {
 				return;
 			}
@@ -164,9 +166,9 @@
 				return false;
 			}
 			if (this.isInScroll) {
-				var scrollId = this.element.parentNode.getAttribute('data-scroll');
+				let scrollId = this.element.parentNode.getAttribute('data-scroll');
 				if (scrollId) {
-					var scrollApi = $.data[scrollId];
+					let scrollApi = $.data[scrollId];
 					return scrollApi.y === scrollApi.maxScrollY;
 				}
 			}
@@ -177,9 +179,9 @@
 				return false;
 			}
 			if (this.isInScroll) {
-				var scrollId = this.element.parentNode.getAttribute('data-scroll');
+				const scrollId = this.element.parentNode.getAttribute('data-scroll');
 				if (scrollId) {
-					var scrollApi = $.data[scrollId];
+					const scrollApi = $.data[scrollId];
 					return scrollApi.y === 0;
 				}
 			}
@@ -191,7 +193,7 @@
 				e.detail.gesture.preventDefault();
 				return;
 			}
-			var detail = e.detail;
+			const detail = e.detail;
 			if (!this.isDragging) {
 				if (detail.direction === 'down' && this._canPullDown()) {
 					if (document.querySelector('.' + CLASS_PULL_TOP_TIPS)) {
@@ -210,11 +212,11 @@
 			if (this.isDragging) {
 				e.stopPropagation();
 				e.detail.gesture.preventDefault();
-				var deltaY = detail.deltaY - this.startDeltaY;
+				let deltaY = detail.deltaY - this.startDeltaY;
 				deltaY = Math.min(deltaY, 1.5 * this.options.down.height);
 				this.deltaY = deltaY;
 				this._pulling(deltaY);
-				var state = deltaY > this.options.down.height ? STATE_AFTERCHANGEOFFSET : STATE_BEFORECHANGEOFFSET;
+				let state = deltaY > this.options.down.height ? STATE_AFTERCHANGEOFFSET : STATE_BEFORECHANGEOFFSET;
 				if (this.state !== state) {
 					this.state = state;
 					if (this.state === STATE_AFTERCHANGEOFFSET) {
@@ -227,7 +229,7 @@
 					this['_' + state](deltaY);
 				}
 				if ($.os.ios && parseFloat($.os.version) >= 8) {
-					var clientY = detail.gesture.touches[0].clientY;
+					const clientY = detail.gesture.touches[0].clientY;
 					if ((clientY + 10) > window.innerHeight || clientY < 10) {
 						this._dragend(e);
 						return;
@@ -236,7 +238,7 @@
 			}
 		},
 		_dragend: function(e) {
-			var self = this;
+			let self = this;
 			if (self.isDragging) {
 				self.isDragging = false;
 				self._dragEndAfterChangeOffset(self.isNeedRefresh);
@@ -369,7 +371,7 @@
 			}
 		},
 		setStopped: function(stopped) {
-			if (stopped != this.stopped) {
+			if (stopped !== this.stopped) {
 				this.stopped = stopped;
 				this.pullUpTips && this.pullUpTips.classList[stopped ? 'add' : 'remove'](CLASS_HIDDEN);
 			}
@@ -384,12 +386,12 @@
 		}
 	});
 	$.fn.pullToRefresh = function(options) {
-		var pullRefreshApis = [];
+		const pullRefreshApis = [];
 		options = options || {};
 		this.each(function() {
-			var self = this;
-			var pullRefreshApi = null;
-			var id = self.getAttribute('data-pullToRefresh');
+			const self = this;
+			let pullRefreshApi = null;
+			let id = self.getAttribute('data-pullToRefresh');
 			if (!id) {
 				id = ++$.uuid;
 				$.data[id] = pullRefreshApi = new $.PullToRefresh(self, options);

@@ -1,3 +1,5 @@
+'use strict';
+
 (function($, window) {
 	/**
 	 * 确认消息框

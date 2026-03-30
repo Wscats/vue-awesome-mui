@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Popovers
  * @param {type} $
@@ -9,19 +11,19 @@
  */
 (function($, window, document, name) {
 
-	var CLASS_POPOVER = $.className('popover');
-	var CLASS_POPOVER_ARROW = $.className('popover-arrow');
-	var CLASS_ACTION_POPOVER = $.className('popover-action');
-	var CLASS_BACKDROP = $.className('backdrop');
-	var CLASS_BAR_POPOVER = $.className('bar-popover');
-	var CLASS_BAR_BACKDROP = $.className('bar-backdrop');
-	var CLASS_ACTION_BACKDROP = $.className('backdrop-action');
-	var CLASS_ACTIVE = $.className('active');
-	var CLASS_BOTTOM = $.className('bottom');
+	const CLASS_POPOVER = $.className('popover');
+	const CLASS_POPOVER_ARROW = $.className('popover-arrow');
+	const CLASS_ACTION_POPOVER = $.className('popover-action');
+	const CLASS_BACKDROP = $.className('backdrop');
+	const CLASS_BAR_POPOVER = $.className('bar-popover');
+	const CLASS_BAR_BACKDROP = $.className('bar-backdrop');
+	const CLASS_ACTION_BACKDROP = $.className('backdrop-action');
+	const CLASS_ACTIVE = $.className('active');
+	const CLASS_BOTTOM = $.className('bottom');
 
 
 
-	var handle = function(event, target) {
+	const handle = function(event, target) {
 		if (target.tagName === 'A' && target.hash) {
 			$.targets._popover = document.getElementById(target.hash.replace('#', ''));
 			if ($.targets._popover && $.targets._popover.classList.contains(CLASS_POPOVER)) {
@@ -42,24 +44,24 @@
 		isContinue: true
 	});
 
-	var onPopoverShown = function(e) {
+	const onPopoverShown = function(e) {
 		this.removeEventListener('webkitTransitionEnd', onPopoverShown);
 		this.addEventListener($.EVENT_MOVE, $.preventDefault);
 		$.trigger(this, 'shown', this);
 	}
-	var onPopoverHidden = function(e) {
+	const onPopoverHidden = function(e) {
 		setStyle(this, 'none');
 		this.removeEventListener('webkitTransitionEnd', onPopoverHidden);
 		this.removeEventListener($.EVENT_MOVE, $.preventDefault);
 		$.trigger(this, 'hidden', this);
 	};
 
-	var backdrop = (function() {
-		var element = document.createElement('div');
+	const backdrop = (function() {
+		let element = document.createElement('div');
 		element.classList.add(CLASS_BACKDROP);
 		element.addEventListener($.EVENT_MOVE, $.preventDefault);
 		element.addEventListener('tap', function(e) {
-			var popover = $.targets._popover;
+			let popover = $.targets._popover;
 			if (popover) {
 				popover.addEventListener('webkitTransitionEnd', onPopoverHidden);
 				popover.classList.remove(CLASS_ACTIVE);
@@ -70,7 +72,7 @@
 		return element;
 	}());
 	var removeBackdropTimer;
-	var removeBackdrop = function(popover) {
+	const removeBackdrop = function(popover) {
 		backdrop.setAttribute('style', 'opacity:0');
 		$.targets.popover = $.targets._popover = null; //reset
 		removeBackdropTimer = $.later(function() {
@@ -83,8 +85,8 @@
 		if (!$.targets.popover) {
 			return;
 		}
-		var toggle = false;
-		var target = e.target;
+		let toggle = false;
+		let target = e.target;
 		for (; target && target !== document; target = target.parentNode) {
 			if (target === $.targets.popover) {
 				toggle = true;
@@ -97,7 +99,7 @@
 
 	});
 
-	var togglePopover = function(popover, anchor, state) {
+	const togglePopover = function(popover, anchor, state) {
 		if ((state === 'show' && popover.classList.contains(CLASS_ACTIVE)) || (state === 'hide' && !popover.classList.contains(CLASS_ACTIVE))) {
 			return;
 		}
@@ -107,7 +109,7 @@
 		popover.removeEventListener('webkitTransitionEnd', onPopoverHidden);
 		backdrop.classList.remove(CLASS_BAR_BACKDROP);
 		backdrop.classList.remove(CLASS_ACTION_BACKDROP);
-		var _popover = document.querySelector($.classSelector('.popover.active'));
+		let _popover = document.querySelector($.classSelector('.popover.active'));
 		if (_popover) {
 			//			_popover.setAttribute('style', '');
 			_popover.addEventListener('webkitTransitionEnd', onPopoverHidden);
@@ -119,7 +121,7 @@
 				return;
 			}
 		}
-		var isActionSheet = false;
+		let isActionSheet = false;
 		if (popover.classList.contains(CLASS_BAR_POPOVER) || popover.classList.contains(CLASS_ACTION_POPOVER)) { //navBar
 			if (popover.classList.contains(CLASS_ACTION_POPOVER)) { //action sheet popover
 				isActionSheet = true;
@@ -128,9 +130,9 @@
 				backdrop.classList.add(CLASS_BAR_BACKDROP);
 				//				if (anchor) {
 				//					if (anchor.parentNode) {
-				//						var offsetWidth = anchor.offsetWidth;
-				//						var offsetLeft = anchor.offsetLeft;
-				//						var innerWidth = window.innerWidth;
+				//						const offsetWidth = anchor.offsetWidth;
+				//						const offsetLeft = anchor.offsetLeft;
+				//						const innerWidth = window.innerWidth;
 				//						popover.style.left = (Math.min(Math.max(offsetLeft, defaultPadding), innerWidth - offsetWidth - defaultPadding)) + "px";
 				//					} else {
 				//						//TODO anchor is position:{left,top,bottom,right}
@@ -147,8 +149,8 @@
 		backdrop.classList.add(CLASS_ACTIVE);
 		popover.addEventListener('webkitTransitionEnd', onPopoverShown);
 	};
-	var setStyle = function(popover, display, top, left) {
-		var style = popover.style;
+	const setStyle = function(popover, display, top, left) {
+		const style = popover.style;
 		if (typeof display !== 'undefined')
 			style.display = display;
 		if (typeof top !== 'undefined')
@@ -156,7 +158,7 @@
 		if (typeof left !== 'undefined')
 			style.left = left + 'px';
 	};
-	var calPosition = function(popover, anchor, isActionSheet) {
+	const calPosition = function(popover, anchor, isActionSheet) {
 		if (!popover || !anchor) {
 			return;
 		}
@@ -166,33 +168,33 @@
 			return;
 		}
 
-		var wWidth = window.innerWidth;
-		var wHeight = window.innerHeight;
+		const wWidth = window.innerWidth;
+		const wHeight = window.innerHeight;
 
-		var pWidth = popover.offsetWidth;
-		var pHeight = popover.offsetHeight;
+		const pWidth = popover.offsetWidth;
+		const pHeight = popover.offsetHeight;
 
-		var aWidth = anchor.offsetWidth;
-		var aHeight = anchor.offsetHeight;
-		var offset = $.offset(anchor);
+		const aWidth = anchor.offsetWidth;
+		const aHeight = anchor.offsetHeight;
+		const offset = $.offset(anchor);
 
-		var arrow = popover.querySelector('.' + CLASS_POPOVER_ARROW);
+		let arrow = popover.querySelector('.' + CLASS_POPOVER_ARROW);
 		if (!arrow) {
 			arrow = document.createElement('div');
 			arrow.className = CLASS_POPOVER_ARROW;
 			popover.appendChild(arrow);
 		}
-		var arrowSize = arrow && arrow.offsetWidth / 2 || 0;
+		const arrowSize = arrow && arrow.offsetWidth / 2 || 0;
 
 
 
-		var pTop = 0;
-		var pLeft = 0;
-		var diff = 0;
-		var arrowLeft = 0;
-		var defaultPadding = popover.classList.contains(CLASS_ACTION_POPOVER) ? 0 : 5;
+		let pTop = 0;
+		let pLeft = 0;
+		let diff = 0;
+		let arrowLeft = 0;
+		const defaultPadding = popover.classList.contains(CLASS_ACTION_POPOVER) ? 0 : 5;
 
-		var position = 'top';
+		let position = 'top';
 		if ((pHeight + arrowSize) < (offset.top - window.pageYOffset)) { //top
 			pTop = offset.top - pHeight - arrowSize;
 		} else if ((pHeight + arrowSize) < (wHeight - (offset.top - window.pageYOffset) - aHeight)) { //bottom
@@ -227,13 +229,13 @@
 	};
 
 	$.createMask = function(callback) {
-		var element = document.createElement('div');
+		const element = document.createElement('div');
 		element.classList.add(CLASS_BACKDROP);
 		element.addEventListener($.EVENT_MOVE, $.preventDefault);
 		element.addEventListener('tap', function() {
 			mask.close();
 		});
-		var mask = [element];
+		const mask = [element];
 		mask._show = false;
 		mask.show = function() {
 			mask._show = true;
@@ -246,7 +248,7 @@
 				mask._show = false;
 				element.setAttribute('style', 'opacity:0');
 				$.later(function() {
-					var body = document.body;
+					const body = document.body;
 					element.parentNode === body && body.removeChild(element);
 				}, 350);
 			}
@@ -264,7 +266,7 @@
 		return mask;
 	};
 	$.fn.popover = function() {
-		var args = arguments;
+		const args = arguments;
 		this.each(function() {
 			$.targets._popover = this;
 			if (args[0] === 'show' || args[0] === 'hide' || args[0] === 'toggle') {

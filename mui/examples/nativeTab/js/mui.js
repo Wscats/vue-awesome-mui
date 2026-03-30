@@ -1,3 +1,5 @@
+'use strict';
+
 /*!
  * =====================================================
  * Mui v3.7.0 (http://dev.dcloud.net.cn/mui)
@@ -7,13 +9,13 @@
  * MUI核心JS
  * @type _L4.$|Function
  */
-var mui = (function(document, undefined) {
-	var readyRE = /complete|loaded|interactive/;
-	var idSelectorRE = /^#([\w-]+)$/;
-	var classSelectorRE = /^\.([\w-]+)$/;
-	var tagSelectorRE = /^[\w-]+$/;
-	var translateRE = /translate(?:3d)?\((.+?)\)/;
-	var translateMatrixRE = /matrix(3d)?\((.+?)\)/;
+let mui = (function(document, undefined) {
+	const readyRE = /complete|loaded|interactive/;
+	const idSelectorRE = /^#([\w-]+)$/;
+	const classSelectorRE = /^\.([\w-]+)$/;
+	const tagSelectorRE = /^[\w-]+$/;
+	const translateRE = /translate(?:3d)?\((.+?)\)/;
+	const translateMatrixRE = /matrix(3d)?\((.+?)\)/;
 
 	var $ = function(selector, context) {
 		context = context || document;
@@ -31,7 +33,7 @@ var mui = (function(document, undefined) {
 			try {
 				selector = selector.trim();
 				if (idSelectorRE.test(selector)) {
-					var found = document.getElementById(RegExp.$1);
+					const found = document.getElementById(RegExp.$1);
 					return wrap(found ? [found] : []);
 				}
 				return wrap($.qsa(selector, context), selector);
@@ -40,7 +42,7 @@ var mui = (function(document, undefined) {
 		return wrap();
 	};
 
-	var wrap = function(dom, selector) {
+	const wrap = function(dom, selector) {
 		dom = dom || [];
 		Object.setPrototypeOf(dom, $.fn);
 		dom.selector = selector || '';
@@ -81,7 +83,7 @@ var mui = (function(document, undefined) {
 		}
 
 		for (; i < length; i++) {
-			if ((options = arguments[i]) != null) {
+			if ((options = arguments[i]) !== null) {
 				for (name in options) {
 					src = target[name];
 					copy = options[name];
@@ -124,7 +126,7 @@ var mui = (function(document, undefined) {
 	$.filter = [].filter;
 
 	$.type = function(obj) {
-		return obj == null ? String(obj) : class2type[{}.toString.call(obj)] || "object";
+		return obj === null ? String(obj) : class2type[{}.toString.call(obj)] || "object";
 	};
 	/**
 	 * mui isArray
@@ -138,8 +140,8 @@ var mui = (function(document, undefined) {
 	 * @param {Object} obj
 	 */
 	$.isArrayLike = function(obj) {
-		var length = !!obj && "length" in obj && obj.length;
-		var type = $.type(obj);
+		let length = !!obj && "length" in obj && obj.length;
+		let type = $.type(obj);
 		if (type === "function" || $.isWindow(obj)) {
 			return false;
 		}
@@ -150,7 +152,7 @@ var mui = (function(document, undefined) {
 	 * mui isWindow(需考虑obj为undefined的情况)
 	 */
 	$.isWindow = function(obj) {
-		return obj != null && obj === obj.window;
+		return obj !== null && obj === obj.window;
 	};
 	/**
 	 * mui isObject
@@ -218,9 +220,9 @@ var mui = (function(document, undefined) {
 	 */
 	$.buffer = function(fn, ms, context) {
 		var timer;
-		var lastStart = 0;
-		var lastEnd = 0;
-		var ms = ms || 150;
+		let lastStart = 0;
+		let lastEnd = 0;
+		const ms = ms || 150;
 
 		function run() {
 			if (timer) {
@@ -312,7 +314,7 @@ var mui = (function(document, undefined) {
 	 * @returns {styles}
 	 */
 	$.getStyles = function(element, property) {
-		var styles = element.ownerDocument.defaultView.getComputedStyle(element, null);
+		let styles = element.ownerDocument.defaultView.getComputedStyle(element, null);
 		if (property) {
 			return styles.getPropertyValue(property) || styles[property];
 		}
@@ -325,7 +327,7 @@ var mui = (function(document, undefined) {
 	 * @returns {Object}
 	 */
 	$.parseTranslate = function(translateString, position) {
-		var result = translateString.match(translateRE || '');
+		let result = translateString.match(translateRE || '');
 		if (!result || !result[1]) {
 			result = ['', '0,0,0'];
 		}
@@ -347,8 +349,8 @@ var mui = (function(document, undefined) {
 	 * @returns {Object}
 	 */
 	$.parseTranslateMatrix = function(translateString, position) {
-		var matrix = translateString.match(translateMatrixRE);
-		var is3D = matrix && matrix[1];
+		let matrix = translateString.match(translateMatrixRE);
+		const is3D = matrix && matrix[1];
 		if (matrix) {
 			matrix = matrix[2].split(",");
 			if (is3D === "3d")
@@ -360,7 +362,7 @@ var mui = (function(document, undefined) {
 		} else {
 			matrix = [0, 0, 0];
 		}
-		var result = {
+		let result = {
 			x: parseFloat(matrix[0]),
 			y: parseFloat(matrix[1]),
 			z: parseFloat(matrix[2])
@@ -372,7 +374,7 @@ var mui = (function(document, undefined) {
 	};
 	$.hooks = {};
 	$.addAction = function(type, hook) {
-		var hooks = $.hooks[type];
+		let hooks = $.hooks[type];
 		if (!hooks) {
 			hooks = [];
 		}
@@ -402,8 +404,8 @@ var mui = (function(document, undefined) {
 	 */
 	$.later = function(fn, when, context, data) {
 		when = when || 0;
-		var m = fn;
-		var d = data;
+		let m = fn;
+		const d = data;
 		var f;
 		var r;
 
@@ -427,7 +429,7 @@ var mui = (function(document, undefined) {
 	$.now = Date.now || function() {
 		return +new Date();
 	};
-	var class2type = {};
+	const class2type = {};
 	$.each(['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Object', 'Error'], function(i, name) {
 		class2type["[object " + name + "]"] = name.toLowerCase();
 	});
@@ -467,10 +469,10 @@ var mui = (function(document, undefined) {
 (function($, window) {
 	function detect(ua) {
 		this.os = {};
-		var funcs = [
+		const funcs = [
 
 			function() { //wechat
-				var wechat = ua.match(/(MicroMessenger)\/([\d\.]+)/i);
+				let wechat = ua.match(/(MicroMessenger)\/([\d\.]+)/i);
 				if (wechat) { //wechat
 					this.os.wechat = {
 						version: wechat[2].replace(/_/g, '.')
@@ -479,7 +481,7 @@ var mui = (function(document, undefined) {
 				return false;
 			},
 			function() { //android
-				var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
+				let android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
 				if (android) {
 					this.os.android = true;
 					this.os.version = android[2];
@@ -489,12 +491,12 @@ var mui = (function(document, undefined) {
 				return this.os.android === true;
 			},
 			function() { //ios
-				var iphone = ua.match(/(iPhone\sOS)\s([\d_]+)/);
+				let iphone = ua.match(/(iPhone\sOS)\s([\d_]+)/);
 				if (iphone) { //iphone
 					this.os.ios = this.os.iphone = true;
 					this.os.version = iphone[2].replace(/_/g, '.');
 				} else {
-					var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+					let ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
 					if (ipad) { //ipad
 						this.os.ios = this.os.ipad = true;
 						this.os.version = ipad[2].replace(/_/g, '.');
@@ -517,7 +519,7 @@ var mui = (function(document, undefined) {
 (function($, document) {
 	function detect(ua) {
 		this.os = this.os || {};
-		var plus = ua.match(/Html5Plus/i); //TODO 5\+Browser?
+		let plus = ua.match(/Html5Plus/i); //TODO 5\+Browser?
 		if (plus) {
 			this.os.plus = true;
 			$(function() {
@@ -552,24 +554,24 @@ var mui = (function(document, undefined) {
 	$.EVENT_CANCEL = 'touchcancel';
 	$.EVENT_CLICK = 'click';
 
-	var _mid = 1;
-	var delegates = {};
+	let _mid = 1;
+	const delegates = {};
 	//需要wrap的函数
-	var eventMethods = {
+	const eventMethods = {
 		preventDefault: 'isDefaultPrevented',
 		stopImmediatePropagation: 'isImmediatePropagationStopped',
 		stopPropagation: 'isPropagationStopped'
 	};
 	//默认true返回函数
-	var returnTrue = function() {
+	const returnTrue = function() {
 		return true
 	};
 	//默认false返回函数
-	var returnFalse = function() {
+	const returnFalse = function() {
 		return false
 	};
 	//wrap浏览器事件
-	var compatible = function(event, target) {
+	const compatible = function(event, target) {
 		if (!event.detail) {
 			event.detail = {
 				currentTarget: target
@@ -578,7 +580,7 @@ var mui = (function(document, undefined) {
 			event.detail.currentTarget = target;
 		}
 		$.each(eventMethods, function(name, predicate) {
-			var sourceMethod = event[name];
+			const sourceMethod = event[name];
 			event[name] = function() {
 				this[predicate] = returnTrue;
 				return sourceMethod && sourceMethod.apply(event, arguments)
@@ -588,19 +590,19 @@ var mui = (function(document, undefined) {
 		return event;
 	};
 	//简单的wrap对象_mid
-	var mid = function(obj) {
+	const mid = function(obj) {
 		return obj && (obj._mid || (obj._mid = _mid++));
 	};
 	//事件委托对象绑定的事件回调列表
-	var delegateFns = {};
+	const delegateFns = {};
 	//返回事件委托的wrap事件回调
-	var delegateFn = function(element, event, selector, callback) {
+	const delegateFn = function(element, event, selector, callback) {
 		return function(e) {
 			//same event
-			var callbackObjs = delegates[element._mid][event];
-			var handlerQueue = [];
-			var target = e.target;
-			var selectorAlls = {};
+			const callbackObjs = delegates[element._mid][event];
+			const handlerQueue = [];
+			let target = e.target;
+			let selectorAlls = {};
 			for (; target && target !== document; target = target.parentNode) {
 				if (target === element) {
 					break;
@@ -608,7 +610,7 @@ var mui = (function(document, undefined) {
 				if (~['click', 'tap', 'doubletap', 'longtap', 'hold'].indexOf(event) && (target.disabled || target.classList.contains('mui-disabled'))) {
 					break;
 				}
-				var matches = {};
+				let matches = {};
 				$.each(callbackObjs, function(selector, callbacks) { //same selector
 					selectorAlls[selector] || (selectorAlls[selector] = $.qsa(selector, element));
 					if (selectorAlls[selector] && ~(selectorAlls[selector]).indexOf(target)) {
@@ -628,7 +630,7 @@ var mui = (function(document, undefined) {
 			e = compatible(e); //compatible event
 			$.each(handlerQueue, function(index, handler) {
 				target = handler.element;
-				var tagName = target.tagName;
+				let tagName = target.tagName;
 				if (event === 'tap' && (tagName !== 'INPUT' && tagName !== 'TEXTAREA' && tagName !== 'SELECT')) {
 					e.preventDefault();
 					e.detail && e.detail.gesture && e.detail.gesture.preventDefault();
@@ -647,13 +649,13 @@ var mui = (function(document, undefined) {
 			}, true);
 		};
 	};
-	var findDelegateFn = function(element, event) {
-		var delegateCallbacks = delegateFns[mid(element)];
-		var result = [];
+	const findDelegateFn = function(element, event) {
+		let delegateCallbacks = delegateFns[mid(element)];
+		let result = [];
 		if (delegateCallbacks) {
 			result = [];
 			if (event) {
-				var filterFn = function(fn) {
+				const filterFn = function(fn) {
 					return fn.type === event;
 				}
 				return delegateCallbacks.filter(filterFn);
@@ -663,7 +665,7 @@ var mui = (function(document, undefined) {
 		}
 		return result;
 	};
-	var preventDefaultException = /^(INPUT|TEXTAREA|BUTTON|SELECT)$/;
+	let preventDefaultException = /^(INPUT|TEXTAREA|BUTTON|SELECT)$/;
 	/**
 	 * mui delegate events
 	 * @param {type} event
@@ -673,23 +675,23 @@ var mui = (function(document, undefined) {
 	 */
 	$.fn.on = function(event, selector, callback) { //仅支持简单的事件委托,主要是tap事件使用，类似mouse,focus之类暂不封装支持
 		return this.each(function() {
-			var element = this;
+			let element = this;
 			mid(element);
 			mid(callback);
-			var isAddEventListener = false;
-			var delegateEvents = delegates[element._mid] || (delegates[element._mid] = {});
-			var delegateCallbackObjs = delegateEvents[event] || ((delegateEvents[event] = {}));
+			let isAddEventListener = false;
+			const delegateEvents = delegates[element._mid] || (delegates[element._mid] = {});
+			const delegateCallbackObjs = delegateEvents[event] || ((delegateEvents[event] = {}));
 			if ($.isEmptyObject(delegateCallbackObjs)) {
 				isAddEventListener = true;
 			}
-			var delegateCallbacks = delegateCallbackObjs[selector] || (delegateCallbackObjs[selector] = []);
+			let delegateCallbacks = delegateCallbackObjs[selector] || (delegateCallbackObjs[selector] = []);
 			delegateCallbacks.push(callback);
 			if (isAddEventListener) {
-				var delegateFnArray = delegateFns[mid(element)];
+				let delegateFnArray = delegateFns[mid(element)];
 				if (!delegateFnArray) {
 					delegateFnArray = [];
 				}
-				var delegateCallback = delegateFn(element, event, selector, callback);
+				const delegateCallback = delegateFn(element, event, selector, callback);
 				delegateFnArray.push(delegateCallback);
 				delegateCallback.i = delegateFnArray.length - 1;
 				delegateCallback.type = event;
@@ -698,10 +700,10 @@ var mui = (function(document, undefined) {
 				if (event === 'tap') { //TODO 需要找个更好的解决方案
 					element.addEventListener('click', function(e) {
 						if (e.target) {
-							var tagName = e.target.tagName;
+							const tagName = e.target.tagName;
 							if (!preventDefaultException.test(tagName)) {
 								if (tagName === 'A') {
-									var href = e.target.href;
+									let href = e.target.href;
 									if (!(href && ~href.indexOf('tel:'))) {
 										e.preventDefault();
 									}
@@ -717,7 +719,7 @@ var mui = (function(document, undefined) {
 	};
 	$.fn.off = function(event, selector, callback) {
 		return this.each(function() {
-			var _mid = mid(this);
+			const _mid = mid(this);
 			if (!event) { //mui(selector).off();
 				delegates[_mid] && delete delegates[_mid];
 			} else if (!selector) { //mui(selector).off(event);
@@ -725,7 +727,7 @@ var mui = (function(document, undefined) {
 			} else if (!callback) { //mui(selector).off(event,selector);
 				delegates[_mid] && delegates[_mid][event] && delete delegates[_mid][event][selector];
 			} else { //mui(selector).off(event,selector,callback);
-				var delegateCallbacks = delegates[_mid] && delegates[_mid][event] && delegates[_mid][event][selector];
+				const delegateCallbacks = delegates[_mid] && delegates[_mid][event] && delegates[_mid][event][selector];
 				$.each(delegateCallbacks, function(index, delegateCallback) {
 					if (mid(delegateCallback) === mid(callback)) {
 						delegateCallbacks.splice(index, 1);
@@ -782,12 +784,12 @@ var mui = (function(document, undefined) {
 		return $.targetHandles;
 	};
 	window.addEventListener($.EVENT_START, function(event) {
-		var target = event.target;
-		var founds = {};
+		let target = event.target;
+		const founds = {};
 		for (; target && target !== document; target = target.parentNode) {
-			var isFound = false;
+			let isFound = false;
 			$.each($.targetHandles, function(index, targetHandle) {
-				var name = targetHandle.name;
+				let name = targetHandle.name;
 				if (!isFound && !founds[name] && targetHandle.hasOwnProperty('handle')) {
 					$.targets[name] = targetHandle.handle(event, target);
 					if ($.targets[name]) {
@@ -809,12 +811,12 @@ var mui = (function(document, undefined) {
 		}
 	});
 	window.addEventListener('click', function(event) { //解决touch与click的target不一致的问题(比如链接边缘点击时，touch的target为html，而click的target为A)
-		var target = event.target;
-		var isFound = false;
+		let target = event.target;
+		let isFound = false;
 		for (; target && target !== document; target = target.parentNode) {
 			if (target.tagName === 'A') {
 				$.each($.targetHandles, function(index, targetHandle) {
-					var name = targetHandle.name;
+					let name = targetHandle.name;
 					if (targetHandle.hasOwnProperty('handle')) {
 						if (targetHandle.handle(event, target)) {
 							isFound = true;
@@ -858,8 +860,8 @@ var mui = (function(document, undefined) {
 				cancelable: false,
 				detail: undefined
 			};
-			var evt = document.createEvent('Events');
-			var bubbles = true;
+			const evt = document.createEvent('Events');
+			let bubbles = true;
 			for (var name in params) {
 				(name === 'bubbles') ? (bubbles = !!params[name]) : (evt[name] = params[name]);
 			}
@@ -878,12 +880,12 @@ var mui = (function(document, undefined) {
 
 Function.prototype.bind = Function.prototype.bind || function(to) {
 	// Make an array of our arguments, starting from second argument
-	var partial = Array.prototype.splice.call(arguments, 1),
+	const partial = Array.prototype.splice.call(arguments, 1),
 		// We'll need the original function.
 		fn = this;
-	var bound = function() {
+	const bound = function() {
 			// Join the already applied arguments to the now called ones (after converting to an array again).
-			var args = partial.concat(Array.prototype.splice.call(arguments, 0));
+			let args = partial.concat(Array.prototype.splice.call(arguments, 0));
 			// If not being called as a constructor
 			if (!(this instanceof bound)) {
 				// return the result of the function called bound to target and partially applied.
@@ -906,10 +908,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
         Object.defineProperty(HTMLElement.prototype, 'classList', {
             get: function() {
-                var self = this;
+                let self = this;
                 function update(fn) {
                     return function(value) {
-                        var classes = self.className.split(/\s+/),
+                        const classes = self.className.split(/\s+/),
                                 index = classes.indexOf(value);
 
                         fn(classes, index, value);
@@ -917,7 +919,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
                     };
                 }
 
-                var ret = {
+                let ret = {
                     add: update(function(classes, index, value) {
                         ~index || classes.push(value);
                     }),
@@ -954,11 +956,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  */
 (function(window) {
 	if (!window.requestAnimationFrame) {
-		var lastTime = 0;
+		let lastTime = 0;
 		window.requestAnimationFrame = window.webkitRequestAnimationFrame || function(callback, element) {
-			var currTime = new Date().getTime();
-			var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
-			var id = window.setTimeout(function() {
+			const currTime = new Date().getTime();
+			const timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+			let id = window.setTimeout(function() {
 				callback(currTime + timeToCall);
 			}, timeToCall);
 			lastTime = currTime + timeToCall;
@@ -980,7 +982,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return;
 	}
 
-	var handle = function(event, target) {
+	let handle = function(event, target) {
 		if (target.tagName === 'LABEL') {
 			if (target.parentNode) {
 				target = target.parentNode.querySelector('input');
@@ -1000,8 +1002,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		handle: handle,
 		target: false
 	});
-	var dispatchEvent = function(event) {
-		var targetElement = $.targets.click;
+	const dispatchEvent = function(event) {
+		const targetElement = $.targets.click;
 		if (targetElement) {
 			var clickEvent, touch;
 			// On some Android devices activeElement needs to be blurred otherwise the synthetic click will have no effect
@@ -1042,12 +1044,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		if (!$.os.ios) {
 			return;
 		}
-		var CLASS_FOCUSIN = 'mui-focusin';
-		var CLASS_BAR_TAB = 'mui-bar-tab';
-		var CLASS_BAR_FOOTER = 'mui-bar-footer';
-		var CLASS_BAR_FOOTER_SECONDARY = 'mui-bar-footer-secondary';
-		var CLASS_BAR_FOOTER_SECONDARY_TAB = 'mui-bar-footer-secondary-tab';
-		// var content = document.querySelector('.' + CLASS_CONTENT);
+		let CLASS_FOCUSIN = 'mui-focusin';
+		const CLASS_BAR_TAB = 'mui-bar-tab';
+		const CLASS_BAR_FOOTER = 'mui-bar-footer';
+		const CLASS_BAR_FOOTER_SECONDARY = 'mui-bar-footer-secondary';
+		const CLASS_BAR_FOOTER_SECONDARY_TAB = 'mui-bar-footer-secondary-tab';
+		// const content = document.querySelector('.' + CLASS_CONTENT);
 		// if (content) {
 		// 	document.body.insertBefore(content, document.body.firstElementChild);
 		// }
@@ -1059,24 +1061,24 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					}
 				}
 			}
-			var target = e.target;
+			let target = e.target;
 			//TODO 需考虑所有键盘弹起的情况
 			if (target.tagName && (target.tagName === 'TEXTAREA' || (target.tagName === 'INPUT' && (target.type === 'text' || target.type === 'search' || target.type === 'number')))) {
 				if (target.disabled || target.readOnly) {
 					return;
 				}
 				document.body.classList.add(CLASS_FOCUSIN);
-				var isFooter = false;
+				let isFooter = false;
 				for (; target && target !== document; target = target.parentNode) {
-					var classList = target.classList;
+					let classList = target.classList;
 					if (classList && classList.contains(CLASS_BAR_TAB) || classList.contains(CLASS_BAR_FOOTER) || classList.contains(CLASS_BAR_FOOTER_SECONDARY) || classList.contains(CLASS_BAR_FOOTER_SECONDARY_TAB)) {
 						isFooter = true;
 						break;
 					}
 				}
 				if (isFooter) {
-					var scrollTop = document.body.scrollHeight;
-					var scrollLeft = document.body.scrollLeft;
+					let scrollTop = document.body.scrollHeight;
+					const scrollLeft = document.body.scrollLeft;
 					setTimeout(function() {
 						window.scrollTo(scrollLeft, scrollTop);
 					}, 20);
@@ -1084,7 +1086,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		});
 		document.addEventListener('focusout', function(e) {
-			var classList = document.body.classList;
+			let classList = document.body.classList;
 			if (classList.contains(CLASS_FOCUSIN)) {
 				classList.remove(CLASS_FOCUSIN);
 				setTimeout(function() {
@@ -1167,23 +1169,23 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 	};
 
-	var round = Math.round;
-	var abs = Math.abs;
-	var sqrt = Math.sqrt;
-	var atan = Math.atan;
-	var atan2 = Math.atan2;
+	const round = Math.round;
+	const abs = Math.abs;
+	const sqrt = Math.sqrt;
+	const atan = Math.atan;
+	const atan2 = Math.atan2;
 	/**
 	 * distance
 	 * @param {type} p1
 	 * @param {type} p2
 	 * @returns {Number}
 	 */
-	var getDistance = function(p1, p2, props) {
+	const getDistance = function(p1, p2, props) {
 		if (!props) {
 			props = ['x', 'y'];
 		}
-		var x = p2[props[0]] - p1[props[0]];
-		var y = p2[props[1]] - p1[props[1]];
+		let x = p2[props[0]] - p1[props[0]];
+		let y = p2[props[1]] - p1[props[1]];
 		return sqrt((x * x) + (y * y));
 	};
 	/**
@@ -1191,9 +1193,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} starts
 	 * @param {Object} moves
 	 */
-	var getScale = function(starts, moves) {
+	const getScale = function(starts, moves) {
 		if (starts.length >= 2 && moves.length >= 2) {
-			var props = ['pageX', 'pageY'];
+			let props = ['pageX', 'pageY'];
 			return getDistance(moves[1], moves[0], props) / getDistance(starts[1], starts[0], props);
 		}
 		return 1;
@@ -1204,12 +1206,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {type} p2
 	 * @returns {Number}
 	 */
-	var getAngle = function(p1, p2, props) {
+	const getAngle = function(p1, p2, props) {
 		if (!props) {
 			props = ['x', 'y'];
 		}
-		var x = p2[props[0]] - p1[props[0]];
-		var y = p2[props[1]] - p1[props[1]];
+		let x = p2[props[0]] - p1[props[0]];
+		let y = p2[props[1]] - p1[props[1]];
 		return atan2(y, x) * 180 / Math.PI;
 	};
 	/**
@@ -1217,7 +1219,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} x
 	 * @param {Object} y
 	 */
-	var getDirection = function(x, y) {
+	const getDirection = function(x, y) {
 		if (x === y) {
 			return '';
 		}
@@ -1231,8 +1233,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} start
 	 * @param {Object} end
 	 */
-	var getRotation = function(start, end) {
-		var props = ['pageX', 'pageY'];
+	const getRotation = function(start, end) {
+		const props = ['pageX', 'pageY'];
 		return getAngle(end[1], end[0], props) - getAngle(start[1], start[0], props);
 	};
 	/**
@@ -1241,7 +1243,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} x
 	 * @param {Object} y
 	 */
-	var getVelocity = function(deltaTime, x, y) {
+	const getVelocity = function(deltaTime, x, y) {
 		return {
 			x: x / deltaTime || 0,
 			y: y / deltaTime || 0
@@ -1253,7 +1255,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {type} touch
 	 * @returns {undefined}
 	 */
-	var detect = function(event, touch) {
+	const detect = function(event, touch) {
 		if ($.gestures.stoped) {
 			return;
 		}
@@ -1270,9 +1272,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} node
 	 * @param {Object} parent
 	 */
-	var hasParent = function(node, parent) {
+	const hasParent = function(node, parent) {
 		while (node) {
-			if (node == parent) {
+			if (node === parent) {
 				return true;
 			}
 			node = node.parentNode;
@@ -1280,13 +1282,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return false;
 	};
 
-	var uniqueArray = function(src, key, sort) {
-		var results = [];
-		var values = [];
-		var i = 0;
+	const uniqueArray = function(src, key, sort) {
+		let results = [];
+		const values = [];
+		let i = 0;
 
 		while (i < src.length) {
-			var val = key ? src[i][key] : src[i];
+			let val = key ? src[i][key] : src[i];
 			if (values.indexOf(val) < 0) {
 				results.push(src[i]);
 			}
@@ -1306,8 +1308,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 		return results;
 	};
-	var getMultiCenter = function(touches) {
-		var touchesLength = touches.length;
+	const getMultiCenter = function(touches) {
+		let touchesLength = touches.length;
 		if (touchesLength === 1) {
 			return {
 				x: round(touches[0].pageX),
@@ -1315,9 +1317,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			};
 		}
 
-		var x = 0;
-		var y = 0;
-		var i = 0;
+		let x = 0;
+		let y = 0;
+		let i = 0;
 		while (i < touchesLength) {
 			x += touches[i].pageX;
 			y += touches[i].pageY;
@@ -1329,12 +1331,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			y: round(y / touchesLength)
 		};
 	};
-	var multiTouch = function() {
+	const multiTouch = function() {
 		return $.options.gestureConfig.pinch;
 	};
-	var copySimpleTouchData = function(touch) {
-		var touches = [];
-		var i = 0;
+	const copySimpleTouchData = function(touch) {
+		let touches = [];
+		let i = 0;
 		while (i < touch.touches.length) {
 			touches[i] = {
 				pageX: round(touch.touches[i].pageX),
@@ -1352,12 +1354,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		};
 	};
 
-	var calDelta = function(touch) {
-		var session = $.gestures.session;
-		var center = touch.center;
-		var offset = session.offsetDelta || {};
-		var prevDelta = session.prevDelta || {};
-		var prevTouch = session.prevTouch || {};
+	const calDelta = function(touch) {
+		let session = $.gestures.session;
+		let center = touch.center;
+		let offset = session.offsetDelta || {};
+		let prevDelta = session.prevDelta || {};
+		let prevTouch = session.prevTouch || {};
 
 		if (touch.gesture.type === $.EVENT_START || touch.gesture.type === $.EVENT_END) {
 			prevDelta = session.prevDelta = {
@@ -1373,10 +1375,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		touch.deltaX = prevDelta.x + (center.x - offset.x);
 		touch.deltaY = prevDelta.y + (center.y - offset.y);
 	};
-	var calTouchData = function(touch) {
-		var session = $.gestures.session;
-		var touches = touch.touches;
-		var touchesLength = touches.length;
+	const calTouchData = function(touch) {
+		let session = $.gestures.session;
+		let touches = touch.touches;
+		let touchesLength = touches.length;
 
 		if (!session.firstTouch) {
 			session.firstTouch = copySimpleTouchData(touch);
@@ -1388,11 +1390,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			session.firstMultiTouch = false;
 		}
 
-		var firstTouch = session.firstTouch;
-		var firstMultiTouch = session.firstMultiTouch;
-		var offsetCenter = firstMultiTouch ? firstMultiTouch.center : firstTouch.center;
+		const firstTouch = session.firstTouch;
+		const firstMultiTouch = session.firstMultiTouch;
+		const offsetCenter = firstMultiTouch ? firstMultiTouch.center : firstTouch.center;
 
-		var center = touch.center = getMultiCenter(touches);
+		let center = touch.center = getMultiCenter(touches);
 		touch.timestamp = $.now();
 		touch.deltaTime = touch.timestamp - firstTouch.timestamp;
 
@@ -1409,21 +1411,21 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		calIntervalTouchData(touch);
 
 	};
-	var CAL_INTERVAL = 25;
-	var calIntervalTouchData = function(touch) {
-		var session = $.gestures.session;
-		var last = session.lastInterval || touch;
-		var deltaTime = touch.timestamp - last.timestamp;
+	const CAL_INTERVAL = 25;
+	const calIntervalTouchData = function(touch) {
+		let session = $.gestures.session;
+		const last = session.lastInterval || touch;
+		const deltaTime = touch.timestamp - last.timestamp;
 		var velocity;
 		var velocityX;
 		var velocityY;
 		var direction;
 
-		if (touch.gesture.type != $.EVENT_CANCEL && (deltaTime > CAL_INTERVAL || last.velocity === undefined)) {
-			var deltaX = last.deltaX - touch.deltaX;
-			var deltaY = last.deltaY - touch.deltaY;
+		if (touch.gesture.type !== $.EVENT_CANCEL && (deltaTime > CAL_INTERVAL || last.velocity === undefined)) {
+			let deltaX = last.deltaX - touch.deltaX;
+			let deltaY = last.deltaY - touch.deltaY;
 
-			var v = getVelocity(deltaTime, deltaX, deltaY);
+			const v = getVelocity(deltaTime, deltaX, deltaY);
 			velocityX = v.x;
 			velocityY = v.y;
 			velocity = (abs(v.x) > abs(v.y)) ? v.x : v.y;
@@ -1442,20 +1444,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		touch.velocityY = velocityY;
 		touch.direction = direction;
 	};
-	var targetIds = {};
-	var convertTouches = function(touches) {
-		for (var i = 0; i < touches.length; i++) {
+	const targetIds = {};
+	const convertTouches = function(touches) {
+		for (let i = 0; i < touches.length; i++) {
 			!touches['identifier'] && (touches['identifier'] = 0);
 		}
 		return touches;
 	};
-	var getTouches = function(event, touch) {
-		var allTouches = convertTouches($.slice.call(event.touches || [event]));
+	const getTouches = function(event, touch) {
+		const allTouches = convertTouches($.slice.call(event.touches || [event]));
 
-		var type = event.type;
+		let type = event.type;
 
-		var targetTouches = [];
-		var changedTargetTouches = [];
+		let targetTouches = [];
+		let changedTargetTouches = [];
 
 		//当touchstart或touchmove且touches长度为1，直接获得all和changed
 		if ((type === $.EVENT_START || type === $.EVENT_MOVE) && allTouches.length === 1) {
@@ -1464,13 +1466,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			changedTargetTouches = allTouches;
 			touch.target = event.target;
 		} else {
-			var i = 0;
-			var targetTouches = [];
-			var changedTargetTouches = [];
-			var changedTouches = convertTouches($.slice.call(event.changedTouches || [event]));
+			let i = 0;
+			let targetTouches = [];
+			const changedTargetTouches = [];
+			let changedTouches = convertTouches($.slice.call(event.changedTouches || [event]));
 
 			touch.target = event.target;
-			var sessionTarget = $.gestures.session.target || event.target;
+			const sessionTarget = $.gestures.session.target || event.target;
 			targetTouches = allTouches.filter(function(touch) {
 				return hasParent(touch.target, sessionTarget);
 			});
@@ -1499,8 +1501,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		}
 		targetTouches = uniqueArray(targetTouches.concat(changedTargetTouches), 'identifier', true);
-		var touchesLength = targetTouches.length;
-		var changedTouchesLength = changedTargetTouches.length;
+		const touchesLength = targetTouches.length;
+		const changedTouchesLength = changedTargetTouches.length;
 		if (type === $.EVENT_START && touchesLength - changedTouchesLength === 0) { //first
 			touch.isFirst = true;
 			$.gestures.touch = $.gestures.session = {
@@ -1514,11 +1516,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return true;
 
 	};
-	var handleTouchEvent = function(event) {
-		var touch = {
+	const handleTouchEvent = function(event) {
+		let touch = {
 			gesture: event
 		};
-		var touches = getTouches(event, touch);
+		const touches = getTouches(event, touch);
 		if (!touches) {
 			return;
 		}
@@ -1544,7 +1546,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 	//增加原生滚动识别
 	$.isScrolling = false;
-	var scrollingTimeout = null;
+	let scrollingTimeout = null;
 	window.addEventListener('scroll', function() {
 		$.isScrolling = true;
 		scrollingTimeout && clearTimeout(scrollingTimeout);
@@ -1560,11 +1562,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, name) {
-	var flickStartTime = 0;
-	var handle = function(event, touch) {
-		var session = $.gestures.session;
-		var options = this.options;
-		var now = $.now();
+	let flickStartTime = 0;
+	let handle = function(event, touch) {
+		let session = $.gestures.session;
+		let options = this.options;
+		const now = $.now();
 		switch (event.type) {
 			case $.EVENT_MOVE:
 				if (now - flickStartTime > 300) {
@@ -1607,10 +1609,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, name) {
-	var handle = function(event, touch) {
-		var session = $.gestures.session;
+	let handle = function(event, touch) {
+		let session = $.gestures.session;
 		if (event.type === $.EVENT_END || event.type === $.EVENT_CANCEL) {
-			var options = this.options;
+			let options = this.options;
 			touch.swipe = false;
 			//TODO 后续根据velocity计算
 			if (touch.direction && options.swipeMaxTime > touch.deltaTime && touch.distance > options.swipeMinDistince) {
@@ -1640,8 +1642,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, name) {
-	var handle = function(event, touch) {
-		var session = $.gestures.session;
+	let handle = function(event, touch) {
+		let session = $.gestures.session;
 		switch (event.type) {
 			case $.EVENT_START:
 				break;
@@ -1696,15 +1698,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 (function($, name) {
 	var lastTarget;
 	var lastTapTime;
-	var handle = function(event, touch) {
-		var session = $.gestures.session;
-		var options = this.options;
+	let handle = function(event, touch) {
+		let session = $.gestures.session;
+		let options = this.options;
 		switch (event.type) {
 			case $.EVENT_END:
 				if (!touch.isFinal) {
 					return;
 				}
-				var target = session.target;
+				let target = session.target;
 				if (!target || (target.disabled || (target.classList && target.classList.contains('mui-disabled')))) {
 					return;
 				}
@@ -1747,9 +1749,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  */
 (function($, name) {
 	var timer;
-	var handle = function(event, touch) {
-		var session = $.gestures.session;
-		var options = this.options;
+	let handle = function(event, touch) {
+		let session = $.gestures.session;
+		let options = this.options;
 		switch (event.type) {
 			case $.EVENT_START:
 				clearTimeout(timer);
@@ -1790,9 +1792,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  */
 (function($, name) {
 	var timer;
-	var handle = function(event, touch) {
-		var session = $.gestures.session;
-		var options = this.options;
+	let handle = function(event, touch) {
+		let session = $.gestures.session;
+		let options = this.options;
 		switch (event.type) {
 			case $.EVENT_START:
 				if ($.options.gestureConfig.hold) {
@@ -1834,9 +1836,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, name) {
-	var handle = function(event, touch) {
-		var options = this.options;
-		var session = $.gestures.session;
+	let handle = function(event, touch) {
+		let options = this.options;
+		const session = $.gestures.session;
 		switch (event.type) {
 			case $.EVENT_START:
 				break;
@@ -1850,10 +1852,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 						$.trigger(session.target, name + 'start', touch);
 					}
 					$.trigger(session.target, name, touch);
-					var scale = touch.scale;
-					var rotation = touch.rotation;
-					var lastScale = typeof touch.lastScale === 'undefined' ? 1 : touch.lastScale;
-					var scaleDiff = 0.000000000001; //防止scale与lastScale相等，不触发事件的情况。
+					let scale = touch.scale;
+					const rotation = touch.rotation;
+					let lastScale = typeof touch.lastScale === 'undefined' ? 1 : touch.lastScale;
+					const scaleDiff = 0.000000000001; //防止scale与lastScale相等，不触发事件的情况。
 					if (scale > lastScale) { //out
 						lastScale = scale - scaleDiff;
 						$.trigger(session.target, name + 'out', touch);
@@ -1915,7 +1917,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		$.options = $.extend(true, $.global, options);
 		return this;
 	};
-	var inits = {};
+	const inits = {};
 
 	/**
 	 * 单页配置 初始化
@@ -1925,7 +1927,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		$.options = $.extend(true, $.global, options || {});
 		$.ready(function() {
 			$.doAction('inits', function(index, init) {
-				var isInit = !!(!inits[init.name] || init.repeat);
+				const isInit = !!(!inits[init.name] || init.repeat);
 				if (isInit) {
 					init.handle.call($);
 					inits[init.name] = true;
@@ -1949,18 +1951,18 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		name: 'iframe',
 		index: 100,
 		handle: function() {
-			var options = $.options;
-			var subpages = options.subpages || [];
+			let options = $.options;
+			let subpages = options.subpages || [];
 			if (!$.os.plus && subpages.length) {
 				//暂时只处理单个subpage。后续可以考虑支持多个subpage
 				createIframe(subpages[0]);
 			}
 		}
 	});
-	var createIframe = function(options) {
-		var wrapper = document.createElement('div');
+	const createIframe = function(options) {
+		let wrapper = document.createElement('div');
 		wrapper.className = 'mui-iframe-wrapper';
-		var styles = options.styles || {};
+		const styles = options.styles || {};
 		if (typeof styles.top !== 'string') {
 			styles.top = '0px';
 		}
@@ -1969,7 +1971,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 		wrapper.style.top = styles.top;
 		wrapper.style.bottom = styles.bottom;
-		var iframe = document.createElement('iframe');
+		const iframe = document.createElement('iframe');
 		iframe.src = options.url;
 		iframe.id = options.id || options.url;
 		iframe.name = iframe.id;
@@ -1980,8 +1982,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 
 	function handleScroll(wrapper, iframe) {
-		var key = 'MUI_SCROLL_POSITION_' + document.location.href + '_' + iframe.src;
-		var scrollTop = (parseFloat(localStorage.getItem(key)) || 0);
+		let key = 'MUI_SCROLL_POSITION_' + document.location.href + '_' + iframe.src;
+		let scrollTop = (parseFloat(localStorage.getItem(key)) || 0);
 		if (scrollTop) {
 			(function(y) {
 				iframe.onload = function() {
@@ -1990,7 +1992,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			})(scrollTop);
 		}
 		setInterval(function() {
-			var _scrollTop = window.scrollY;
+			const _scrollTop = window.scrollY;
 			if (scrollTop !== _scrollTop) {
 				localStorage.setItem(key, _scrollTop + '');
 				scrollTop = _scrollTop;
@@ -1998,8 +2000,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}, 100);
 	};
 	$(function() {
-		var classList = document.body.classList;
-		var os = [];
+		let classList = document.body.classList;
+		const os = [];
 		if ($.os.ios) {
 			os.push({
 				os: 'ios',
@@ -2022,8 +2024,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 		if (os.length) {
 			$.each(os, function(index, osObj) {
-				var version = '';
-				var classArray = [];
+				let version = '';
+				const classArray = [];
 				if (osObj.version) {
 					$.each(osObj.version.split('.'), function(i, v) {
 						version = version + (version ? '-' : '') + v;
@@ -2040,7 +2042,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($) {
-	var defaultOptions = {
+	let defaultOptions = {
 		swipeBack: false,
 		preloadPages: [], //5+ lazyLoad webview
 		preloadLimit: 10, //预加载窗口的数量限制(一旦超出，先进先出)
@@ -2092,7 +2094,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 
 	//默认页面动画
-	var defaultShow = {
+	let defaultShow = {
 		event:"titleUpdate",
 		autoShow: true,
 		duration: 300,
@@ -2192,30 +2194,30 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			$.trigger(document, eventType, data);
 		}
 	};
-	var triggerPreload = function(webview) {
+	const triggerPreload = function(webview) {
 		if(!webview.preloaded) { //保证仅触发一次
 			$.fire(webview, 'preload');
-			var list = webview.children();
-			for(var i = 0; i < list.length; i++) {
+			let list = webview.children();
+			for(let i = 0; i < list.length; i++) {
 				$.fire(list[i], 'preload');
 			}
 			webview.preloaded = true;
 		}
 	};
-	var trigger = function(webview, eventType, timeChecked) {
+	const trigger = function(webview, eventType, timeChecked) {
 		if(timeChecked) {
 			if(!webview[eventType + 'ed']) {
 				$.fire(webview, eventType);
-				var list = webview.children();
-				for(var i = 0; i < list.length; i++) {
+				let list = webview.children();
+				for(let i = 0; i < list.length; i++) {
 					$.fire(list[i], eventType);
 				}
 				webview[eventType + 'ed'] = true;
 			}
 		} else {
 			$.fire(webview, eventType);
-			var list = webview.children();
-			for(var i = 0; i < list.length; i++) {
+			const list = webview.children();
+			for(let i = 0; i < list.length; i++) {
 				$.fire(list[i], eventType);
 			}
 		}
@@ -2254,8 +2256,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 
 		options = options || {};
-		var params = options.params || {};
-		var webview = null,
+		let params = options.params || {};
+		let webview = null,
 			webviewCache = null,
 			nShow, nWaiting;
 
@@ -2288,7 +2290,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 
 			//显示waiting
-			var waitingConfig = $.waitingOptions(options.waiting);
+			let waitingConfig = $.waitingOptions(options.waiting);
 			if(waitingConfig.autoShow) {
 				nWaiting = plus.nativeUI.showWaiting(waitingConfig.title, waitingConfig.options);
 			}
@@ -2304,7 +2306,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			//显示
 			nShow = $.showOptions(options.show);
 			if(nShow.autoShow) {
-				var showWebview = function() {
+				const showWebview = function() {
 					//关闭等待框
 					if(nWaiting) {
 						nWaiting.close();
@@ -2327,8 +2329,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 	$.openWindowWithTitle = function(options, titleConfig) {
 		options = options || {};
-		var url = options.url;
-		var id = options.id || url;
+		let url = options.url;
+		let id = options.id || url;
 
 		if(!$.os.plus) {
 			//TODO 先临时这么处理：手机上顶层跳，PC上parent跳
@@ -2343,8 +2345,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			return;
 		}
 
-		var params = options.params || {};
-		var webview = null,
+		let params = options.params || {};
+		let webview = null,
 			webviewCache = null,
 			nShow, nWaiting;
 
@@ -2377,7 +2379,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 
 			//显示waiting
-			var waitingConfig = $.waitingOptions(options.waiting);
+			const waitingConfig = $.waitingOptions(options.waiting);
 			if(waitingConfig.autoShow) {
 				nWaiting = plus.nativeUI.showWaiting(waitingConfig.title, waitingConfig.options);
 			}
@@ -2392,8 +2394,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 			if(titleConfig) { //处理原生头
 				$.extend(true, $.options.titleConfig, titleConfig);
-				var tid = $.options.titleConfig.id ? $.options.titleConfig.id : id + "_title";
-				var view = new plus.nativeObj.View(tid, {
+				const tid = $.options.titleConfig.id ? $.options.titleConfig.id : id + "_title";
+				const view = new plus.nativeObj.View(tid, {
 					top: 0,
 					height: $.options.titleConfig.height,
 					width: "100%",
@@ -2401,7 +2403,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					position: "dock"
 				});
 				view.drawRect($.options.titleConfig.backgroundColor); //绘制背景色
-				var _b = parseInt($.options.titleConfig.height) - 1;
+				const _b = parseInt($.options.titleConfig.height) - 1;
 				view.drawRect($.options.titleConfig.bottomBorderColor, {
 					top: _b + "px",
 					left: "0px"
@@ -2409,24 +2411,24 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 				//绘制文字
 				if($.options.titleConfig.title.text){
-					var _title = $.options.titleConfig.title;
+					const _title = $.options.titleConfig.title;
 					view.drawText(_title.text,_title.position , _title.styles);
 				}
 				
 				//返回图标绘制
-				var _back = $.options.titleConfig.back;
-				var backClick = null;
+				const _back = $.options.titleConfig.back;
+				let backClick = null;
 				//优先字体
 
 				//其次是图片
-				var _backImage = _back.image;
+				const _backImage = _back.image;
 				if(_backImage.base64Data || _backImage.imgSrc) {
 					//TODO 此处需要处理百分比的情况
 					backClick = {
 						left:parseInt(_backImage.position.left),
 						right:parseInt(_backImage.position.left) + parseInt(_backImage.position.width)
 					};
-					var bitmap = new plus.nativeObj.Bitmap(id + "_back");
+					const bitmap = new plus.nativeObj.Bitmap(id + "_back");
 					if(_backImage.base64Data) { //优先base64编码字符串
 						bitmap.loadBase64Data(_backImage.base64Data);
 					} else { //其次加载图片文件
@@ -2444,7 +2446,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				});
 				view.interceptTouchEvent(true);
 				view.addEventListener("click", function(e) {
-					var x = e.clientX;
+					let x = e.clientX;
 					
 					//返回按钮点击
 					if(backClick&& x > backClick.left && x < backClick.right){
@@ -2486,7 +2488,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		if(!window.plus) {
 			return;
 		}
-		var id = options.id || options.url;
+		let id = options.id || options.url;
 		var webview;
 		if(options.preload) {
 			if($.webviews[id] && $.webviews[id].webview.getURL()) { //已经cache
@@ -2504,9 +2506,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					}, options.extras));
 					if(options.subpages) {
 						$.each(options.subpages, function(index, subpage) {
-							var subpageId = subpage.id || subpage.url;
+							let subpageId = subpage.id || subpage.url;
 							if(subpageId) { //过滤空对象
-								var subWebview = plus.webview.getWebviewById(subpageId);
+								let subWebview = plus.webview.getWebviewById(subpageId);
 								if(!subWebview) { //如果该webview不存在，则创建
 									subWebview = plus.webview.create(subpage.url, subpageId, $.windowOptions(subpage.styles), $.extend({
 										preload: true
@@ -2527,16 +2529,16 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				afterShowMethodName: options.afterShowMethodName //就不应该用evalJS。应该是通过事件消息通讯
 			};
 			//索引该预加载窗口
-			var preloads = $.data.preloads;
-			var index = preloads.indexOf(id);
+			let preloads = $.data.preloads;
+			const index = preloads.indexOf(id);
 			if(~index) { //删除已存在的(变相调整插入位置)
 				preloads.splice(index, 1);
 			}
 			preloads.push(id);
 			if(preloads.length > $.options.preloadLimit) {
 				//先进先出
-				var first = $.data.preloads.shift();
-				var webviewCache = $.webviews[first];
+				const first = $.data.preloads.shift();
+				const webviewCache = $.webviews[first];
 				if(webviewCache && webviewCache.webview) {
 					//需要将自己打开的所有页面，全部close；
 					//关闭该预加载webview	
@@ -2550,8 +2552,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				webview = plus.webview.create(options.url, id, $.windowOptions(options.styles), options.extras);
 				if(options.subpages) {
 					$.each(options.subpages, function(index, subpage) {
-						var subpageId = subpage.id || subpage.url;
-						var subWebview = plus.webview.getWebviewById(subpageId);
+						const subpageId = subpage.id || subpage.url;
+						let subWebview = plus.webview.getWebviewById(subpageId);
 						if(!subWebview) {
 							subWebview = plus.webview.create(subpage.url, subpageId, $.windowOptions(subpage.styles), subpage.extras);
 						}
@@ -2578,11 +2580,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 *关闭当前webview打开的所有webview；
 	 */
 	$.closeOpened = function(webview) {
-		var opened = webview.opened();
+		const opened = webview.opened();
 		if(opened) {
-			for(var i = 0, len = opened.length; i < len; i++) {
-				var openedWebview = opened[i];
-				var open_open = openedWebview.opened();
+			for(let i = 0, len = opened.length; i < len; i++) {
+				const openedWebview = opened[i];
+				const open_open = openedWebview.opened();
 				if(open_open && open_open.length > 0) {
 					//关闭打开的webview
 					$.closeOpened(openedWebview);
@@ -2626,7 +2628,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		if(!window.plus) {
 			return;
 		}
-		var id = options.id || options.url;
+		let id = options.id || options.url;
 		var webview;
 		if(!$.webviews[id]) { //保证执行一遍
 			//TODO 这里也有隐患，比如某个webview不是作为subpage创建的，而是作为target webview的话；
@@ -2659,8 +2661,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		name: '5+',
 		index: 100,
 		handle: function() {
-			var options = $.options;
-			var subpages = options.subpages || [];
+			let options = $.options;
+			const subpages = options.subpages || [];
 			if($.os.plus) {
 				$.plusReady(function() {
 					//TODO  这里需要判断一下，最好等子窗口加载完毕后，再调用主窗口的show方法；
@@ -2682,9 +2684,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					}
 					if($.os.android && parseFloat($.os.version) < 4.4) {
 						//解决Android平台4.4版本以下，resume后，父窗体标题延迟渲染的问题；
-						if(plus.webview.currentWebview().parent() == null) {
+						if(plus.webview.currentWebview().parent() === null) {
 							document.addEventListener("resume", function() {
-								var body = document.body;
+								let body = document.body;
 								body.style.display = 'none';
 								setTimeout(function() {
 									body.style.display = '';
@@ -2696,13 +2698,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			} else {
 				//已支持iframe嵌入
 				//				if (subpages.length > 0) {
-				//					var err = document.createElement('div');
+				//					const err = document.createElement('div');
 				//					err.className = 'mui-error';
 				//					//文字描述
-				//					var span = document.createElement('span');
+				//					let span = document.createElement('span');
 				//					span.innerHTML = '在该浏览器下，不支持创建子页面，具体参考';
 				//					err.appendChild(span);
-				//					var a = document.createElement('a');
+				//					let a = document.createElement('a');
 				//					a.innerHTML = '"mui框架适用场景"';
 				//					a.href = 'http://ask.dcloud.net.cn/article/113';
 				//					err.appendChild(a);
@@ -2716,7 +2718,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	});
 	window.addEventListener('preload', function() {
 		//处理预加载部分
-		var webviews = $.options.preloadPages || [];
+		const webviews = $.options.preloadPages || [];
 		$.plusReady(function() {
 			$.each(webviews, function(index, webview) {
 				$.createWindow($.extend(webview, {
@@ -2778,14 +2780,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		$.doAction('backs');
 	};
 	window.addEventListener('tap', function(e) {
-		var action = $.targets.action;
+		let action = $.targets.action;
 		if (action && action.classList.contains('mui-action-back')) {
 			$.back();
 			$.targets.action = false;
 		}
 	});
 	window.addEventListener('swiperight', function(e) {
-		var detail = e.detail;
+		let detail = e.detail;
 		if ($.options.swipeBack === true && Math.abs(detail.angle) < 3) {
 			$.back();
 		}
@@ -2811,12 +2813,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					return true;
 				}
 				//offcanvas
-				var offCanvas = document.querySelector('.mui-off-canvas-wrap.mui-active');
+				let offCanvas = document.querySelector('.mui-off-canvas-wrap.mui-active');
 				if (offCanvas) {
 					$(offCanvas).offCanvas('close');
 					return true;
 				}
-				var previewImage = $.isFunction($.getPreviewImage) && $.getPreviewImage();
+				const previewImage = $.isFunction($.getPreviewImage) && $.getPreviewImage();
 				if (previewImage && previewImage.isShown()) {
 					previewImage.close();
 					return true;
@@ -2838,8 +2840,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			if (!window.plus) {
 				return false;
 			}
-			var wobj = plus.webview.currentWebview();
-			var parent = wobj.parent();
+			let wobj = plus.webview.currentWebview();
+			let parent = wobj.parent();
 			if (parent) {
 				parent.evalJS('mui&&mui.back();');
 			} else {
@@ -2880,24 +2882,24 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 
 	$.menu = function() {
-		var menu = document.querySelector('.mui-action-menu');
+		const menu = document.querySelector('.mui-action-menu');
 		if (menu) {
 			$.trigger(menu, $.EVENT_START); //临时处理menu无touchstart的话，找不到当前targets的问题
 			$.trigger(menu, 'tap');
 		} else { //执行父窗口的menu
 			if (window.plus) {
-				var wobj = $.currentWebview;
-				var parent = wobj.parent();
+				const wobj = $.currentWebview;
+				let parent = wobj.parent();
 				if (parent) { //又得evalJS
 					parent.evalJS('mui&&mui.menu();');
 				}
 			}
 		}
 	};
-	var __back = function() {
+	const __back = function() {
 		$.back();
 	};
-	var __menu = function() {
+	const __menu = function() {
 		$.menu();
 	};
 	//默认监听
@@ -2936,17 +2938,17 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		name: 'pullrefresh',
 		index: 1000,
 		handle: function() {
-			var options = $.options;
-			var pullRefreshOptions = options.pullRefresh || {};
-			var hasPulldown = pullRefreshOptions.down && pullRefreshOptions.down.hasOwnProperty('callback');
-			var hasPullup = pullRefreshOptions.up && pullRefreshOptions.up.hasOwnProperty('callback');
+			let options = $.options;
+			const pullRefreshOptions = options.pullRefresh || {};
+			const hasPulldown = pullRefreshOptions.down && pullRefreshOptions.down.hasOwnProperty('callback');
+			const hasPullup = pullRefreshOptions.up && pullRefreshOptions.up.hasOwnProperty('callback');
 			if(hasPulldown || hasPullup) {
-				var container = pullRefreshOptions.container;
+				let container = pullRefreshOptions.container;
 				if(container) {
 					var $container = $(container);
 					if($container.length === 1) {
 						if($.os.plus) { //5+环境
-							if(hasPulldown && pullRefreshOptions.down.style == "circle") { //原生转圈
+							if(hasPulldown && pullRefreshOptions.down.style === "circle") { //原生转圈
 								$.plusReady(function() {
 									//这里改写$.fn.pullRefresh
 									$.fn.pullRefresh = $.fn.pullRefresh_native;
@@ -2957,27 +2959,27 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 								$.plusReady(function() {
 									//这里改写$.fn.pullRefresh
 									$.fn.pullRefresh = $.fn.pullRefresh_native
-									var webview = plus.webview.currentWebview();
+									let webview = plus.webview.currentWebview();
 									if(window.__NWin_Enable__ === false) { //不支持多webview
 										$container.pullRefresh(pullRefreshOptions);
 									} else {
 										if(hasPullup) {
 											//当前页面初始化pullup
-											var upOptions = {};
+											const upOptions = {};
 											upOptions.up = pullRefreshOptions.up;
 											upOptions.webviewId = webview.id || webview.getURL();
 											$container.pullRefresh(upOptions);
 										}
 										if(hasPulldown) {
-											var parent = webview.parent();
-											var id = webview.id || webview.getURL();
+											const parent = webview.parent();
+											let id = webview.id || webview.getURL();
 											if(parent) {
 												if(!hasPullup) { //如果没有上拉加载，需要手动初始化一个默认的pullRefresh，以便当前页面容器可以调用endPulldownToRefresh等方法
 													$container.pullRefresh({
 														webviewId: id
 													});
 												}
-												var downOptions = {
+												let downOptions = {
 													webviewId: id//子页面id
 												};
 												downOptions.down = $.extend({}, pullRefreshOptions.down);
@@ -3009,12 +3011,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  */
 (function($, window, undefined) {
 
-	var jsonType = 'application/json';
-	var htmlType = 'text/html';
-	var rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
-	var scriptTypeRE = /^(?:text|application)\/javascript/i;
-	var xmlTypeRE = /^(?:text|application)\/xml/i;
-	var blankRE = /^\s*$/;
+	const jsonType = 'application/json';
+	const htmlType = 'text/html';
+	const rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+	const scriptTypeRE = /^(?:text|application)\/javascript/i;
+	const xmlTypeRE = /^(?:text|application)\/xml/i;
+	const blankRE = /^\s*$/;
 
 	$.ajaxSettings = {
 		type: 'GET',
@@ -3037,27 +3039,27 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		processData: true,
 		cache: true
 	};
-	var ajaxBeforeSend = function(xhr, settings) {
-		var context = settings.context
+	const ajaxBeforeSend = function(xhr, settings) {
+		let context = settings.context
 		if(settings.beforeSend.call(context, xhr, settings) === false) {
 			return false;
 		}
 	};
-	var ajaxSuccess = function(data, xhr, settings) {
+	const ajaxSuccess = function(data, xhr, settings) {
 		settings.success.call(settings.context, data, 'success', xhr);
 		ajaxComplete('success', xhr, settings);
 	};
 	// type: "timeout", "error", "abort", "parsererror"
-	var ajaxError = function(error, type, xhr, settings) {
+	const ajaxError = function(error, type, xhr, settings) {
 		settings.error.call(settings.context, xhr, type, error);
 		ajaxComplete(type, xhr, settings);
 	};
 	// status: "success", "notmodified", "error", "timeout", "abort", "parsererror"
-	var ajaxComplete = function(status, xhr, settings) {
+	const ajaxComplete = function(status, xhr, settings) {
 		settings.complete.call(settings.context, xhr, status);
 	};
 
-	var serialize = function(params, obj, traditional, scope) {
+	const serialize = function(params, obj, traditional, scope) {
 		var type, array = $.isArray(obj),
 			hash = $.isPlainObject(obj);
 		$.each(obj, function(key, value) {
@@ -3078,9 +3080,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		});
 	};
-	var serializeData = function(options) {
+	const serializeData = function(options) {
 		if(options.processData && options.data && typeof options.data !== "string") {
-			var contentType = options.contentType;
+			let contentType = options.contentType;
 			if(!contentType && options.headers) {
 				contentType = options.headers['Content-Type'];
 			}
@@ -3095,13 +3097,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			options.data = undefined;
 		}
 	};
-	var appendQuery = function(url, query) {
+	const appendQuery = function(url, query) {
 		if(query === '') {
 			return url;
 		}
 		return(url + '&' + query).replace(/[&?]{1,2}/, '?');
 	};
-	var mimeToDataType = function(mime) {
+	const mimeToDataType = function(mime) {
 		if(mime) {
 			mime = mime.split(';', 2)[0];
 		}
@@ -3110,7 +3112,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			scriptTypeRE.test(mime) ? 'script' :
 			xmlTypeRE.test(mime) && 'xml') || 'text';
 	};
-	var parseArguments = function(url, data, success, dataType) {
+	const parseArguments = function(url, data, success, dataType) {
 		if($.isFunction(data)) {
 			dataType = success, success = data, data = undefined;
 		}
@@ -3129,7 +3131,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			options = url;
 			url = undefined;
 		}
-		var settings = options || {};
+		const settings = options || {};
 		settings.url = url || settings.url;
 		for(var key in $.ajaxSettings) {
 			if(settings[key] === undefined) {
@@ -3137,19 +3139,19 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		}
 		serializeData(settings);
-		var dataType = settings.dataType;
+		let dataType = settings.dataType;
 
 		if(settings.cache === false || ((!options || options.cache !== true) && ('script' === dataType))) {
 			settings.url = appendQuery(settings.url, '_=' + $.now());
 		}
-		var mime = settings.accepts[dataType && dataType.toLowerCase()];
-		var headers = {};
-		var setHeader = function(name, value) {
+		let mime = settings.accepts[dataType && dataType.toLowerCase()];
+		const headers = {};
+		const setHeader = function(name, value) {
 			headers[name.toLowerCase()] = [name, value];
 		};
-		var protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol;
-		var xhr = settings.xhr(settings);
-		var nativeSetHeader = xhr.setRequestHeader;
+		const protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol;
+		const xhr = settings.xhr(settings);
+		const nativeSetHeader = xhr.setRequestHeader;
 		var abortTimeout;
 
 		setHeader('X-Requested-With', 'XMLHttpRequest');
@@ -3174,7 +3176,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				xhr.onreadystatechange = $.noop;
 				clearTimeout(abortTimeout);
 				var result, error = false;
-				var isLocal = protocol === 'file:';
+				const isLocal = protocol === 'file:';
 				if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 || (xhr.status === 0 && isLocal && xhr.responseText)) {
 					dataType = dataType || mimeToDataType(settings.mimeType || xhr.getResponseHeader('content-type'));
 					result = xhr.responseText;
@@ -3197,8 +3199,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 						ajaxSuccess(result, xhr, settings);
 					}
 				} else {
-					var status = xhr.status ? 'error' : 'abort';
-					var statusText = xhr.statusText || null;
+					let status = xhr.status ? 'error' : 'abort';
+					let statusText = xhr.statusText || null;
 					if(isLocal) {
 						status = 'error';
 						statusText = '404';
@@ -3219,7 +3221,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		}
 
-		var async = 'async' in settings ? settings.async : true;
+		const async = 'async' in settings ? settings.async : true;
 
 		xhr.open(settings.type.toUpperCase(), settings.url, async, settings.username, settings.password);
 
@@ -3240,7 +3242,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 
 	$.param = function(obj, traditional) {
-		var params = [];
+		const params = [];
 		params.add = function(k, v) {
 			this.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
 		};
@@ -3252,13 +3254,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 
 	$.post = function( /* url, data, success, dataType */ ) {
-		var options = parseArguments.apply(null, arguments);
+		let options = parseArguments.apply(null, arguments);
 		options.type = 'POST';
 		return $.ajax(options);
 	};
 
 	$.getJSON = function( /* url, data, success */ ) {
-		var options = parseArguments.apply(null, arguments);
+		let options = parseArguments.apply(null, arguments);
 		options.dataType = 'json';
 		return $.ajax(options);
 	};
@@ -3266,7 +3268,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	$.fn.load = function(url, data, success) {
 		if(!this.length)
 			return this;
-		var self = this,
+		let self = this,
 			parts = url.split(/\s/),
 			selector,
 			options = parseArguments(url, data, success),
@@ -3275,12 +3277,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			options.url = parts[0], selector = parts[1];
 		options.success = function(response) {
 			if(selector) {
-				var div = document.createElement('div');
+				const div = document.createElement('div');
 				div.innerHTML = response.replace(rscript, "");
-				var selectorDiv = document.createElement('div');
-				var childs = div.querySelectorAll(selector);
+				const selectorDiv = document.createElement('div');
+				const childs = div.querySelectorAll(selector);
 				if(childs && childs.length > 0) {
-					for(var i = 0, len = childs.length; i < len; i++) {
+					for(let i = 0, len = childs.length; i < len; i++) {
 						selectorDiv.appendChild(childs[i]);
 					}
 				}
@@ -3299,7 +3301,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * 5+ ajax
  */
 (function($) {
-	var originAnchor = document.createElement('a');
+	const originAnchor = document.createElement('a');
 	originAnchor.href = window.location.href;
 	$.plusReady(function() {
 		$.ajaxSettings = $.extend($.ajaxSettings, {
@@ -3309,7 +3311,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				}
 				//仅在webview的url为远程文件，且ajax请求的资源不同源下使用plus.net.XMLHttpRequest
 				if (originAnchor.protocol !== 'file:') {
-					var urlAnchor = document.createElement('a');
+					const urlAnchor = document.createElement('a');
 					urlAnchor.href = settings.url;
 					urlAnchor.href = urlAnchor.href;
 					settings.crossDomain = (originAnchor.protocol + '//' + originAnchor.host) !== (urlAnchor.protocol + '//' + urlAnchor.host);
@@ -3334,7 +3336,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  */
 (function($, window, undefined) {
 	$.offset = function(element) {
-		var box = {
+		let box = {
 			top : 0,
 			left : 0
 		};
@@ -3356,13 +3358,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 */
 	$.scrollTo = function(scrollTop, duration, callback) {
 		duration = duration || 1000;
-		var scroll = function(duration) {
+		let scroll = function(duration) {
 			if (duration <= 0) {
 				window.scrollTo(0, scrollTop);
 				callback && callback();
 				return;
 			}
-			var distaince = scrollTop - window.scrollY;
+			const distaince = scrollTop - window.scrollY;
 			setTimeout(function() {
 				window.scrollTo(0, window.scrollY + distaince / duration * 10);
 				scroll(duration - 10);
@@ -3387,27 +3389,27 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 })(mui, window);
 (function($) {
-	var initializing = false,
+	let initializing = false,
 		fnTest = /xyz/.test(function() {
 			xyz;
 		}) ? /\b_super\b/ : /.*/;
 
-	var Class = function() {};
+	let Class = function() {};
 	Class.extend = function(prop) {
-		var _super = this.prototype;
+		let _super = this.prototype;
 		initializing = true;
-		var prototype = new this();
+		let prototype = new this();
 		initializing = false;
 		for (var name in prop) {
-			prototype[name] = typeof prop[name] == "function" &&
-				typeof _super[name] == "function" && fnTest.test(prop[name]) ?
+			prototype[name] = typeof prop[name] === "function" &&
+				typeof _super[name] === "function" && fnTest.test(prop[name]) ?
 				(function(name, fn) {
 					return function() {
-						var tmp = this._super;
+						const tmp = this._super;
 
 						this._super = _super[name];
 
-						var ret = fn.apply(this, arguments);
+						const ret = fn.apply(this, arguments);
 						this._super = tmp;
 
 						return ret;
@@ -3427,30 +3429,30 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	$.Class = Class;
 })(mui);
 (function($, document, undefined) {
-    var CLASS_PULL_TOP_POCKET = 'mui-pull-top-pocket';
-    var CLASS_PULL_BOTTOM_POCKET = 'mui-pull-bottom-pocket';
-    var CLASS_PULL = 'mui-pull';
-    var CLASS_PULL_LOADING = 'mui-pull-loading';
-    var CLASS_PULL_CAPTION = 'mui-pull-caption';
-    var CLASS_PULL_CAPTION_DOWN = 'mui-pull-caption-down';
-    var CLASS_PULL_CAPTION_REFRESH = 'mui-pull-caption-refresh';
-    var CLASS_PULL_CAPTION_NOMORE = 'mui-pull-caption-nomore';
+    const CLASS_PULL_TOP_POCKET = 'mui-pull-top-pocket';
+    const CLASS_PULL_BOTTOM_POCKET = 'mui-pull-bottom-pocket';
+    const CLASS_PULL = 'mui-pull';
+    const CLASS_PULL_LOADING = 'mui-pull-loading';
+    let CLASS_PULL_CAPTION = 'mui-pull-caption';
+    let CLASS_PULL_CAPTION_DOWN = 'mui-pull-caption-down';
+    let CLASS_PULL_CAPTION_REFRESH = 'mui-pull-caption-refresh';
+    let CLASS_PULL_CAPTION_NOMORE = 'mui-pull-caption-nomore';
 
-    var CLASS_ICON = 'mui-icon';
-    var CLASS_SPINNER = 'mui-spinner';
-    var CLASS_ICON_PULLDOWN = 'mui-icon-pulldown';
+    let CLASS_ICON = 'mui-icon';
+    const CLASS_SPINNER = 'mui-spinner';
+    const CLASS_ICON_PULLDOWN = 'mui-icon-pulldown';
 
-    var CLASS_BLOCK = 'mui-block';
-    var CLASS_HIDDEN = 'mui-hidden';
-    var CLASS_VISIBILITY = 'mui-visibility';
+    let CLASS_BLOCK = 'mui-block';
+    let CLASS_HIDDEN = 'mui-hidden';
+    let CLASS_VISIBILITY = 'mui-visibility';
 
-    var CLASS_LOADING_UP = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_ICON_PULLDOWN;
-    var CLASS_LOADING_DOWN = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_ICON_PULLDOWN;
-    var CLASS_LOADING = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_SPINNER;
+    const CLASS_LOADING_UP = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_ICON_PULLDOWN;
+    const CLASS_LOADING_DOWN = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_ICON_PULLDOWN;
+    const CLASS_LOADING = CLASS_PULL_LOADING + ' ' + CLASS_ICON + ' ' + CLASS_SPINNER;
 
-    var pocketHtml = ['<div class="' + CLASS_PULL + '">', '<div class="{icon}"></div>', '<div class="' + CLASS_PULL_CAPTION + '">{contentrefresh}</div>', '</div>'].join('');
+    const pocketHtml = ['<div class="' + CLASS_PULL + '">', '<div class="{icon}"></div>', '<div class="' + CLASS_PULL_CAPTION + '">{contentrefresh}</div>', '</div>'].join('');
 
-    var PullRefresh = {
+    let PullRefresh = {
         init: function(element, options) {
             this._super(element, $.extend(true, {
                 scrollY: true,
@@ -3500,7 +3502,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
             }
         },
         _initPocket: function() {
-            var options = this.options;
+            let options = this.options;
             if (options.down && options.down.hasOwnProperty('callback')) {
                 this.topPocket = this.scroller.querySelector('.' + CLASS_PULL_TOP_POCKET);
                 if (!this.topPocket) {
@@ -3523,13 +3525,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
             }
         },
         _createPocket: function(clazz, options, iconClass) {
-            var pocket = document.createElement('div');
+            let pocket = document.createElement('div');
             pocket.className = clazz;
             pocket.innerHTML = pocketHtml.replace('{contentrefresh}', options.contentinit).replace('{icon}', iconClass);
             return pocket;
         },
         _resetPullDownLoading: function() {
-            var loading = this.pullLoading;
+            let loading = this.pullLoading;
             if (loading) {
                 this.pullCaption.innerHTML = this.options.down.contentdown;
                 loading.style.webkitTransition = "";
@@ -3557,12 +3559,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
             if (this.loading) {
                 return;
             }
-            var options = this.options;
-            var pocket = this.pullPocket;
-            var caption = this.pullCaption;
-            var loading = this.pullLoading;
-            var isPulldown = this.pulldown;
-            var self = this;
+            let options = this.options;
+            const pocket = this.pullPocket;
+            const caption = this.pullCaption;
+            let loading = this.pullLoading;
+            const isPulldown = this.pulldown;
+            let self = this;
             if (pocket) {
                 if (reset) {
                     setTimeout(function() {
@@ -3611,15 +3613,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
     $.PullRefresh = PullRefresh;
 })(mui, document);
 (function($, window, document, undefined) {
-	var CLASS_SCROLL = 'mui-scroll';
-	var CLASS_SCROLLBAR = 'mui-scrollbar';
-	var CLASS_INDICATOR = 'mui-scrollbar-indicator';
-	var CLASS_SCROLLBAR_VERTICAL = CLASS_SCROLLBAR + '-vertical';
-	var CLASS_SCROLLBAR_HORIZONTAL = CLASS_SCROLLBAR + '-horizontal';
+	const CLASS_SCROLL = 'mui-scroll';
+	const CLASS_SCROLLBAR = 'mui-scrollbar';
+	const CLASS_INDICATOR = 'mui-scrollbar-indicator';
+	const CLASS_SCROLLBAR_VERTICAL = CLASS_SCROLLBAR + '-vertical';
+	const CLASS_SCROLLBAR_HORIZONTAL = CLASS_SCROLLBAR + '-horizontal';
 
-	var CLASS_ACTIVE = 'mui-active';
+	let CLASS_ACTIVE = 'mui-active';
 
-	var ease = {
+	const ease = {
 		quadratic: {
 			style: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
 			fn: function(k) {
@@ -3639,7 +3641,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			style: 'cubic-bezier(0.165, 0.84, 0.44, 1)'
 		}
 	}
-	var Scroll = $.Class.extend({
+	let Scroll = $.Class.extend({
 		init: function(element, options) {
 			this.wrapper = this.element = element;
 			this.scroller = this.wrapper.children[0];
@@ -3703,12 +3705,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		_initIndicators: function() {
-			var self = this;
+			let self = this;
 			self.indicators = [];
 			if (!this.options.indicators) {
 				return;
 			}
-			var indicators = [],
+			let indicators = [],
 				indicator;
 
 			// Vertical scrollbar
@@ -3733,7 +3735,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				indicators.push(indicator);
 			}
 
-			for (var i = indicators.length; i--;) {
+			for (let i = indicators.length; i--;) {
 				this.indicators.push(new Indicator(this, indicators[i]));
 			}
 
@@ -3741,18 +3743,18 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		_initSnap: function() {
 			this.currentPage = {};
 			this.pages = [];
-			var snaps = this.snaps;
-			var length = snaps.length;
-			var m = 0;
-			var n = -1;
-			var x = 0;
-			var leftX = 0;
-			var rightX = 0;
-			var snapX = 0;
-			for (var i = 0; i < length; i++) {
-				var snap = snaps[i];
-				var offsetLeft = snap.offsetLeft;
-				var offsetWidth = snap.offsetWidth;
+			let snaps = this.snaps;
+			let length = snaps.length;
+			let m = 0;
+			let n = -1;
+			let x = 0;
+			let leftX = 0;
+			let rightX = 0;
+			let snapX = 0;
+			for (let i = 0; i < length; i++) {
+				const snap = snaps[i];
+				let offsetLeft = snap.offsetLeft;
+				let offsetWidth = snap.offsetWidth;
 				if (i === 0 || offsetLeft <= snaps[i - 1].offsetLeft) {
 					m = 0;
 					n++;
@@ -3785,7 +3787,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		_gotoPage: function(index) {
 			this.currentPage = this.pages[Math.min(index, this.pages.length - 1)][0];
-			for (var i = 0, len = this.snaps.length; i < len; i++) {
+			for (let i = 0, len = this.snaps.length; i < len; i++) {
 				if (i === index) {
 					this.snaps[i].classList.add(CLASS_ACTIVE);
 				} else {
@@ -3801,15 +3803,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					pageX: 0
 				};
 			}
-			var i = 0;
-			var length = this.pages.length;
+			let i = 0;
+			let length = this.pages.length;
 			if (x > 0) {
 				x = 0;
 			} else if (x < this.maxScrollX) {
 				x = this.maxScrollX;
 			}
 			for (; i < length; i++) {
-				var nearestX = this.direction === 'left' ? this.pages[i][0].leftX : this.pages[i][0].rightX;
+				const nearestX = this.direction === 'left' ? this.pages[i][0].leftX : this.pages[i][0].rightX;
 				if (x >= nearestX) {
 					return this.pages[i][0];
 				}
@@ -3820,7 +3822,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			};
 		},
 		_initEvent: function(detach) {
-			var action = detach ? 'removeEventListener' : 'addEventListener';
+			let action = detach ? 'removeEventListener' : 'addEventListener';
 			window[action]('orientationchange', this);
 			window[action]('resize', this);
 
@@ -3836,7 +3838,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			if (this.options.scrollX) {
 				this.wrapper[action]('swiperight', this);
 			}
-			var segmentedControl = this.wrapper.querySelector('.mui-segmented-control');
+			let segmentedControl = this.wrapper.querySelector('.mui-segmented-control');
 			if (segmentedControl) { //靠，这个bug排查了一下午，阻止hash跳转，一旦hash跳转会导致可拖拽选项卡的tab不见
 				mui(segmentedControl)[detach ? 'off' : 'on']('click', 'a', $.preventDefault);
 			}
@@ -3913,7 +3915,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			if (this.isInTransition) {
 				this.needReset = true;
 				this.isInTransition = false;
-				var pos = $.parseTranslateMatrix($.getStyles(this.scroller, 'webkitTransform'));
+				const pos = $.parseTranslateMatrix($.getStyles(this.scroller, 'webkitTransform'));
 				this.setTranslate(Math.round(pos.x), Math.round(pos.y));
 				//				this.resetPosition(); //reset
 				$.trigger(this.scroller, 'scrollend', this);
@@ -3940,11 +3942,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			//				e.stopPropagation(); //disable parent drag(nested scroller)
 			//				return;
 			//			}
-			var detail = e.detail;
+			let detail = e.detail;
 			if (this.options.scrollY || detail.direction === 'up' || detail.direction === 'down') { //如果是竖向滚动或手势方向是上或下
 				//ios8 hack
 				if ($.os.ios && parseFloat($.os.version) >= 8) { //多webview时，离开当前webview会导致后续touch事件不触发
-					var clientY = detail.gesture.touches[0].clientY;
+					const clientY = detail.gesture.touches[0].clientY;
 					//下拉刷新 or 上拉加载
 					if ((clientY + 10) > window.innerHeight || clientY < 10) {
 						this.resetPosition(this.options.bounceTime);
@@ -3952,8 +3954,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					}
 				}
 			}
-			var isPreventDefault = isReturn = false;
-			var direction = this._getDirectionByAngle(detail.angle);
+			let isPreventDefault = isReturn = false;
+			let direction = this._getDirectionByAngle(detail.angle);
 			if (detail.direction === 'left' || detail.direction === 'right') {
 				if (this.options.scrollX) {
 					isPreventDefault = true;
@@ -3998,8 +4000,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			} else {
 				e.stopPropagation(); //move期间阻止冒泡(scroll嵌套)
 			}
-			var deltaX = 0;
-			var deltaY = 0;
+			let deltaX = 0;
+			let deltaY = 0;
 			if (!this.moved) { //start
 				deltaX = detail.deltaX;
 				deltaY = detail.deltaY;
@@ -4007,8 +4009,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				deltaX = detail.deltaX - $.gestures.session.prevTouch.deltaX;
 				deltaY = detail.deltaY - $.gestures.session.prevTouch.deltaY;
 			}
-			var absDeltaX = Math.abs(detail.deltaX);
-			var absDeltaY = Math.abs(detail.deltaY);
+			const absDeltaX = Math.abs(detail.deltaX);
+			const absDeltaY = Math.abs(detail.deltaY);
 			if (absDeltaX > absDeltaY + this.options.directionLockThreshold) {
 				deltaY = 0;
 			} else if (absDeltaY >= absDeltaX + this.options.directionLockThreshold) {
@@ -4017,8 +4019,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 			deltaX = this.hasHorizontalScroll ? deltaX : 0;
 			deltaY = this.hasVerticalScroll ? deltaY : 0;
-			var newX = this.x + deltaX;
-			var newY = this.y + deltaY;
+			let newX = this.x + deltaX;
+			let newY = this.y + deltaY;
 			// Slow down if outside of the boundaries
 			if (newX > 0 || newX < this.maxScrollX) {
 				newX = this.options.bounce ? this.x + deltaX / 3 : newX > 0 ? 0 : this.maxScrollX;
@@ -4044,14 +4046,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				return;
 			}
 			e.stopPropagation();
-			var detail = e.detail;
+			let detail = e.detail;
 			this._clearRequestAnimationFrame();
 			if (e.type === 'dragend' && detail.flick) { //dragend
 				return;
 			}
 
-			var newX = Math.round(this.x);
-			var newY = Math.round(this.y);
+			let newX = Math.round(this.x);
+			let newY = Math.round(this.y);
 
 			this.isInTransition = false;
 			// reset if we are outside of the boundaries
@@ -4065,8 +4067,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				$.trigger(this.scroller, 'scrollend', this);
 				return;
 			}
-			var time = 0;
-			var easing = '';
+			let time = 0;
+			let easing = '';
 			// start momentum animation if needed
 			if (this.options.momentum && detail.flickTime < 300) {
 				momentumX = this.hasHorizontalScroll ? this._momentum(this.x, detail.flickDistanceX, detail.flickTime, this.maxScrollX, this.options.bounce ? this.wrapperWidth : 0, this.options.deceleration) : {
@@ -4083,7 +4085,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				this.isInTransition = true;
 			}
 
-			if (newX != this.x || newY != this.y) {
+			if (newX !== this.x || newY !== this.y) {
 				if (newX > 0 || newX < this.maxScrollX || newY > 0 || newY < this.maxScrollY) {
 					easing = ease.quadratic;
 				}
@@ -4101,7 +4103,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		_transitionEnd: function(e) {
-			if (e.target != this.scroller || !this.isInTransition) {
+			if (e.target !== this.scroller || !this.isInTransition) {
 				return;
 			}
 			this._transitionTime();
@@ -4116,7 +4118,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		_resize: function() {
-			var that = this;
+			const that = this;
 			clearTimeout(that.resizeTimeout);
 			that.resizeTimeout = setTimeout(function() {
 				that.refresh();
@@ -4135,7 +4137,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				}
 			}
 			if (this.indicators) {
-				for (var i = this.indicators.length; i--;) {
+				for (let i = this.indicators.length; i--;) {
 					this.indicators[i].transitionTime(time);
 				}
 			}
@@ -4152,7 +4154,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				this.parallaxStyle['webkitTransitionDuration'] = easing;
 			}
 			if (this.indicators) {
-				for (var i = this.indicators.length; i--;) {
+				for (let i = this.indicators.length; i--;) {
 					this.indicators[i].transitionTimingFunction(easing);
 				}
 			}
@@ -4168,7 +4170,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		_updateTranslate: function() {
-			var self = this;
+			let self = this;
 			if (self.x !== self.lastX || self.y !== self.lastY) {
 				self.setTranslate(self.x, self.y);
 			}
@@ -4177,8 +4179,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			});
 		},
 		_createScrollBar: function(clazz) {
-			var scrollbar = document.createElement('div');
-			var indicator = document.createElement('div');
+			const scrollbar = document.createElement('div');
+			let indicator = document.createElement('div');
 			scrollbar.className = CLASS_SCROLLBAR + ' ' + clazz;
 			indicator.className = CLASS_INDICATOR;
 			scrollbar.appendChild(indicator);
@@ -4217,11 +4219,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 			//以防slider类嵌套使用
 			if (this.options.snap && typeof this.options.snap === 'string') {
-				var items = this.scroller.querySelectorAll(this.options.snap);
+				let items = this.scroller.querySelectorAll(this.options.snap);
 				this.itemLength = 0;
 				this.snaps = [];
-				for (var i = 0, len = items.length; i < len; i++) {
-					var item = items[i];
+				for (let i = 0, len = items.length; i < len; i++) {
+					let item = items[i];
 					if (item.parentNode === this.scroller) {
 						this.itemLength++;
 						this.snaps.push(item);
@@ -4231,7 +4233,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		_momentum: function(current, distance, time, lowerMargin, wrapperSize, deceleration) {
-			var speed = parseFloat(Math.abs(distance) / time),
+			let speed = parseFloat(Math.abs(distance) / time),
 				destination,
 				duration;
 
@@ -4268,8 +4270,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.y = y;
 			this.scrollerStyle['webkitTransform'] = this._getTranslateStr(x, y);
 			if (this.parallaxElement && this.options.scrollY) { //目前仅支持竖向视差效果
-				var parallaxY = y * this.options.parallaxRatio;
-				var scale = 1 + parallaxY / ((this.parallaxHeight - parallaxY) / 2);
+				const parallaxY = y * this.options.parallaxRatio;
+				const scale = 1 + parallaxY / ((this.parallaxHeight - parallaxY) / 2);
 				if (scale > 1) {
 					this.parallaxImgStyle['opacity'] = 1 - parallaxY / 100 * this.options.parallaxRatio;
 					this.parallaxStyle['webkitTransform'] = this._getTranslateStr(0, -parallaxY) + ' scale(' + scale + ',' + scale + ')';
@@ -4279,7 +4281,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				}
 			}
 			if (this.indicators) {
-				for (var i = this.indicators.length; i--;) {
+				for (let i = this.indicators.length; i--;) {
 					this.indicators[i].updatePosition();
 				}
 			}
@@ -4290,13 +4292,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		reLayout: function() {
 			this.wrapper.offsetHeight;
 
-			var paddingLeft = parseFloat($.getStyles(this.wrapper, 'padding-left')) || 0;
-			var paddingRight = parseFloat($.getStyles(this.wrapper, 'padding-right')) || 0;
-			var paddingTop = parseFloat($.getStyles(this.wrapper, 'padding-top')) || 0;
-			var paddingBottom = parseFloat($.getStyles(this.wrapper, 'padding-bottom')) || 0;
+			const paddingLeft = parseFloat($.getStyles(this.wrapper, 'padding-left')) || 0;
+			const paddingRight = parseFloat($.getStyles(this.wrapper, 'padding-right')) || 0;
+			const paddingTop = parseFloat($.getStyles(this.wrapper, 'padding-top')) || 0;
+			const paddingBottom = parseFloat($.getStyles(this.wrapper, 'padding-bottom')) || 0;
 
-			var clientWidth = this.wrapper.clientWidth;
-			var clientHeight = this.wrapper.clientHeight;
+			const clientWidth = this.wrapper.clientWidth;
+			const clientHeight = this.wrapper.clientHeight;
 
 			this.scrollerWidth = this.scroller.offsetWidth;
 			this.scrollerHeight = this.scroller.offsetHeight;
@@ -4311,7 +4313,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this._reLayout();
 		},
 		resetPosition: function(time) {
-			var x = this.x,
+			let x = this.x,
 				y = this.y;
 
 			time = time || 0;
@@ -4327,7 +4329,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				y = this.maxScrollY;
 			}
 
-			if (x == this.x && y == this.y) {
+			if (x === this.x && y === this.y) {
 				return false;
 			}
 			this.scrollTo(x, y, time, this.options.scrollEasing);
@@ -4335,8 +4337,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			return true;
 		},
 		_reInit: function() {
-			var groups = this.wrapper.querySelectorAll('.' + CLASS_SCROLL);
-			for (var i = 0, len = groups.length; i < len; i++) {
+			let groups = this.wrapper.querySelectorAll('.' + CLASS_SCROLL);
+			for (let i = 0, len = groups.length; i < len; i++) {
 				if (groups[i].parentNode === this.wrapper) {
 					this.scroller = groups[i];
 					break;
@@ -4351,8 +4353,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.resetPosition();
 		},
 		scrollTo: function(x, y, time, easing) {
-			var easing = easing || ease.circular;
-			//			this.isInTransition = time > 0 && (this.lastX != x || this.lastY != y);
+			const easing = easing || ease.circular;
+			//			this.isInTransition = time > 0 && (this.lastX !== x || this.lastY !== y);
 			//暂不严格判断x,y，否则会导致部分版本上不正常触发轮播
 			this.isInTransition = time > 0;
 			if (this.isInTransition) {
@@ -4379,8 +4381,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 	});
 	//Indicator
-	var Indicator = function(scroller, options) {
-		this.wrapper = typeof options.el == 'string' ? document.querySelector(options.el) : options.el;
+	const Indicator = function(scroller, options) {
+		this.wrapper = typeof options.el === 'string' ? document.querySelector(options.el) : options.el;
 		this.wrapperStyle = this.wrapper.style;
 		this.indicator = this.wrapper.children[0];
 		this.indicatorStyle = this.indicator.style;
@@ -4462,7 +4464,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 
 		updatePosition: function() {
-			var x = this.options.listenX && Math.round(this.sizeRatioX * this.scroller.x) || 0,
+			let x = this.options.listenX && Math.round(this.sizeRatioX * this.scroller.x) || 0,
 				y = this.options.listenY && Math.round(this.sizeRatioY * this.scroller.y) || 0;
 
 			if (x < this.minBoundaryX) {
@@ -4473,7 +4475,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				this.width = Math.max(this.indicatorWidth - (x - this.maxPosX), 8);
 				this.indicatorStyle.width = this.width + 'px';
 				x = this.maxPosX + this.indicatorWidth - this.width;
-			} else if (this.width != this.indicatorWidth) {
+			} else if (this.width !== this.indicatorWidth) {
 				this.width = this.indicatorWidth;
 				this.indicatorStyle.width = this.width + 'px';
 			}
@@ -4486,7 +4488,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				this.height = Math.max(this.indicatorHeight - (y - this.maxPosY) * 3, 8);
 				this.indicatorStyle.height = this.height + 'px';
 				y = this.maxPosY + this.indicatorHeight - this.height;
-			} else if (this.height != this.indicatorHeight) {
+			} else if (this.height !== this.indicatorHeight) {
 				this.height = this.indicatorHeight;
 				this.indicatorStyle.height = this.height + 'px';
 			}
@@ -4505,7 +4507,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			clearTimeout(this.fadeTimeout);
 			this.fadeTimeout = null;
 
-			var time = val ? 250 : 500,
+			let time = val ? 250 : 500,
 				delay = val ? 0 : 300;
 
 			val = val ? '1' : '0';
@@ -4522,14 +4524,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	$.Scroll = Scroll;
 
 	$.fn.scroll = function(options) {
-		var scrollApis = [];
+		const scrollApis = [];
 		this.each(function() {
-			var scrollApi = null;
-			var self = this;
-			var id = self.getAttribute('data-scroll');
+			let scrollApi = null;
+			let self = this;
+			let id = self.getAttribute('data-scroll');
 			if (!id) {
 				id = ++$.uuid;
-				var _options = $.extend({}, options);
+				let _options = $.extend({}, options);
 				if (self.classList.contains('mui-segmented-control')) {
 					_options = $.extend(_options, {
 						scrollY: false,
@@ -4550,10 +4552,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 })(mui, window, document);
 (function($, window, document, undefined) {
 
-	var CLASS_VISIBILITY = 'mui-visibility';
-	var CLASS_HIDDEN = 'mui-hidden';
+	let CLASS_VISIBILITY = 'mui-visibility';
+	let CLASS_HIDDEN = 'mui-hidden';
 
-	var PullRefresh = $.Scroll.extend($.extend({
+	const PullRefresh = $.Scroll.extend($.extend({
 		handleEvent: function(e) {
 			this._super(e);
 			if (e.type === 'scrollbottom') {
@@ -4619,11 +4621,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.indicators.map(function(indicator) {
 				indicator.fade(0);
 			});
-			var callback = this.options.down.callback;
+			let callback = this.options.down.callback;
 			callback && callback.call(this);
 		},
 		endPulldownToRefresh: function() {
-			var self = this;
+			let self = this;
 			if (self.topPocket && self.loading && this.pulldown) {
 				self.scrollTo(0, 0, self.options.bounceTime, self.options.bounceEasing);
 				self.loading = false;
@@ -4649,7 +4651,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			callback && callback.call(this);
 		},
 		endPullupToRefresh: function(finished) {
-			var self = this;
+			let self = this;
 			if (self.bottomPocket) { // && self.loading && !this.pulldown
 				self.loading = false;
 				if (finished) {
@@ -4687,9 +4689,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	}, $.PullRefresh));
 	$.fn.pullRefresh = function(options) {
 		if (this.length === 1) {
-			var self = this[0];
-			var pullRefreshApi = null;
-			var id = self.getAttribute('data-pullrefresh');
+			let self = this[0];
+			let pullRefreshApi = null;
+			let id = self.getAttribute('data-pullrefresh');
 			if (!id && typeof options === 'undefined') {
 				return false;
 			}
@@ -4708,7 +4710,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 			//暂不提供这种调用方式吧			
 			//			if (typeof options === 'string') {
-			//				var methodValue = pullRefreshApi[options].apply(pullRefreshApi, $.slice.call(arguments, 1));
+			//				const methodValue = pullRefreshApi[options].apply(pullRefreshApi, $.slice.call(arguments, 1));
 			//				if (methodValue !== undefined) {
 			//					return methodValue;
 			//				}
@@ -4723,21 +4725,21 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @param {Object} window
  */
 (function($, window) {
-	var CLASS_SLIDER = 'mui-slider';
-	var CLASS_SLIDER_GROUP = 'mui-slider-group';
-	var CLASS_SLIDER_LOOP = 'mui-slider-loop';
-	var CLASS_SLIDER_INDICATOR = 'mui-slider-indicator';
-	var CLASS_ACTION_PREVIOUS = 'mui-action-previous';
-	var CLASS_ACTION_NEXT = 'mui-action-next';
-	var CLASS_SLIDER_ITEM = 'mui-slider-item';
+	const CLASS_SLIDER = 'mui-slider';
+	const CLASS_SLIDER_GROUP = 'mui-slider-group';
+	const CLASS_SLIDER_LOOP = 'mui-slider-loop';
+	const CLASS_SLIDER_INDICATOR = 'mui-slider-indicator';
+	const CLASS_ACTION_PREVIOUS = 'mui-action-previous';
+	const CLASS_ACTION_NEXT = 'mui-action-next';
+	let CLASS_SLIDER_ITEM = 'mui-slider-item';
 
-	var CLASS_ACTIVE = 'mui-active';
+	let CLASS_ACTIVE = 'mui-active';
 
-	var SELECTOR_SLIDER_ITEM = '.' + CLASS_SLIDER_ITEM;
-	var SELECTOR_SLIDER_INDICATOR = '.' + CLASS_SLIDER_INDICATOR;
-	var SELECTOR_SLIDER_PROGRESS_BAR = '.mui-slider-progress-bar';
+	const SELECTOR_SLIDER_ITEM = '.' + CLASS_SLIDER_ITEM;
+	const SELECTOR_SLIDER_INDICATOR = '.' + CLASS_SLIDER_INDICATOR;
+	const SELECTOR_SLIDER_PROGRESS_BAR = '.mui-slider-progress-bar';
 
-	var Slider = $.Slider = $.Scroll.extend({
+	let Slider = $.Slider = $.Scroll.extend({
 		init: function(element, options) {
 			this._super(element, $.extend(true, {
 				fingers: 1,
@@ -4775,9 +4777,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		_triggerSlide: function() {
-			var self = this;
+			let self = this;
 			self.isInTransition = false;
-			var page = self.currentPage;
+			let page = self.currentPage;
 			self.slideNumber = self._fixedSlideNumber();
 			if (self.loop) {
 				if (self.slideNumber === 0) {
@@ -4786,7 +4788,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					self.setTranslate(self.pages[self.itemLength - 2][0].x, 0);
 				}
 			}
-			if (self.lastSlideNumber != self.slideNumber) {
+			if (self.lastSlideNumber !== self.slideNumber) {
 				self.lastSlideNumber = self.slideNumber;
 				self.lastPage = self.currentPage;
 				$.trigger(self.wrapper, 'slide', {
@@ -4796,27 +4798,27 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			self._initTimer();
 		},
 		_handleSlide: function(e) {
-			var self = this;
+			let self = this;
 			if (e.target !== self.wrapper) {
 				return;
 			}
-			var detail = e.detail;
+			let detail = e.detail;
 			detail.slideNumber = detail.slideNumber || 0;
-			var temps = self.scroller.querySelectorAll(SELECTOR_SLIDER_ITEM);
-			var items = [];
-			for (var i = 0, len = temps.length; i < len; i++) {
-				var item = temps[i];
+			const temps = self.scroller.querySelectorAll(SELECTOR_SLIDER_ITEM);
+			const items = [];
+			for (let i = 0, len = temps.length; i < len; i++) {
+				let item = temps[i];
 				if (item.parentNode === self.scroller) {
 					items.push(item);
 				}
 			}
-			var _slideNumber = detail.slideNumber;
+			const _slideNumber = detail.slideNumber;
 			if (self.loop) {
 				_slideNumber += 1;
 			}
 			if (!self.wrapper.classList.contains('mui-segmented-control')) {
-				for (var i = 0, len = items.length; i < len; i++) {
-					var item = items[i];
+				for (let i = 0, len = items.length; i < len; i++) {
+					const item = items[i];
 					if (item.parentNode === self.scroller) {
 						if (i === _slideNumber) {
 							item.classList.add(CLASS_ACTIVE);
@@ -4826,23 +4828,23 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					}
 				}
 			}
-			var indicatorWrap = self.wrapper.querySelector('.mui-slider-indicator');
+			const indicatorWrap = self.wrapper.querySelector('.mui-slider-indicator');
 			if (indicatorWrap) {
 				if (indicatorWrap.getAttribute('data-scroll')) { //scroll
 					$(indicatorWrap).scroll().gotoPage(detail.slideNumber);
 				}
-				var indicators = indicatorWrap.querySelectorAll('.mui-indicator');
+				const indicators = indicatorWrap.querySelectorAll('.mui-indicator');
 				if (indicators.length > 0) { //图片轮播
-					for (var i = 0, len = indicators.length; i < len; i++) {
+					for (let i = 0, len = indicators.length; i < len; i++) {
 						indicators[i].classList[i === detail.slideNumber ? 'add' : 'remove'](CLASS_ACTIVE);
 					}
 				} else {
-					var number = indicatorWrap.querySelector('.mui-number span');
+					const number = indicatorWrap.querySelector('.mui-number span');
 					if (number) { //图文表格
 						number.innerText = (detail.slideNumber + 1);
 					} else { //segmented controls
-						var controlItems = indicatorWrap.querySelectorAll('.mui-control-item');
-						for (var i = 0, len = controlItems.length; i < len; i++) {
+						const controlItems = indicatorWrap.querySelectorAll('.mui-control-item');
+						for (let i = 0, len = controlItems.length; i < len; i++) {
 							controlItems[i].classList[i === detail.slideNumber ? 'add' : 'remove'](CLASS_ACTIVE);
 						}
 					}
@@ -4851,21 +4853,21 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			e.stopPropagation();
 		},
 		_handleTabShow: function(e) {
-			var self = this;
+			let self = this;
 			self.gotoItem((e.detail.tabNumber || 0), self.options.slideTime);
 		},
 		_handleIndicatorTap: function(event) {
-			var self = this;
-			var target = event.target;
+			let self = this;
+			let target = event.target;
 			if (target.classList.contains(CLASS_ACTION_PREVIOUS) || target.classList.contains(CLASS_ACTION_NEXT)) {
 				self[target.classList.contains(CLASS_ACTION_PREVIOUS) ? 'prevItem' : 'nextItem']();
 				event.stopPropagation();
 			}
 		},
 		_initEvent: function(detach) {
-			var self = this;
+			let self = this;
 			self._super(detach);
-			var action = detach ? 'removeEventListener' : 'addEventListener';
+			let action = detach ? 'removeEventListener' : 'addEventListener';
 			self.wrapper[action]('slide', this);
 			self.wrapper[action]($.eventName('shown', 'tab'), this);
 		},
@@ -4888,20 +4890,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		},
 		_drag: function(e) {
 			this._super(e);
-			var direction = e.detail.direction;
+			let direction = e.detail.direction;
 			if (direction === 'left' || direction === 'right') {
 				//拖拽期间取消定时
-				var slidershowTimer = this.wrapper.getAttribute('data-slidershowTimer');
+				let slidershowTimer = this.wrapper.getAttribute('data-slidershowTimer');
 				slidershowTimer && window.clearTimeout(slidershowTimer);
 
 				e.stopPropagation();
 			}
 		},
 		_initTimer: function() {
-			var self = this;
-			var slider = self.wrapper;
-			var interval = self.options.interval;
-			var slidershowTimer = slider.getAttribute('data-slidershowTimer');
+			let self = this;
+			let slider = self.wrapper;
+			const interval = self.options.interval;
+			let slidershowTimer = slider.getAttribute('data-slidershowTimer');
 			slidershowTimer && window.clearTimeout(slidershowTimer);
 			if (interval) {
 				slidershowTimer = window.setTimeout(function() {
@@ -4921,7 +4923,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 		_fixedSlideNumber: function(page) {
 			page = page || this.currentPage;
-			var slideNumber = page.pageX;
+			let slideNumber = page.pageX;
 			if (this.loop) {
 				if (page.pageX === 0) {
 					slideNumber = this.itemLength - 3;
@@ -4939,7 +4941,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this._super();
 		},
 		_getScroll: function() {
-			var result = $.parseTranslateMatrix($.getStyles(this.scroller, 'webkitTransform'));
+			let result = $.parseTranslateMatrix($.getStyles(this.scroller, 'webkitTransform'));
 			return result ? result.x : 0;
 		},
 		_transitionEnd: function(e) {
@@ -4954,8 +4956,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			if (!this.moved) { //无moved
 				return;
 			}
-			var detail = e.detail;
-			var direction = detail.direction;
+			let detail = e.detail;
+			let direction = detail.direction;
 			this._clearRequestAnimationFrame();
 			this.isInTransition = true;
 			//			if (direction === 'up' || direction === 'down') {
@@ -4978,7 +4980,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this._super();
 			if (!this.currentPage.x) {
 				//当slider处于隐藏状态时，导致snap计算是错误的，临时先这么判断一下，后续要考虑解决所有scroll在隐藏状态下初始化属性不正确的问题
-				var currentPage = this.pages[this.loop ? 1 : 0];
+				let currentPage = this.pages[this.loop ? 1 : 0];
 				currentPage = currentPage || this.pages[0];
 				if (!currentPage) {
 					return;
@@ -5030,7 +5032,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		//API
 		setTranslate: function(x, y) {
 			this._super(x, y);
-			var progressBar = this.progressBar;
+			const progressBar = this.progressBar;
 			if (progressBar) {
 				this.progressBarStyle.webkitTransform = this._getTranslateStr((-x * (this.progressBarWidth / this.wrapperWidth)), 0);
 			}
@@ -5059,8 +5061,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			return this.slideNumber || 0;
 		},
 		_reInit: function() {
-			var groups = this.wrapper.querySelectorAll('.' + CLASS_SLIDER_GROUP);
-			for (var i = 0, len = groups.length; i < len; i++) {
+			const groups = this.wrapper.querySelectorAll('.' + CLASS_SLIDER_GROUP);
+			for (let i = 0, len = groups.length; i < len; i++) {
 				if (groups[i].parentNode === this.wrapper) {
 					this.scroller = groups[i];
 					break;
@@ -5088,14 +5090,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 	});
 	$.fn.slider = function(options) {
-		var slider = null;
+		let slider = null;
 		this.each(function() {
-			var sliderElement = this;
+			let sliderElement = this;
 			if (!this.classList.contains(CLASS_SLIDER)) {
 				sliderElement = this.querySelector('.' + CLASS_SLIDER);
 			}
 			if (sliderElement && sliderElement.querySelector(SELECTOR_SLIDER_ITEM)) {
-				var id = sliderElement.getAttribute('data-slider');
+				let id = sliderElement.getAttribute('data-slider');
 				if (!id) {
 					id = ++$.uuid;
 					$.data[id] = slider = new Slider(sliderElement, options);
@@ -5136,17 +5138,17 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
         if (window.__NWin_Enable__ === false) { //不支持多webview，则不用5+下拉刷新
             return;
         }
-        var CLASS_PLUS_PULLREFRESH = 'mui-plus-pullrefresh';
-        var CLASS_VISIBILITY = 'mui-visibility';
-        var CLASS_HIDDEN = 'mui-hidden';
-        var CLASS_BLOCK = 'mui-block';
+        const CLASS_PLUS_PULLREFRESH = 'mui-plus-pullrefresh';
+        const CLASS_VISIBILITY = 'mui-visibility';
+        let CLASS_HIDDEN = 'mui-hidden';
+        const CLASS_BLOCK = 'mui-block';
 
-        var CLASS_PULL_CAPTION = 'mui-pull-caption';
-        var CLASS_PULL_CAPTION_DOWN = 'mui-pull-caption-down';
-        var CLASS_PULL_CAPTION_REFRESH = 'mui-pull-caption-refresh';
-        var CLASS_PULL_CAPTION_NOMORE = 'mui-pull-caption-nomore';
+        const CLASS_PULL_CAPTION = 'mui-pull-caption';
+        const CLASS_PULL_CAPTION_DOWN = 'mui-pull-caption-down';
+        const CLASS_PULL_CAPTION_REFRESH = 'mui-pull-caption-refresh';
+        const CLASS_PULL_CAPTION_NOMORE = 'mui-pull-caption-nomore';
 
-        var PlusPullRefresh = $.Class.extend({
+        const PlusPullRefresh = $.Class.extend({
             init: function(element, options) {
                 this.element = element;
                 this.options = options;
@@ -5155,7 +5157,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
                 this._initPulldownRefreshEvent();
             },
             _init: function() {
-                var self = this;
+                let self = this;
                 //document.addEventListener('plusscrollbottom', this);
                 window.addEventListener('dragup', self);
                 document.addEventListener("plusscrollbottom", self);
@@ -5171,9 +5173,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
                 }, 100);
             },
             _initPulldownRefreshEvent: function() {
-                var self = this;
+                let self = this;
                 $.plusReady(function() {
-                		if(self.options.down.style == "circle"){
+                		if(self.options.down.style === "circle"){
 	                		//单webview、原生转圈
 	                		self.options.webview = plus.webview.currentWebview();
 						self.options.webview.setPullToRefresh({
@@ -5187,15 +5189,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 							self.options.down.callback();
 						});
 	               }else if (self.topPocket && self.options.webviewId) {
-                        var webview = plus.webview.getWebviewById(self.options.webviewId);//子窗口
+                        let webview = plus.webview.getWebviewById(self.options.webviewId);//子窗口
                         if (!webview) {
                             return;
                         }
                         self.options.webview = webview;
-                        var downOptions = self.options.down;
-                        var height = downOptions.height;
+                        const downOptions = self.options.down;
+                        let height = downOptions.height;
                         webview.addEventListener('close', function() {
-                            var attrWebviewId = self.options.webviewId && self.options.webviewId.replace(/\//g, "_"); //替换所有"/" 
+                            let attrWebviewId = self.options.webviewId && self.options.webviewId.replace(/\//g, "_"); //替换所有"/" 
                             self.element.removeAttribute('data-pullrefresh-plus-' + attrWebviewId);
                         });
                         webview.addEventListener("dragBounce", function(e) {
@@ -5234,7 +5236,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
                 });
             },
             handleEvent: function(e) {
-                var self = this;
+                let self = this;
                 if (self.stopped) {
                     return;
                 }
@@ -5250,7 +5252,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
             setStopped: function(stopped) { //该方法是子页面调用的
                 this.stopped = !!stopped;
                 //TODO 此处需要设置当前webview的bounce为none,目前5+有BUG
-                var webview = plus.webview.currentWebview();
+                const webview = plus.webview.currentWebview();
                 if (this.stopped) {
                     webview.setStyle({
                         bounce: 'none'
@@ -5261,7 +5263,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
                         }
                     });
                 } else {
-                    var height = this.options.down.height;
+                    let height = this.options.down.height;
                     webview.setStyle({
                         bounce: 'vertical'
                     });
@@ -5277,11 +5279,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
             },
             beginPulldown:function() { 
                 $.plusReady(function() {
-                		var _wv = plus.webview.currentWebview();
-                		var self = this;
+                		let _wv = plus.webview.currentWebview();
+                		let self = this;
                 		//这里延时的目的是为了保证下拉刷新组件初始化完成，后续应该做成有状态的
                 		setTimeout(function () {
-                			if(self.options.down.style == "circle"){
+                			if(self.options.down.style === "circle"){
 	                			_wv.beginPullToRefresh();
 	                		}else{
 	                			_wv.setBounce({
@@ -5297,9 +5299,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
             		this.beginPulldown();
             },
             _pulldownLoading: function() { //该方法是父页面调用的
-                var self = this;
+                let self = this;
                 $.plusReady(function() {
-                    var childWebview = plus.webview.getWebviewById(self.options.webviewId);
+                    const childWebview = plus.webview.getWebviewById(self.options.webviewId);
                    	childWebview && childWebview.setBounce({
                         offset: {
                             top: self.options.down.height + "px"
@@ -5308,7 +5310,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
                 });
             },
             endPulldown:function(){
-            		var _wv = plus.webview.currentWebview();
+            		const _wv = plus.webview.currentWebview();
                 //双webview的下拉刷新，需要修改父窗口提示信息
                 if(_wv.parent() && this.options.down.style !== "circle"){
 	                	_wv.parent().evalJS("mui&&mui(document.querySelector('.mui-content')).pullRefresh('" + JSON.stringify({
@@ -5322,7 +5324,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
            	 	this.endPulldown();
             }, 
             _endPulldownToRefresh: function() { //该方法是父页面调用的
-                var self = this;
+                let self = this;
                 if (self.topPocket && self.options.webview) {
                     self.options.webview.endPullToRefresh(); //下拉刷新所在webview回弹
                     self.loading = false;
@@ -5333,7 +5335,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
                 }
             },
             beginPullup:function(callback) {//开始上拉加载
-                var self = this;
+                let self = this;
                 if (self.isLoading) return;
                 self.isLoading = true;
                 if (self.pulldown !== false) {
@@ -5355,7 +5357,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
             		this.beginPullup(callback);
             },
             endPullup:function(finished) {//上拉加载结束
-                var self = this;
+                let self = this;
                 if (self.pullLoading) {
                     self.pullLoading.classList.remove(CLASS_VISIBILITY);
                     self.pullLoading.classList.add(CLASS_HIDDEN);
@@ -5413,16 +5415,16 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
             } else {
                 self = this[0];
             }
-            var args = options;
+            let args = options;
             //一个父需要支持多个子下拉刷新
             options = options || {}
             if (typeof options === 'string') {
                 options = $.parseJSON(options);
             };
             !options.webviewId && (options.webviewId = (plus.webview.currentWebview().id || plus.webview.currentWebview().getURL()));
-            var pullRefreshApi = null;
-            var attrWebviewId = options.webviewId && options.webviewId.replace(/\//g, "_"); //替换所有"/"
-            var id = self.getAttribute('data-pullrefresh-plus-' + attrWebviewId);
+            let pullRefreshApi = null;
+            const attrWebviewId = options.webviewId && options.webviewId.replace(/\//g, "_"); //替换所有"/"
+            let id = self.getAttribute('data-pullrefresh-plus-' + attrWebviewId);
             if (!id && typeof args === 'undefined') {
                 return false;
             }
@@ -5454,21 +5456,21 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, window, document, name) {
-	var CLASS_OFF_CANVAS_LEFT = 'mui-off-canvas-left';
-	var CLASS_OFF_CANVAS_RIGHT = 'mui-off-canvas-right';
-	var CLASS_ACTION_BACKDROP = 'mui-off-canvas-backdrop';
-	var CLASS_OFF_CANVAS_WRAP = 'mui-off-canvas-wrap';
+	const CLASS_OFF_CANVAS_LEFT = 'mui-off-canvas-left';
+	const CLASS_OFF_CANVAS_RIGHT = 'mui-off-canvas-right';
+	let CLASS_ACTION_BACKDROP = 'mui-off-canvas-backdrop';
+	const CLASS_OFF_CANVAS_WRAP = 'mui-off-canvas-wrap';
 
-	var CLASS_SLIDE_IN = 'mui-slide-in';
-	var CLASS_ACTIVE = 'mui-active';
-
-
-	var CLASS_TRANSITIONING = 'mui-transitioning';
-
-	var SELECTOR_INNER_WRAP = '.mui-inner-wrap';
+	const CLASS_SLIDE_IN = 'mui-slide-in';
+	let CLASS_ACTIVE = 'mui-active';
 
 
-	var OffCanvas = $.Class.extend({
+	let CLASS_TRANSITIONING = 'mui-transitioning';
+
+	const SELECTOR_INNER_WRAP = '.mui-inner-wrap';
+
+
+	const OffCanvas = $.Class.extend({
 		init: function(element, options) {
 			this.wrapper = this.element = element;
 			this.scroller = this.wrapper.querySelector(SELECTOR_INNER_WRAP);
@@ -5551,7 +5553,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					}
 					break;
 				case 'drag':
-					var detail = e.detail;
+					let detail = e.detail;
 					if (!this.startX) {
 						this.startX = detail.center.x;
 						this.lastX = this.startX;
@@ -5620,13 +5622,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					break;
 				case 'dragend':
 					if (this.isDragging) {
-						var detail = e.detail;
-						var direction = detail.direction;
+						let detail = e.detail;
+						let direction = detail.direction;
 						this.isDragging = false;
 						this.offCanvas.classList.add(CLASS_TRANSITIONING);
 						this.scroller.classList.add(CLASS_TRANSITIONING);
-						var ratio = 0;
-						var x = this.getTranslateX();
+						let ratio = 0;
+						let x = this.getTranslateX();
 						if (!this.slideIn) {
 							if (x >= 0) {
 								ratio = (this.offCanvasLeftWidth && (x / this.offCanvasLeftWidth)) || 0;
@@ -5714,7 +5716,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		},
 		initEvent: function() {
-			var self = this;
+			let self = this;
 			if (self.backdrop) {
 				self.backdrop.addEventListener('tap', function(e) {
 					self.close();
@@ -5729,7 +5731,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			this.wrapper.addEventListener('webkitTransitionEnd', this);
 		},
 		openPercentage: function(percentage) {
-			var p = percentage / 100;
+			let p = percentage / 100;
 			if (!this.slideIn) {
 				if (this.offCanvasLeft && percentage >= 0) {
 					this.updateTranslate(this.offCanvasLeftWidth * p);
@@ -5829,11 +5831,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		setTranslateX: $.animationFrame(function(x) {
 			if (this.scroller) {
 				if (this.scalable && this.offCanvas.parentNode === this.wrapper) {
-					var percent = Math.abs(x) / this.offCanvasWidth;
-					var zoomOutScale = 1 - (1 - this.options.scale) * percent;
-					var zoomInScale = this.options.scale + (1 - this.options.scale) * percent;
-					var zoomOutOpacity = 1 - (1 - this.options.opacity) * percent;
-					var zoomInOpacity = this.options.opacity + (1 - this.options.opacity) * percent;
+					const percent = Math.abs(x) / this.offCanvasWidth;
+					const zoomOutScale = 1 - (1 - this.options.scale) * percent;
+					const zoomInScale = this.options.scale + (1 - this.options.scale) * percent;
+					const zoomOutOpacity = 1 - (1 - this.options.opacity) * percent;
+					const zoomInOpacity = this.options.opacity + (1 - this.options.opacity) * percent;
 					if (this.offCanvas.classList.contains(CLASS_OFF_CANVAS_LEFT)) {
 						this.offCanvas.style.webkitTransformOrigin = '-100%';
 						this.scroller.style.webkitTransformOrigin = 'left';
@@ -5855,16 +5857,16 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}),
 		getTranslateX: function() {
 			if (this.offCanvas) {
-				var scroller = this.slideIn ? this.offCanvas : this.scroller;
-				var result = $.parseTranslateMatrix($.getStyles(scroller, 'webkitTransform'));
+				const scroller = this.slideIn ? this.offCanvas : this.scroller;
+				let result = $.parseTranslateMatrix($.getStyles(scroller, 'webkitTransform'));
 				return (result && result.x) || 0;
 			}
 			return 0;
 		},
 		isShown: function(direction) {
-			var shown = false;
+			let shown = false;
 			if (!this.slideIn) {
-				var x = this.getTranslateX();
+				const x = this.getTranslateX();
 				if (direction === 'right') {
 					shown = this.classList.contains(CLASS_ACTIVE) && x < 0;
 				} else if (direction === 'left') {
@@ -5918,7 +5920,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			return true;
 		},
 		toggle: function(directionOrOffCanvas) {
-			var direction = directionOrOffCanvas;
+			let direction = directionOrOffCanvas;
 			if (directionOrOffCanvas && directionOrOffCanvas.classList) {
 				direction = directionOrOffCanvas.classList.contains(CLASS_OFF_CANVAS_LEFT) ? 'left' : 'right';
 				this.refresh(directionOrOffCanvas);
@@ -5930,7 +5932,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	});
 
 	//hash to offcanvas
-	var findOffCanvasContainer = function(target) {
+	const findOffCanvasContainer = function(target) {
 		parentNode = target.parentNode;
 		if (parentNode) {
 			if (parentNode.classList.contains(CLASS_OFF_CANVAS_WRAP)) {
@@ -5943,11 +5945,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		}
 	};
-	var handle = function(event, target) {
+	let handle = function(event, target) {
 		if (target.tagName === 'A' && target.hash) {
-			var offcanvas = document.getElementById(target.hash.replace('#', ''));
+			let offcanvas = document.getElementById(target.hash.replace('#', ''));
 			if (offcanvas) {
-				var container = findOffCanvasContainer(offcanvas);
+				let container = findOffCanvasContainer(offcanvas);
 				if (container) {
 					$.targets._container = container;
 					return offcanvas;
@@ -5971,7 +5973,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			return;
 		}
 		//TODO 此处类型的代码后续考虑统一优化(target机制)，现在的实现费力不讨好
-		var target = e.target;
+		let target = e.target;
 		for (; target && target !== document; target = target.parentNode) {
 			if (target.tagName === 'A' && target.hash && target.hash === ('#' + $.targets.offcanvas.id)) {
 				e.detail && e.detail.gesture && e.detail.gesture.preventDefault(); //fixed hashchange
@@ -5983,15 +5985,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	});
 
 	$.fn.offCanvas = function(options) {
-		var offCanvasApis = [];
+		const offCanvasApis = [];
 		this.each(function() {
-			var offCanvasApi = null;
-			var self = this;
+			let offCanvasApi = null;
+			let self = this;
 			//hack old version
 			if (!self.classList.contains(CLASS_OFF_CANVAS_WRAP)) {
 				self = findOffCanvasContainer(self);
 			}
-			var id = self.getAttribute('data-offCanvas');
+			let id = self.getAttribute('data-offCanvas');
 			if (!id) {
 				id = ++$.uuid;
 				$.data[id] = offCanvasApi = new OffCanvas(self, options);
@@ -6017,10 +6019,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, name) {
-	var CLASS_ACTION = 'mui-action';
+	const CLASS_ACTION = 'mui-action';
 
-	var handle = function(event, target) {
-		var className = target.className || '';
+	let handle = function(event, target) {
+		let className = target.className || '';
 		if (typeof className !== 'string') { //svg className(SVGAnimatedString)
 			className = '';
 		}
@@ -6051,11 +6053,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, window, document, name) {
-	var CLASS_MODAL = 'mui-modal';
+	const CLASS_MODAL = 'mui-modal';
 
-	var handle = function(event, target) {
+	let handle = function(event, target) {
 		if (target.tagName === 'A' && target.hash) {
-			var modal = document.getElementById(target.hash.replace('#', ''));
+			const modal = document.getElementById(target.hash.replace('#', ''));
 			if (modal && modal.classList.contains(CLASS_MODAL)) {
 				return modal;
 			}
@@ -6090,19 +6092,19 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  */
 (function($, window, document, name) {
 
-	var CLASS_POPOVER = 'mui-popover';
-	var CLASS_POPOVER_ARROW = 'mui-popover-arrow';
-	var CLASS_ACTION_POPOVER = 'mui-popover-action';
-	var CLASS_BACKDROP = 'mui-backdrop';
-	var CLASS_BAR_POPOVER = 'mui-bar-popover';
-	var CLASS_BAR_BACKDROP = 'mui-bar-backdrop';
-	var CLASS_ACTION_BACKDROP = 'mui-backdrop-action';
-	var CLASS_ACTIVE = 'mui-active';
-	var CLASS_BOTTOM = 'mui-bottom';
+	const CLASS_POPOVER = 'mui-popover';
+	const CLASS_POPOVER_ARROW = 'mui-popover-arrow';
+	const CLASS_ACTION_POPOVER = 'mui-popover-action';
+	const CLASS_BACKDROP = 'mui-backdrop';
+	const CLASS_BAR_POPOVER = 'mui-bar-popover';
+	const CLASS_BAR_BACKDROP = 'mui-bar-backdrop';
+	const CLASS_ACTION_BACKDROP = 'mui-backdrop-action';
+	let CLASS_ACTIVE = 'mui-active';
+	const CLASS_BOTTOM = 'mui-bottom';
 
 
 
-	var handle = function(event, target) {
+	let handle = function(event, target) {
 		if (target.tagName === 'A' && target.hash) {
 			$.targets._popover = document.getElementById(target.hash.replace('#', ''));
 			if ($.targets._popover && $.targets._popover.classList.contains(CLASS_POPOVER)) {
@@ -6123,24 +6125,24 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		isContinue: true
 	});
 
-	var onPopoverShown = function(e) {
+	const onPopoverShown = function(e) {
 		this.removeEventListener('webkitTransitionEnd', onPopoverShown);
 		this.addEventListener($.EVENT_MOVE, $.preventDefault);
 		$.trigger(this, 'shown', this);
 	}
-	var onPopoverHidden = function(e) {
+	const onPopoverHidden = function(e) {
 		setStyle(this, 'none');
 		this.removeEventListener('webkitTransitionEnd', onPopoverHidden);
 		this.removeEventListener($.EVENT_MOVE, $.preventDefault);
 		$.trigger(this, 'hidden', this);
 	};
 
-	var backdrop = (function() {
-		var element = document.createElement('div');
+	let backdrop = (function() {
+		let element = document.createElement('div');
 		element.classList.add(CLASS_BACKDROP);
 		element.addEventListener($.EVENT_MOVE, $.preventDefault);
 		element.addEventListener('tap', function(e) {
-			var popover = $.targets._popover;
+			let popover = $.targets._popover;
 			if (popover) {
 				popover.addEventListener('webkitTransitionEnd', onPopoverHidden);
 				popover.classList.remove(CLASS_ACTIVE);
@@ -6151,7 +6153,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return element;
 	}());
 	var removeBackdropTimer;
-	var removeBackdrop = function(popover) {
+	const removeBackdrop = function(popover) {
 		backdrop.setAttribute('style', 'opacity:0');
 		$.targets.popover = $.targets._popover = null; //reset
 		removeBackdropTimer = $.later(function() {
@@ -6164,8 +6166,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		if (!$.targets.popover) {
 			return;
 		}
-		var toggle = false;
-		var target = e.target;
+		let toggle = false;
+		let target = e.target;
 		for (; target && target !== document; target = target.parentNode) {
 			if (target === $.targets.popover) {
 				toggle = true;
@@ -6178,7 +6180,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 	});
 
-	var togglePopover = function(popover, anchor, state) {
+	const togglePopover = function(popover, anchor, state) {
 		if ((state === 'show' && popover.classList.contains(CLASS_ACTIVE)) || (state === 'hide' && !popover.classList.contains(CLASS_ACTIVE))) {
 			return;
 		}
@@ -6188,7 +6190,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		popover.removeEventListener('webkitTransitionEnd', onPopoverHidden);
 		backdrop.classList.remove(CLASS_BAR_BACKDROP);
 		backdrop.classList.remove(CLASS_ACTION_BACKDROP);
-		var _popover = document.querySelector('.mui-popover.mui-active');
+		let _popover = document.querySelector('.mui-popover.mui-active');
 		if (_popover) {
 			//			_popover.setAttribute('style', '');
 			_popover.addEventListener('webkitTransitionEnd', onPopoverHidden);
@@ -6200,7 +6202,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				return;
 			}
 		}
-		var isActionSheet = false;
+		let isActionSheet = false;
 		if (popover.classList.contains(CLASS_BAR_POPOVER) || popover.classList.contains(CLASS_ACTION_POPOVER)) { //navBar
 			if (popover.classList.contains(CLASS_ACTION_POPOVER)) { //action sheet popover
 				isActionSheet = true;
@@ -6209,9 +6211,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				backdrop.classList.add(CLASS_BAR_BACKDROP);
 				//				if (anchor) {
 				//					if (anchor.parentNode) {
-				//						var offsetWidth = anchor.offsetWidth;
-				//						var offsetLeft = anchor.offsetLeft;
-				//						var innerWidth = window.innerWidth;
+				//						const offsetWidth = anchor.offsetWidth;
+				//						let offsetLeft = anchor.offsetLeft;
+				//						const innerWidth = window.innerWidth;
 				//						popover.style.left = (Math.min(Math.max(offsetLeft, defaultPadding), innerWidth - offsetWidth - defaultPadding)) + "px";
 				//					} else {
 				//						//TODO anchor is position:{left,top,bottom,right}
@@ -6228,8 +6230,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		backdrop.classList.add(CLASS_ACTIVE);
 		popover.addEventListener('webkitTransitionEnd', onPopoverShown);
 	};
-	var setStyle = function(popover, display, top, left) {
-		var style = popover.style;
+	const setStyle = function(popover, display, top, left) {
+		let style = popover.style;
 		if (typeof display !== 'undefined')
 			style.display = display;
 		if (typeof top !== 'undefined')
@@ -6237,7 +6239,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		if (typeof left !== 'undefined')
 			style.left = left + 'px';
 	};
-	var calPosition = function(popover, anchor, isActionSheet) {
+	const calPosition = function(popover, anchor, isActionSheet) {
 		if (!popover || !anchor) {
 			return;
 		}
@@ -6247,33 +6249,33 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			return;
 		}
 
-		var wWidth = window.innerWidth;
-		var wHeight = window.innerHeight;
+		const wWidth = window.innerWidth;
+		const wHeight = window.innerHeight;
 
-		var pWidth = popover.offsetWidth;
-		var pHeight = popover.offsetHeight;
+		const pWidth = popover.offsetWidth;
+		const pHeight = popover.offsetHeight;
 
-		var aWidth = anchor.offsetWidth;
-		var aHeight = anchor.offsetHeight;
-		var offset = $.offset(anchor);
+		const aWidth = anchor.offsetWidth;
+		const aHeight = anchor.offsetHeight;
+		let offset = $.offset(anchor);
 
-		var arrow = popover.querySelector('.' + CLASS_POPOVER_ARROW);
+		let arrow = popover.querySelector('.' + CLASS_POPOVER_ARROW);
 		if (!arrow) {
 			arrow = document.createElement('div');
 			arrow.className = CLASS_POPOVER_ARROW;
 			popover.appendChild(arrow);
 		}
-		var arrowSize = arrow && arrow.offsetWidth / 2 || 0;
+		const arrowSize = arrow && arrow.offsetWidth / 2 || 0;
 
 
 
-		var pTop = 0;
-		var pLeft = 0;
-		var diff = 0;
-		var arrowLeft = 0;
-		var defaultPadding = popover.classList.contains(CLASS_ACTION_POPOVER) ? 0 : 5;
+		let pTop = 0;
+		let pLeft = 0;
+		let diff = 0;
+		let arrowLeft = 0;
+		const defaultPadding = popover.classList.contains(CLASS_ACTION_POPOVER) ? 0 : 5;
 
-		var position = 'top';
+		let position = 'top';
 		if ((pHeight + arrowSize) < (offset.top - window.pageYOffset)) { //top
 			pTop = offset.top - pHeight - arrowSize;
 		} else if ((pHeight + arrowSize) < (wHeight - (offset.top - window.pageYOffset) - aHeight)) { //bottom
@@ -6308,13 +6310,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 
 	$.createMask = function(callback) {
-		var element = document.createElement('div');
+		let element = document.createElement('div');
 		element.classList.add(CLASS_BACKDROP);
 		element.addEventListener($.EVENT_MOVE, $.preventDefault);
 		element.addEventListener('tap', function() {
 			mask.close();
 		});
-		var mask = [element];
+		const mask = [element];
 		mask._show = false;
 		mask.show = function() {
 			mask._show = true;
@@ -6327,7 +6329,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				mask._show = false;
 				element.setAttribute('style', 'opacity:0');
 				$.later(function() {
-					var body = document.body;
+					const body = document.body;
 					element.parentNode === body && body.removeChild(element);
 				}, 350);
 			}
@@ -6345,7 +6347,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return mask;
 	};
 	$.fn.popover = function() {
-		var args = arguments;
+		const args = arguments;
 		this.each(function() {
 			$.targets._popover = this;
 			if (args[0] === 'show' || args[0] === 'hide' || args[0] === 'toggle') {
@@ -6365,15 +6367,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  */
 (function($, window, document, name, undefined) {
 
-	var CLASS_CONTROL_ITEM = 'mui-control-item';
-	var CLASS_SEGMENTED_CONTROL = 'mui-segmented-control';
-	var CLASS_SEGMENTED_CONTROL_VERTICAL = 'mui-segmented-control-vertical';
-	var CLASS_CONTROL_CONTENT = 'mui-control-content';
-	var CLASS_TAB_BAR = 'mui-bar-tab';
-	var CLASS_TAB_ITEM = 'mui-tab-item';
-	var CLASS_SLIDER_ITEM = 'mui-slider-item';
+	const CLASS_CONTROL_ITEM = 'mui-control-item';
+	const CLASS_SEGMENTED_CONTROL = 'mui-segmented-control';
+	const CLASS_SEGMENTED_CONTROL_VERTICAL = 'mui-segmented-control-vertical';
+	const CLASS_CONTROL_CONTENT = 'mui-control-content';
+	const CLASS_TAB_BAR = 'mui-bar-tab';
+	const CLASS_TAB_ITEM = 'mui-tab-item';
+	const CLASS_SLIDER_ITEM = 'mui-slider-item';
 
-	var handle = function(event, target) {
+	let handle = function(event, target) {
 		if (target.classList && (target.classList.contains(CLASS_CONTROL_ITEM) || target.classList.contains(CLASS_TAB_ITEM))) {
 			if (target.parentNode && target.parentNode.classList && target.parentNode.classList.contains(CLASS_SEGMENTED_CONTROL_VERTICAL)) {
 				//vertical 如果preventDefault会导致无法滚动
@@ -6396,16 +6398,16 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 	window.addEventListener('tap', function(e) {
 
-		var targetTab = $.targets.tab;
+		const targetTab = $.targets.tab;
 		if (!targetTab) {
 			return;
 		}
 		var activeTab;
 		var activeBodies;
 		var targetBody;
-		var className = 'mui-active';
-		var classSelector = '.' + className;
-		var segmentedControl = targetTab.parentNode;
+		let className = 'mui-active';
+		const classSelector = '.' + className;
+		let segmentedControl = targetTab.parentNode;
 
 		for (; segmentedControl && segmentedControl !== document; segmentedControl = segmentedControl.parentNode) {
 			if (segmentedControl.classList.contains(CLASS_SEGMENTED_CONTROL)) {
@@ -6420,7 +6422,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			activeTab.classList.remove(className);
 		}
 
-		var isLastActive = targetTab === activeTab;
+		const isLastActive = targetTab === activeTab;
 		if (targetTab) {
 			targetTab.classList.add(className);
 		}
@@ -6440,18 +6442,18 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		if (isLastActive) { //same
 			return;
 		}
-		var parentNode = targetBody.parentNode;
+		const parentNode = targetBody.parentNode;
 		activeBodies = parentNode.querySelectorAll('.' + CLASS_CONTROL_CONTENT + classSelector);
-		for (var i = 0; i < activeBodies.length; i++) {
-			var activeBody = activeBodies[i];
+		for (let i = 0; i < activeBodies.length; i++) {
+			const activeBody = activeBodies[i];
 			activeBody.parentNode === parentNode && activeBody.classList.remove(className);
 		}
 
 		targetBody.classList.add(className);
 
-		var contents = [];
-		var _contents = parentNode.querySelectorAll('.' + CLASS_CONTROL_CONTENT);
-		for (var i = 0; i < _contents.length; i++) { //查找直属子节点
+		const contents = [];
+		const _contents = parentNode.querySelectorAll('.' + CLASS_CONTROL_CONTENT);
+		for (let i = 0; i < _contents.length; i++) { //查找直属子节点
 			_contents[i].parentNode === parentNode && (contents.push(_contents[i]));
 		}
 		$.trigger(targetBody, $.eventName('shown', name), {
@@ -6470,16 +6472,16 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  */
 (function($, window, name) {
 
-	var CLASS_SWITCH = 'mui-switch';
-	var CLASS_SWITCH_HANDLE = 'mui-switch-handle';
-	var CLASS_ACTIVE = 'mui-active';
-	var CLASS_DRAGGING = 'mui-dragging';
+	const CLASS_SWITCH = 'mui-switch';
+	const CLASS_SWITCH_HANDLE = 'mui-switch-handle';
+	let CLASS_ACTIVE = 'mui-active';
+	const CLASS_DRAGGING = 'mui-dragging';
 
-	var CLASS_DISABLED = 'mui-disabled';
+	let CLASS_DISABLED = 'mui-disabled';
 
-	var SELECTOR_SWITCH_HANDLE = '.' + CLASS_SWITCH_HANDLE;
+	const SELECTOR_SWITCH_HANDLE = '.' + CLASS_SWITCH_HANDLE;
 
-	var handle = function(event, target) {
+	let handle = function(event, target) {
 		if (target.classList && target.classList.contains(CLASS_SWITCH)) {
 			return target;
 		}
@@ -6494,7 +6496,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	});
 
 
-	var Toggle = function(element) {
+	const Toggle = function(element) {
 		this.element = element;
 		this.classList = this.element.classList;
 		this.handle = this.element.querySelector(SELECTOR_SWITCH_HANDLE);
@@ -6542,7 +6544,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 	};
 	Toggle.prototype.drag = function(e) {
-		var detail = e.detail;
+		let detail = e.detail;
 		if (!this.isDragging) {
 			if (detail.direction === 'left' || detail.direction === 'right') {
 				this.isDragging = true;
@@ -6574,7 +6576,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 	};
 	Toggle.prototype.toggle = function(animate) {
-		var classList = this.classList;
+		let classList = this.classList;
 		if (animate === false) {
 			this.handle.style.webkitTransitionDuration = this.element.style.webkitTransitionDuration = '0s';
 		} else {
@@ -6595,7 +6597,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		if (!this.isDragging) {
 			return;
 		}
-		var isChanged = false;
+		let isChanged = false;
 		if ((this.initialState && -x > (this.handleX / 2)) || (!this.initialState && x > (this.handleX / 2))) {
 			isChanged = true;
 		}
@@ -6613,10 +6615,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	});
 
 	$.fn['switch'] = function(options) {
-		var switchApis = [];
+		const switchApis = [];
 		this.each(function() {
-			var switchApi = null;
-			var id = this.getAttribute('data-switch');
+			let switchApi = null;
+			let id = this.getAttribute('data-switch');
 			if (!id) {
 				id = ++$.uuid;
 				$.data[id] = new Toggle(this);
@@ -6641,37 +6643,37 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  */
 (function($, window, document) {
 
-	var CLASS_ACTIVE = 'mui-active';
-	var CLASS_SELECTED = 'mui-selected';
-	var CLASS_GRID_VIEW = 'mui-grid-view';
-	var CLASS_RADIO_VIEW = 'mui-table-view-radio';
-	var CLASS_TABLE_VIEW_CELL = 'mui-table-view-cell';
-	var CLASS_COLLAPSE_CONTENT = 'mui-collapse-content';
-	var CLASS_DISABLED = 'mui-disabled';
-	var CLASS_TOGGLE = 'mui-switch';
-	var CLASS_BTN = 'mui-btn';
+	let CLASS_ACTIVE = 'mui-active';
+	const CLASS_SELECTED = 'mui-selected';
+	const CLASS_GRID_VIEW = 'mui-grid-view';
+	const CLASS_RADIO_VIEW = 'mui-table-view-radio';
+	const CLASS_TABLE_VIEW_CELL = 'mui-table-view-cell';
+	const CLASS_COLLAPSE_CONTENT = 'mui-collapse-content';
+	let CLASS_DISABLED = 'mui-disabled';
+	const CLASS_TOGGLE = 'mui-switch';
+	const CLASS_BTN = 'mui-btn';
 
-	var CLASS_SLIDER_HANDLE = 'mui-slider-handle';
-	var CLASS_SLIDER_LEFT = 'mui-slider-left';
-	var CLASS_SLIDER_RIGHT = 'mui-slider-right';
-	var CLASS_TRANSITIONING = 'mui-transitioning';
+	const CLASS_SLIDER_HANDLE = 'mui-slider-handle';
+	const CLASS_SLIDER_LEFT = 'mui-slider-left';
+	const CLASS_SLIDER_RIGHT = 'mui-slider-right';
+	const CLASS_TRANSITIONING = 'mui-transitioning';
 
 
-	var SELECTOR_SLIDER_HANDLE = '.' + CLASS_SLIDER_HANDLE;
-	var SELECTOR_SLIDER_LEFT = '.' + CLASS_SLIDER_LEFT;
-	var SELECTOR_SLIDER_RIGHT = '.' + CLASS_SLIDER_RIGHT;
-	var SELECTOR_SELECTED = '.' + CLASS_SELECTED;
-	var SELECTOR_BUTTON = '.' + CLASS_BTN;
-	var overFactor = 0.8;
+	const SELECTOR_SLIDER_HANDLE = '.' + CLASS_SLIDER_HANDLE;
+	const SELECTOR_SLIDER_LEFT = '.' + CLASS_SLIDER_LEFT;
+	const SELECTOR_SLIDER_RIGHT = '.' + CLASS_SLIDER_RIGHT;
+	const SELECTOR_SELECTED = '.' + CLASS_SELECTED;
+	const SELECTOR_BUTTON = '.' + CLASS_BTN;
+	const overFactor = 0.8;
 	var cell, a;
 
-	var isMoved = isOpened = openedActions = progress = false;
-	var sliderHandle = sliderActionLeft = sliderActionRight = buttonsLeft = buttonsRight = sliderDirection = sliderRequestAnimationFrame = false;
-	var timer = translateX = lastTranslateX = sliderActionLeftWidth = sliderActionRightWidth = 0;
+	let isMoved = isOpened = openedActions = progress = false;
+	let sliderHandle = sliderActionLeft = sliderActionRight = buttonsLeft = buttonsRight = sliderDirection = sliderRequestAnimationFrame = false;
+	let timer = translateX = lastTranslateX = sliderActionLeftWidth = sliderActionRightWidth = 0;
 
 
 
-	var toggleActive = function(isActive) {
+	const toggleActive = function(isActive) {
 		if (isActive) {
 			if (a) {
 				a.classList.add(CLASS_ACTIVE);
@@ -6688,15 +6690,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 	};
 
-	var updateTranslate = function() {
+	const updateTranslate = function() {
 		if (translateX !== lastTranslateX) {
 			if (buttonsRight && buttonsRight.length > 0) {
 				progress = translateX / sliderActionRightWidth;
 				if (translateX < -sliderActionRightWidth) {
 					translateX = -sliderActionRightWidth - Math.pow(-translateX - sliderActionRightWidth, overFactor);
 				}
-				for (var i = 0, len = buttonsRight.length; i < len; i++) {
-					var buttonRight = buttonsRight[i];
+				for (let i = 0, len = buttonsRight.length; i < len; i++) {
+					let buttonRight = buttonsRight[i];
 					if (typeof buttonRight._buttonOffset === 'undefined') {
 						buttonRight._buttonOffset = buttonRight.offsetLeft;
 					}
@@ -6709,8 +6711,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				if (translateX > sliderActionLeftWidth) {
 					translateX = sliderActionLeftWidth + Math.pow(translateX - sliderActionLeftWidth, overFactor);
 				}
-				for (var i = 0, len = buttonsLeft.length; i < len; i++) {
-					var buttonLeft = buttonsLeft[i];
+				for (let i = 0, len = buttonsLeft.length; i < len; i++) {
+					let buttonLeft = buttonsLeft[i];
 					if (typeof buttonLeft._buttonOffset === 'undefined') {
 						buttonLeft._buttonOffset = sliderActionLeftWidth - buttonLeft.offsetLeft - buttonLeft.offsetWidth;
 					}
@@ -6728,7 +6730,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			updateTranslate();
 		});
 	};
-	var setTranslate = function(element, x) {
+	const setTranslate = function(element, x) {
 		if (element) {
 			element.style.webkitTransform = 'translate(' + x + 'px,0)';
 		}
@@ -6740,11 +6742,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 		cell = a = false;
 		isMoved = isOpened = openedActions = false;
-		var target = event.target;
-		var isDisabled = false;
+		let target = event.target;
+		let isDisabled = false;
 		for (; target && target !== document; target = target.parentNode) {
 			if (target.classList) {
-				var classList = target.classList;
+				let classList = target.classList;
 				if ((target.tagName === 'INPUT' && target.type !== 'radio' && target.type !== 'checkbox') || target.tagName === 'BUTTON' || classList.contains(CLASS_TOGGLE) || classList.contains(CLASS_BTN) || classList.contains(CLASS_DISABLED)) {
 					isDisabled = true;
 				}
@@ -6754,19 +6756,19 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				if (classList.contains(CLASS_TABLE_VIEW_CELL)) {
 					cell = target;
 					//TODO swipe to delete close
-					var selected = cell.parentNode.querySelector(SELECTOR_SELECTED);
+					let selected = cell.parentNode.querySelector(SELECTOR_SELECTED);
 					if (!cell.parentNode.classList.contains(CLASS_RADIO_VIEW) && selected && selected !== cell) {
 						$.swipeoutClose(selected);
 						cell = isDisabled = false;
 						return;
 					}
 					if (!cell.parentNode.classList.contains(CLASS_GRID_VIEW)) {
-						var link = cell.querySelector('a');
+						const link = cell.querySelector('a');
 						if (link && link.parentNode === cell) { //li>a
 							a = link;
 						}
 					}
-					var handle = cell.querySelector(SELECTOR_SLIDER_HANDLE);
+					const handle = cell.querySelector(SELECTOR_SLIDER_HANDLE);
 					if (handle) {
 						toggleEvents(cell);
 						event.stopPropagation();
@@ -6792,7 +6794,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		toggleActive(false);
 	});
 
-	var handleEvent = {
+	let handleEvent = {
 		handleEvent: function(event) {
 			switch (event.type) {
 				case 'drag':
@@ -6837,9 +6839,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					}
 				}
 			}
-			var detail = event.detail;
-			var direction = detail.direction;
-			var angle = detail.angle;
+			let detail = event.detail;
+			let direction = detail.direction;
+			const angle = detail.angle;
 			if (direction === 'left' && (angle > 150 || angle < -150)) {
 				if (buttonsRight || (buttonsLeft && isOpened)) { //存在右侧按钮或存在左侧按钮且是已打开状态
 					isMoved = true;
@@ -6852,7 +6854,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			if (isMoved) {
 				event.stopPropagation();
 				event.detail.gesture.preventDefault();
-				var translate = event.detail.deltaX;
+				let translate = event.detail.deltaX;
 				if (isOpened) {
 					if (openedActions === 'right') {
 						translate = translate - sliderActionRightWidth;
@@ -6905,11 +6907,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				cancelAnimationFrame(sliderRequestAnimationFrame);
 				sliderRequestAnimationFrame = null;
 			}
-			var detail = event.detail;
+			const detail = event.detail;
 			isMoved = false;
-			var action = 'close';
-			var actionsWidth = sliderDirection === 'toLeft' ? sliderActionRightWidth : sliderActionLeftWidth;
-			var isToggle = detail.swipe || (Math.abs(translateX) > actionsWidth / 2);
+			let action = 'close';
+			const actionsWidth = sliderDirection === 'toLeft' ? sliderActionRightWidth : sliderActionLeftWidth;
+			const isToggle = detail.swipe || (Math.abs(translateX) > actionsWidth / 2);
 			if (isToggle) {
 				if (!isOpened) {
 					action = 'open';
@@ -6923,12 +6925,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			cell.classList.add(CLASS_TRANSITIONING);
 			var buttons;
 			if (action === 'open') {
-				var newTranslate = sliderDirection === 'toLeft' ? -actionsWidth : actionsWidth;
+				const newTranslate = sliderDirection === 'toLeft' ? -actionsWidth : actionsWidth;
 				setTranslate(sliderHandle, newTranslate);
 				buttons = sliderDirection === 'toLeft' ? buttonsRight : buttonsLeft;
 				if (typeof buttons !== 'undefined') {
-					var button = null;
-					for (var i = 0; i < buttons.length; i++) {
+					let button = null;
+					for (let i = 0; i < buttons.length; i++) {
 						button = buttons[i];
 						setTranslate(button, newTranslate);
 					}
@@ -6946,8 +6948,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 			var buttonOffset;
 			if (buttonsLeft && buttonsLeft.length > 0 && buttonsLeft !== buttons) {
-				for (var i = 0, len = buttonsLeft.length; i < len; i++) {
-					var buttonLeft = buttonsLeft[i];
+				for (let i = 0, len = buttonsLeft.length; i < len; i++) {
+					const buttonLeft = buttonsLeft[i];
 					buttonOffset = buttonLeft._buttonOffset;
 					if (typeof buttonOffset === 'undefined') {
 						buttonLeft._buttonOffset = sliderActionLeftWidth - buttonLeft.offsetLeft - buttonLeft.offsetWidth;
@@ -6956,8 +6958,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				}
 			}
 			if (buttonsRight && buttonsRight.length > 0 && buttonsRight !== buttons) {
-				for (var i = 0, len = buttonsRight.length; i < len; i++) {
-					var buttonRight = buttonsRight[i];
+				for (let i = 0, len = buttonsRight.length; i < len; i++) {
+					const buttonRight = buttonsRight[i];
 					buttonOffset = buttonRight._buttonOffset;
 					if (typeof buttonOffset === 'undefined') {
 						buttonRight._buttonOffset = buttonRight.offsetLeft;
@@ -6969,7 +6971,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 
 	function toggleEvents(element, isRemove) {
-		var method = !!isRemove ? 'removeEventListener' : 'addEventListener';
+		const method = !!isRemove ? 'removeEventListener' : 'addEventListener';
 		element[method]('drag', handleEvent);
 		element[method]('dragend', handleEvent);
 		element[method]('swiperight', handleEvent);
@@ -6983,7 +6985,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 */
 	$.swipeoutOpen = function(el, direction) {
 		if (!el) return;
-		var classList = el.classList;
+		let classList = el.classList;
 		if (classList.contains(CLASS_SELECTED)) return;
 		if (!direction) {
 			if (el.querySelector(SELECTOR_SLIDER_RIGHT)) {
@@ -6992,17 +6994,17 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				direction = 'left';
 			}
 		}
-		var swipeoutAction = el.querySelector($.classSelector(".slider-" + direction));
+		let swipeoutAction = el.querySelector($.classSelector(".slider-" + direction));
 		if (!swipeoutAction) return;
 		swipeoutAction.classList.add(CLASS_SELECTED);
 		classList.add(CLASS_SELECTED);
 		classList.remove(CLASS_TRANSITIONING);
-		var buttons = swipeoutAction.querySelectorAll(SELECTOR_BUTTON);
-		var swipeoutWidth = swipeoutAction.offsetWidth;
-		var translate = (direction === 'right') ? -swipeoutWidth : swipeoutWidth;
-		var length = buttons.length;
+		let buttons = swipeoutAction.querySelectorAll(SELECTOR_BUTTON);
+		let swipeoutWidth = swipeoutAction.offsetWidth;
+		const translate = (direction === 'right') ? -swipeoutWidth : swipeoutWidth;
+		let length = buttons.length;
 		var button;
-		for (var i = 0; i < length; i++) {
+		for (let i = 0; i < length; i++) {
 			button = buttons[i];
 			if (direction === 'right') {
 				setTranslate(button, -button.offsetLeft);
@@ -7011,7 +7013,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 		}
 		classList.add(CLASS_TRANSITIONING);
-		for (var i = 0; i < length; i++) {
+		for (let i = 0; i < length; i++) {
 			setTranslate(buttons[i], translate);
 		}
 		setTranslate(el.querySelector(SELECTOR_SLIDER_HANDLE), translate);
@@ -7022,20 +7024,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 */
 	$.swipeoutClose = function(el) {
 		if (!el) return;
-		var classList = el.classList;
+		let classList = el.classList;
 		if (!classList.contains(CLASS_SELECTED)) return;
-		var direction = el.querySelector(SELECTOR_SLIDER_RIGHT + SELECTOR_SELECTED) ? 'right' : 'left';
-		var swipeoutAction = el.querySelector($.classSelector(".slider-" + direction));
+		const direction = el.querySelector(SELECTOR_SLIDER_RIGHT + SELECTOR_SELECTED) ? 'right' : 'left';
+		const swipeoutAction = el.querySelector($.classSelector(".slider-" + direction));
 		if (!swipeoutAction) return;
 		swipeoutAction.classList.remove(CLASS_SELECTED);
 		classList.remove(CLASS_SELECTED);
 		classList.add(CLASS_TRANSITIONING);
-		var buttons = swipeoutAction.querySelectorAll(SELECTOR_BUTTON);
-		var swipeoutWidth = swipeoutAction.offsetWidth;
-		var length = buttons.length;
+		const buttons = swipeoutAction.querySelectorAll(SELECTOR_BUTTON);
+		const swipeoutWidth = swipeoutAction.offsetWidth;
+		let length = buttons.length;
 		var button;
 		setTranslate(el.querySelector(SELECTOR_SLIDER_HANDLE), 0);
-		for (var i = 0; i < length; i++) {
+		for (let i = 0; i < length; i++) {
 			button = buttons[i];
 			if (direction === 'right') {
 				setTranslate(button, (-button.offsetLeft));
@@ -7059,14 +7061,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		toggleActive(false);
 		sliderHandle && toggleEvents(cell, true);
 	});
-	var radioOrCheckboxClick = function(event) {
-		var type = event.target && event.target.type || '';
+	const radioOrCheckboxClick = function(event) {
+		let type = event.target && event.target.type || '';
 		if (type === 'radio' || type === 'checkbox') {
 			return;
 		}
-		var classList = cell.classList;
+		let classList = cell.classList;
 		if (classList.contains('mui-radio')) {
-			var input = cell.querySelector('input[type=radio]');
+			let input = cell.querySelector('input[type=radio]');
 			if (input) {
 				//				input.click();
 				if (!input.disabled && !input.readOnly) {
@@ -7075,7 +7077,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 				}
 			}
 		} else if (classList.contains('mui-checkbox')) {
-			var input = cell.querySelector('input[type=checkbox]');
+			let input = cell.querySelector('input[type=checkbox]');
 			if (input) {
 				//				input.click();
 				if (!input.disabled && !input.readOnly) {
@@ -7096,19 +7098,19 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			radioOrCheckboxClick(event);
 		}
 	});
-	var preventDefaultException = /^(INPUT|TEXTAREA|BUTTON|SELECT)$/;
+	const preventDefaultException = /^(INPUT|TEXTAREA|BUTTON|SELECT)$/;
 	window.addEventListener('tap', function(event) {
 		if (!cell) {
 			return;
 		}
-		var isExpand = false;
-		var classList = cell.classList;
-		var ul = cell.parentNode;
+		let isExpand = false;
+		let classList = cell.classList;
+		const ul = cell.parentNode;
 		if (ul && ul.classList.contains(CLASS_RADIO_VIEW)) {
 			if (classList.contains(CLASS_SELECTED)) {
 				return;
 			}
-			var selected = ul.querySelector('li' + SELECTOR_SELECTED);
+			const selected = ul.querySelector('li' + SELECTOR_SELECTED);
 			if (selected) {
 				selected.classList.remove(CLASS_SELECTED);
 			}
@@ -7124,7 +7126,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			}
 
 			if (!classList.contains(CLASS_ACTIVE)) { //展开时,需要收缩其他同类
-				var collapse = cell.parentNode.querySelector('.mui-collapse.mui-active');
+				const collapse = cell.parentNode.querySelector('.mui-collapse.mui-active');
 				if (collapse) {
 					collapse.classList.remove(CLASS_ACTIVE);
 				}
@@ -7137,11 +7139,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 				//scroll
 				//暂不滚动
-				// var offsetTop = $.offset(cell).top;
-				// var scrollTop = document.body.scrollTop;
-				// var height = window.innerHeight;
-				// var offsetHeight = cell.offsetHeight;
-				// var cellHeight = (offsetTop - scrollTop + offsetHeight);
+				// const offsetTop = $.offset(cell).top;
+				// const scrollTop = document.body.scrollTop;
+				// const height = window.innerHeight;
+				// const offsetHeight = cell.offsetHeight;
+				// const cellHeight = (offsetTop - scrollTop + offsetHeight);
 				// if (offsetHeight > height) {
 				// 	$.scrollTo(offsetTop, 300);
 				// } else if (cellHeight > height) {
@@ -7249,7 +7251,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 		} else {
 			//H5版本(确认index为0，取消index为1)
-			var result = window.prompt(text);
+			let result = window.prompt(text);
 			if (result) {
 				callback({
 					index: 0,
@@ -7266,12 +7268,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 })(mui, window);
 (function($, window) {
-	var CLASS_ACTIVE = 'mui-active';
+	let CLASS_ACTIVE = 'mui-active';
 	/**
 	 * 自动消失提示框
 	 */
 	$.toast = function(message,options) {
-		var durations = {
+		const durations = {
 		    'long': 3500,
 		    'short': 2000
 		};
@@ -7299,7 +7301,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		    if (!duration) {
 		        duration = durations['short'];
 		    }
-			var toast = document.createElement('div');
+			let toast = document.createElement('div');
 			toast.classList.add('mui-toast-container');
 			toast.innerHTML = '<div class="' + 'mui-toast-message' + '">' + message + '</div>';
 			toast.addEventListener('webkitTransitionEnd', function() {
@@ -7334,23 +7336,23 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @param {Object} document
  */
 (function($, window, document) {
-    var CLASS_POPUP = 'mui-popup';
-    var CLASS_POPUP_BACKDROP = 'mui-popup-backdrop';
-    var CLASS_POPUP_IN = 'mui-popup-in';
-    var CLASS_POPUP_OUT = 'mui-popup-out';
-    var CLASS_POPUP_INNER = 'mui-popup-inner';
-    var CLASS_POPUP_TITLE = 'mui-popup-title';
-    var CLASS_POPUP_TEXT = 'mui-popup-text';
-    var CLASS_POPUP_INPUT = 'mui-popup-input';
-    var CLASS_POPUP_BUTTONS = 'mui-popup-buttons';
-    var CLASS_POPUP_BUTTON = 'mui-popup-button';
-    var CLASS_POPUP_BUTTON_BOLD = 'mui-popup-button-bold';
-    var CLASS_POPUP_BACKDROP = 'mui-popup-backdrop';
-    var CLASS_ACTIVE = 'mui-active';
+    const CLASS_POPUP = 'mui-popup';
+    let CLASS_POPUP_BACKDROP = 'mui-popup-backdrop';
+    const CLASS_POPUP_IN = 'mui-popup-in';
+    const CLASS_POPUP_OUT = 'mui-popup-out';
+    const CLASS_POPUP_INNER = 'mui-popup-inner';
+    const CLASS_POPUP_TITLE = 'mui-popup-title';
+    const CLASS_POPUP_TEXT = 'mui-popup-text';
+    const CLASS_POPUP_INPUT = 'mui-popup-input';
+    const CLASS_POPUP_BUTTONS = 'mui-popup-buttons';
+    const CLASS_POPUP_BUTTON = 'mui-popup-button';
+    const CLASS_POPUP_BUTTON_BOLD = 'mui-popup-button-bold';
+    const CLASS_POPUP_BACKDROP = 'mui-popup-backdrop';
+    let CLASS_ACTIVE = 'mui-active';
 
-    var popupStack = [];
-    var backdrop = (function() {
-        var element = document.createElement('div');
+    const popupStack = [];
+    const backdrop = (function() {
+        let element = document.createElement('div');
         element.classList.add(CLASS_POPUP_BACKDROP);
         element.addEventListener($.EVENT_MOVE, $.preventDefault);
         element.addEventListener('webkitTransitionEnd', function() {
@@ -7361,26 +7363,26 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
         return element;
     }());
 
-    var createInput = function(placeholder) {
+    const createInput = function(placeholder) {
         return '<div class="' + CLASS_POPUP_INPUT + '"><input type="text" autofocus placeholder="' + (placeholder || '') + '"/></div>';
     };
-    var createInner = function(message, title, extra) {
+    const createInner = function(message, title, extra) {
         return '<div class="' + CLASS_POPUP_INNER + '"><div class="' + CLASS_POPUP_TITLE + '">' + title + '</div><div class="' + CLASS_POPUP_TEXT + '">' + message.replace(/\r\n/g, "<br/>").replace(/\n/g, "<br/>") + '</div>' + (extra || '') + '</div>';
     };
-    var createButtons = function(btnArray) {
-        var length = btnArray.length;
-        var btns = [];
-        for (var i = 0; i < length; i++) {
+    const createButtons = function(btnArray) {
+        const length = btnArray.length;
+        let btns = [];
+        for (let i = 0; i < length; i++) {
             btns.push('<span class="' + CLASS_POPUP_BUTTON + (i === length - 1 ? (' ' + CLASS_POPUP_BUTTON_BOLD) : '') + '">' + btnArray[i] + '</span>');
         }
         return '<div class="' + CLASS_POPUP_BUTTONS + '">' + btns.join('') + '</div>';
     };
 
-    var createPopup = function(html, callback) {
-        var popupElement = document.createElement('div');
+    const createPopup = function(html, callback) {
+        let popupElement = document.createElement('div');
         popupElement.className = CLASS_POPUP;
         popupElement.innerHTML = html;
-        var removePopupElement = function() {
+        const removePopupElement = function() {
             popupElement.parentNode && popupElement.parentNode.removeChild(popupElement);
             popupElement = null;
         };
@@ -7401,13 +7403,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
             backdrop.offsetHeight;
             backdrop.classList.add(CLASS_ACTIVE);
         }
-        var btns = $.qsa('.' + CLASS_POPUP_BUTTON, popupElement);
-        var input = popupElement.querySelector('.' + CLASS_POPUP_INPUT + ' input');
-        var popup = {
+        const btns = $.qsa('.' + CLASS_POPUP_BUTTON, popupElement);
+        let input = popupElement.querySelector('.' + CLASS_POPUP_INPUT + ' input');
+        const popup = {
             element: popupElement,
             close: function(index, animate) {
                 if (popupElement) {
-                    var result = callback && callback({
+                    const result = callback && callback({
                         index: index || 0,
                         value: input && input.value || ''
                     });
@@ -7430,7 +7432,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
                 }
             }
         };
-        var handleEvent = function(e) {
+        const handleEvent = function(e) {
             popup.close(btns.indexOf(e.target));
         };
         $(popupElement).on('tap', '.' + CLASS_POPUP_BUTTON, handleEvent);
@@ -7451,7 +7453,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
         });
         return popup;
     };
-    var createAlert = function(message, title, btnValue, callback, type) {
+    const createAlert = function(message, title, btnValue, callback, type) {
         if (typeof message === 'undefined') {
             return;
         } else {
@@ -7471,7 +7473,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
         }
         return plus.nativeUI.alert(message, callback, title || '提示', btnValue || '确定');
     };
-    var createConfirm = function(message, title, btnArray, callback, type) {
+    const createConfirm = function(message, title, btnArray, callback, type) {
         if (typeof message === 'undefined') {
             return;
         } else {
@@ -7491,7 +7493,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
         }
         return plus.nativeUI.confirm(message, callback, title, btnArray || ['取消', '确认']);
     };
-    var createPrompt = function(message, placeholder, title, btnArray, callback, type) {
+    const createPrompt = function(message, placeholder, title, btnArray, callback, type) {
         if (typeof message === 'undefined') {
             return;
         } else {
@@ -7517,7 +7519,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
         }
         return plus.nativeUI.prompt(message, callback, title || '提示', placeholder, btnArray || ['取消', '确认']);
     };
-    var closePopup = function() {
+    let closePopup = function() {
         if (popupStack.length) {
             popupStack[popupStack.length - 1]['close']();
             return true;
@@ -7525,7 +7527,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
             return false;
         }
     };
-    var closePopups = function() {
+    let closePopups = function() {
         while (popupStack.length) {
             popupStack[popupStack.length - 1]['close']();
         }
@@ -7538,24 +7540,24 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
     $.prompt = createPrompt;
 })(mui, window, document);
 (function($, document) {
-	var CLASS_PROGRESSBAR = 'mui-progressbar';
-	var CLASS_PROGRESSBAR_IN = 'mui-progressbar-in';
-	var CLASS_PROGRESSBAR_OUT = 'mui-progressbar-out';
-	var CLASS_PROGRESSBAR_INFINITE = 'mui-progressbar-infinite';
+	const CLASS_PROGRESSBAR = 'mui-progressbar';
+	const CLASS_PROGRESSBAR_IN = 'mui-progressbar-in';
+	const CLASS_PROGRESSBAR_OUT = 'mui-progressbar-out';
+	const CLASS_PROGRESSBAR_INFINITE = 'mui-progressbar-infinite';
 
-	var SELECTOR_PROGRESSBAR = '.mui-progressbar';
+	const SELECTOR_PROGRESSBAR = '.mui-progressbar';
 
-	var _findProgressbar = function(container) {
+	const _findProgressbar = function(container) {
 		container = $(container || 'body');
 		if (container.length === 0) return;
 		container = container[0];
 		if (container.classList.contains(CLASS_PROGRESSBAR)) {
 			return container;
 		}
-		var progressbars = container.querySelectorAll(SELECTOR_PROGRESSBAR);
+		let progressbars = container.querySelectorAll(SELECTOR_PROGRESSBAR);
 		if (progressbars) {
-			for (var i = 0, len = progressbars.length; i < len; i++) {
-				var progressbar = progressbars[i];
+			for (let i = 0, len = progressbars.length; i < len; i++) {
+				let progressbar = progressbars[i];
 				if (progressbar.parentNode === container) {
 					return progressbar;
 				}
@@ -7568,7 +7570,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} progress 可选，undefined表示循环，数字表示具体进度
 	 * @param {Object} color 可选，指定颜色样式(目前暂未提供实际样式，可暂时不暴露此参数)
 	 */
-	var showProgressbar = function(container, progress, color) {
+	let showProgressbar = function(container, progress, color) {
 		if (typeof container === 'number') {
 			color = progress;
 			progress = container;
@@ -7581,10 +7583,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		if (container.classList.contains(CLASS_PROGRESSBAR)) {
 			progressbar = container;
 		} else {
-			var progressbars = container.querySelectorAll(SELECTOR_PROGRESSBAR + ':not(.' + CLASS_PROGRESSBAR_OUT + ')');
+			const progressbars = container.querySelectorAll(SELECTOR_PROGRESSBAR + ':not(.' + CLASS_PROGRESSBAR_OUT + ')');
 			if (progressbars) {
-				for (var i = 0, len = progressbars.length; i < len; i++) {
-					var _progressbar = progressbars[i];
+				for (let i = 0, len = progressbars.length; i < len; i++) {
+					const _progressbar = progressbars[i];
 					if (_progressbar.parentNode === container) {
 						progressbar = _progressbar;
 						break;
@@ -7609,12 +7611,12 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * 关闭进度条 
 	 * @param {Object} container 可选，默认body，支持selector,DOM Node,mui wrapper
 	 */
-	var hideProgressbar = function(container) {
-		var progressbar = _findProgressbar(container);
+	let hideProgressbar = function(container) {
+		let progressbar = _findProgressbar(container);
 		if (!progressbar) {
 			return;
 		}
-		var classList = progressbar.classList;
+		let classList = progressbar.classList;
 		if (!classList.contains(CLASS_PROGRESSBAR_IN) || classList.contains(CLASS_PROGRESSBAR_OUT)) {
 			return;
 		}
@@ -7632,21 +7634,21 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	 * @param {Object} progress 可选，默认0 取值范围[0-100]
 	 * @param {Object} speed 进度条动画时间
 	 */
-	var setProgressbar = function(container, progress, speed) {
+	let setProgressbar = function(container, progress, speed) {
 		if (typeof container === 'number') {
 			speed = progress;
 			progress = container;
 			container = false;
 		}
-		var progressbar = _findProgressbar(container);
+		let progressbar = _findProgressbar(container);
 		if (!progressbar || progressbar.classList.contains(CLASS_PROGRESSBAR_INFINITE)) {
 			return;
 		}
 		if (progress) progress = Math.min(Math.max(progress, 0), 100);
 		progressbar.offsetHeight;
-		var span = progressbar.querySelector('span');
+		const span = progressbar.querySelector('span');
 		if (span) {
-			var style = span.style;
+			const style = span.style;
 			style.webkitTransform = 'translate3d(' + (-100 + progress) + '%,0,0)';
 			if (typeof speed !== 'undefined') {
 				style.webkitTransitionDuration = speed + 'ms';
@@ -7657,11 +7659,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return progressbar;
 	};
 	$.fn.progressbar = function(options) {
-		var progressbarApis = [];
+		const progressbarApis = [];
 		options = options || {};
 		this.each(function() {
-			var self = this;
-			var progressbarApi = self.mui_plugin_progressbar;
+			let self = this;
+			let progressbarApi = self.mui_plugin_progressbar;
 			if (!progressbarApi) {
 				self.mui_plugin_progressbar = progressbarApi = {
 					options: options,
@@ -7697,23 +7699,23 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, window, document) {
-	var CLASS_ICON = 'mui-icon';
-	var CLASS_ICON_CLEAR = 'mui-icon-clear';
-	var CLASS_ICON_SPEECH = 'mui-icon-speech';
-	var CLASS_ICON_SEARCH = 'mui-icon-search';
-	var CLASS_ICON_PASSWORD = 'mui-icon-eye';
-	var CLASS_INPUT_ROW = 'mui-input-row';
-	var CLASS_PLACEHOLDER = 'mui-placeholder';
-	var CLASS_TOOLTIP = 'mui-tooltip';
-	var CLASS_HIDDEN = 'mui-hidden';
-	var CLASS_FOCUSIN = 'mui-focusin';
-	var SELECTOR_ICON_CLOSE = '.' + CLASS_ICON_CLEAR;
-	var SELECTOR_ICON_SPEECH = '.' + CLASS_ICON_SPEECH;
-	var SELECTOR_ICON_PASSWORD = '.' + CLASS_ICON_PASSWORD;
-	var SELECTOR_PLACEHOLDER = '.' + CLASS_PLACEHOLDER;
-	var SELECTOR_TOOLTIP = '.' + CLASS_TOOLTIP;
+	let CLASS_ICON = 'mui-icon';
+	const CLASS_ICON_CLEAR = 'mui-icon-clear';
+	const CLASS_ICON_SPEECH = 'mui-icon-speech';
+	const CLASS_ICON_SEARCH = 'mui-icon-search';
+	const CLASS_ICON_PASSWORD = 'mui-icon-eye';
+	const CLASS_INPUT_ROW = 'mui-input-row';
+	const CLASS_PLACEHOLDER = 'mui-placeholder';
+	const CLASS_TOOLTIP = 'mui-tooltip';
+	const CLASS_HIDDEN = 'mui-hidden';
+	const CLASS_FOCUSIN = 'mui-focusin';
+	const SELECTOR_ICON_CLOSE = '.' + CLASS_ICON_CLEAR;
+	const SELECTOR_ICON_SPEECH = '.' + CLASS_ICON_SPEECH;
+	const SELECTOR_ICON_PASSWORD = '.' + CLASS_ICON_PASSWORD;
+	const SELECTOR_PLACEHOLDER = '.' + CLASS_PLACEHOLDER;
+	const SELECTOR_TOOLTIP = '.' + CLASS_TOOLTIP;
 
-	var findRow = function(target) {
+	const findRow = function(target) {
 		for (; target && target !== document; target = target.parentNode) {
 			if (target.classList && target.classList.contains(CLASS_INPUT_ROW)) {
 				return target;
@@ -7721,7 +7723,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 		return null;
 	};
-	var Input = function(element, options) {
+	const Input = function(element, options) {
 		this.element = element;
 		this.options = options || {
 			actions: 'clear'
@@ -7754,9 +7756,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		this.initElementEvent();
 	};
 	Input.prototype.initAction = function() {
-		var self = this;
+		let self = this;
 
-		var row = self.element.parentNode;
+		let row = self.element.parentNode;
 		if (row) {
 			if (self.sliderActionClass) {
 				self.sliderAction = self.createAction(row, self.sliderActionClass, self.sliderActionSelector);
@@ -7791,9 +7793,9 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		}
 	};
 	Input.prototype.createAction = function(row, actionClass, actionSelector) {
-		var action = row.querySelector(actionSelector);
+		let action = row.querySelector(actionSelector);
 		if (!action) {
-			var action = document.createElement('span');
+			let action = document.createElement('span');
 			action.className = actionClass;
 			if (actionClass === this.searchActionClass) {
 				action.innerHTML = '<span class="' + CLASS_ICON + ' ' + CLASS_ICON_SEARCH + '"></span><span>' + this.element.getAttribute('placeholder') + '</span>';
@@ -7807,18 +7809,18 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return action;
 	};
 	Input.prototype.initElementEvent = function() {
-		var element = this.element;
+		let element = this.element;
 
 		if (this.sliderActionClass) {
-			var tooltip = this.sliderAction;
-			var timer = null;
-			var showTip = function() { //每次重新计算是因为控件可能被隐藏，初始化时计算是不正确的
+			const tooltip = this.sliderAction;
+			let timer = null;
+			const showTip = function() { //每次重新计算是因为控件可能被隐藏，初始化时计算是不正确的
 				tooltip.classList.remove(CLASS_HIDDEN);
-				var offsetLeft = element.offsetLeft;
-				var width = element.offsetWidth - 28;
-				var tooltipWidth = tooltip.offsetWidth;
-				var distince = Math.abs(element.max - element.min);
-				var scaleWidth = (width / distince) * Math.abs(element.value - element.min);
+				const offsetLeft = element.offsetLeft;
+				const width = element.offsetWidth - 28;
+				const tooltipWidth = tooltip.offsetWidth;
+				const distince = Math.abs(element.max - element.min);
+				const scaleWidth = (width / distince) * Math.abs(element.value - element.min);
 				tooltip.style.left = (14 + offsetLeft + scaleWidth - tooltipWidth / 2) + 'px';
 				tooltip.innerText = element.value;
 				if (timer) {
@@ -7835,7 +7837,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			});
 		} else {
 			if (this.clearActionClass) {
-				var action = this.clearAction;
+				const action = this.clearAction;
 				if (!action) {
 					return;
 				}
@@ -7864,7 +7866,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	Input.prototype.setPlaceholder = function(text) {
 		if (this.searchActionClass) {
-			var placeholder = this.element.parentNode.querySelector(SELECTOR_PLACEHOLDER);
+			const placeholder = this.element.parentNode.querySelector(SELECTOR_PLACEHOLDER);
 			placeholder && (placeholder.getElementsByTagName('span')[1].innerText = text);
 		} else {
 			this.element.setAttribute('placeholder', text);
@@ -7880,7 +7882,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		event.preventDefault();
 	};
 	Input.prototype.clearActionClick = function(event) {
-		var self = this;
+		let self = this;
 		self.element.value = '';
 		$.focus(self.element);
 		self.clearAction.classList.add(CLASS_HIDDEN);
@@ -7888,8 +7890,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	Input.prototype.speechActionClick = function(event) {
 		if (window.plus) {
-			var self = this;
-			var oldValue = self.element.value;
+			let self = this;
+			const oldValue = self.element.value;
 			self.element.value = '';
 			document.body.classList.add(CLASS_FOCUSIN);
 			plus.speech.startRecognize({
@@ -7915,15 +7917,15 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		event.preventDefault();
 	};
 	$.fn.input = function(options) {
-		var inputApis = [];
+		const inputApis = [];
 		this.each(function() {
-			var inputApi = null;
-			var actions = [];
-			var row = findRow(this.parentNode);
+			let inputApi = null;
+			const actions = [];
+			const row = findRow(this.parentNode);
 			if (this.type === 'range' && row.classList.contains('mui-input-range')) {
 				actions.push('slider');
 			} else {
-				var classList = this.classList;
+				const classList = this.classList;
 				if (classList.contains('mui-input-clear')) {
 					actions.push('clear');
 				}
@@ -7937,13 +7939,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 					actions.push('search');
 				}
 			}
-			var id = this.getAttribute('data-input-' + actions[0]);
+			let id = this.getAttribute('data-input-' + actions[0]);
 			if (!id) {
 				id = ++$.uuid;
 				inputApi = $.data[id] = new Input(this, {
 					actions: actions.join(',')
 				});
-				for (var i = 0, len = actions.length; i < len; i++) {
+				for (let i = 0, len = actions.length; i < len; i++) {
 					this.setAttribute('data-input-' + actions[i], id);
 				}
 			} else {
@@ -7958,10 +7960,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	});
 })(mui, window, document);
 (function($, window) {
-    var CLASS_ACTIVE = 'mui-active';
-    var rgbaRegex = /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d*(?:\.\d+)?)\)$/;
-    var getColor = function(colorStr) {
-        var matches = colorStr.match(rgbaRegex);
+    const CLASS_ACTIVE = 'mui-active';
+    const rgbaRegex = /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d*(?:\.\d+)?)\)$/;
+    const getColor = function(colorStr) {
+        const matches = colorStr.match(rgbaRegex);
         if (matches && matches.length === 5) {
             return [
                 matches[1],
@@ -7972,7 +7974,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
         }
         return [];
     };
-    var Transparent = function(element, options) {
+    const Transparent = function(element, options) {
         this.element = element;
         this.options = $.extend({
             top: 0, //距离顶部高度(到达该高度即触发)
@@ -7994,7 +7996,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
         this._style = this.element.style;
         this._bgColor = this._style.backgroundColor;
-        var color = getColor(mui.getStyles(this.element, 'backgroundColor'));
+        const color = getColor(mui.getStyles(this.element, 'backgroundColor'));
         if (color.length) {
             this._R = color[0];
             this._G = color[1];
@@ -8015,11 +8017,11 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
         }
     }
     Transparent.prototype.handleScroll = function(e) {
-        var y = window.scrollY;
+        let y = window.scrollY;
         if (!this.isNativeScroll && e && e.detail) {
             y = -e.detail.y;
         }
-        var opacity = (y - this.options.top) / this.options.offset + this._A;
+        let opacity = (y - this.options.top) / this.options.offset + this._A;
         opacity = Math.min(Math.max(this._A, opacity), 1);
         this._style.backgroundColor = 'rgba(' + this._R + ',' + this._G + ',' + this._B + ',' + opacity + ')';
         if (opacity > this._A) {
@@ -8042,14 +8044,14 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
     };
     $.fn.transparent = function(options) {
         options = options || {};
-        var transparentApis = [];
+        const transparentApis = [];
         this.each(function() {
-            var transparentApi = this.mui_plugin_transparent;
+            let transparentApi = this.mui_plugin_transparent;
             if (!transparentApi) {
-                var top = this.getAttribute('data-top');
-                var offset = this.getAttribute('data-offset');
-                var duration = this.getAttribute('data-duration');
-                var scrollby = this.getAttribute('data-scrollby');
+                let top = this.getAttribute('data-top');
+                let offset = this.getAttribute('data-offset');
+                let duration = this.getAttribute('data-duration');
+                let scrollby = this.getAttribute('data-scrollby');
                 if (top !== null && typeof options.top === 'undefined') {
                     options.top = top;
                 }
@@ -8081,20 +8083,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 
 (function($) {
 
-    var touchSupport = ('ontouchstart' in document);
-    var tapEventName = touchSupport ? 'tap' : 'click';
-    var changeEventName = 'change';
-    var holderClassName = 'mui-numbox';
-    var plusClassSelector = '.mui-btn-numbox-plus,.mui-numbox-btn-plus';
-    var minusClassSelector = '.mui-btn-numbox-minus,.mui-numbox-btn-minus';
-    var inputClassSelector = '.mui-input-numbox,.mui-numbox-input';
+    const touchSupport = ('ontouchstart' in document);
+    const tapEventName = touchSupport ? 'tap' : 'click';
+    const changeEventName = 'change';
+    const holderClassName = 'mui-numbox';
+    const plusClassSelector = '.mui-btn-numbox-plus,.mui-numbox-btn-plus';
+    const minusClassSelector = '.mui-btn-numbox-minus,.mui-numbox-btn-minus';
+    const inputClassSelector = '.mui-input-numbox,.mui-numbox-input';
 
-    var Numbox = $.Numbox = $.Class.extend({
+    let Numbox = $.Numbox = $.Class.extend({
         /**
          * 构造函数
          **/
         init: function(holder, options) {
-            var self = this;
+            let self = this;
             if (!holder) {
                 throw "构造 numbox 时缺少容器元素";
             }
@@ -8112,20 +8114,20 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
          * 初始化事件绑定
          **/
         initEvent: function() {
-            var self = this;
+            let self = this;
             self.plus.addEventListener(tapEventName, function(event) {
-                var val = parseInt(self.input.value) + self.options.step;
+                let val = parseInt(self.input.value) + self.options.step;
                 self.input.value = val.toString();
                 $.trigger(self.input, changeEventName, null);
             });
             self.minus.addEventListener(tapEventName, function(event) {
-                var val = parseInt(self.input.value) - self.options.step;
+                let val = parseInt(self.input.value) - self.options.step;
                 self.input.value = val.toString();
                 $.trigger(self.input, changeEventName, null);
             });
             self.input.addEventListener(changeEventName, function(event) {
                 self.checkValue();
-                var val = parseInt(self.input.value);
+                let val = parseInt(self.input.value);
                 //触发顶层容器
                 $.trigger(self.holder, changeEventName, {
                     value: val
@@ -8136,27 +8138,27 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
          * 获取当前值
          **/
         getValue: function() {
-            var self = this;
+            let self = this;
             return parseInt(self.input.value);
         },
         /**
          * 验证当前值是法合法
          **/
         checkValue: function() {
-            var self = this;
-            var val = self.input.value;
-            if (val == null || val == '' || isNaN(val)) {
+            let self = this;
+            let val = self.input.value;
+            if (val === null || val === '' || isNaN(val)) {
                 self.input.value = self.options.min || 0;
-                self.minus.disabled = self.options.min != null;
+                self.minus.disabled = self.options.min !== null;
             } else {
-                var val = parseInt(val);
-                if (self.options.max != null && !isNaN(self.options.max) && val >= parseInt(self.options.max)) {
+                let val = parseInt(val);
+                if (self.options.max !== null && !isNaN(self.options.max) && val >= parseInt(self.options.max)) {
                     val = self.options.max;
                     self.plus.disabled = true;
                 } else {
                     self.plus.disabled = false;
                 }
-                if (self.options.min != null && !isNaN(self.options.min) && val <= parseInt(self.options.min)) {
+                if (self.options.min !== null && !isNaN(self.options.min) && val <= parseInt(self.options.min)) {
                     val = self.options.min;
                     self.minus.disabled = true;
                 } else {
@@ -8169,7 +8171,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
          * 更新选项
          **/
         setOption: function(name, value) {
-            var self = this;
+            const self = this;
             self.options[name] = value;
         },
         /**
@@ -8182,7 +8184,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
     });
 
     $.fn.numbox = function(options) {
-        var instanceArray = [];
+        const instanceArray = [];
         //遍历选择的元素
         this.each(function(i, element) {
             if (element.numbox) {
@@ -8191,8 +8193,8 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
             if (options) {
                 element.numbox = new Numbox(element, options);
             } else {
-                var optionsText = element.getAttribute('data-numbox-options');
-                var options = optionsText ? JSON.parse(optionsText) : {};
+                const optionsText = element.getAttribute('data-numbox-options');
+                let options = optionsText ? JSON.parse(optionsText) : {};
                 options.step = element.getAttribute('data-numbox-step') || options.step;
                 options.min = element.getAttribute('data-numbox-min') || options.min;
                 options.max = element.getAttribute('data-numbox-max') || options.max;
@@ -8216,19 +8218,19 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
  * @returns {undefined}
  */
 (function($, window, document) {
-    var CLASS_ICON = 'mui-icon';
-    var CLASS_DISABLED = 'mui-disabled';
+    const CLASS_ICON = 'mui-icon';
+    const CLASS_DISABLED = 'mui-disabled';
 
-    var STATE_RESET = 'reset';
-    var STATE_LOADING = 'loading';
+    const STATE_RESET = 'reset';
+    const STATE_LOADING = 'loading';
 
-    var defaultOptions = {
+    const defaultOptions = {
         loadingText: 'Loading...', //文案
         loadingIcon: 'mui-spinner' + ' ' + 'mui-spinner-white', //图标，可为空
         loadingIconPosition: 'left' //图标所处位置，仅支持left|right
     };
 
-    var Button = function(element, options) {
+    const Button = function(element, options) {
         this.element = element;
         this.options = $.extend({}, defaultOptions, options);
         if (!this.options.loadingText) {
@@ -8262,7 +8264,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
         } else if (state === STATE_LOADING) {
             this.element.disabled = true;
             this.element.classList.add(CLASS_DISABLED);
-            var html = this.isInput ? this.options.loadingText : ('<span>' + this.options.loadingText + '</span>');
+            let html = this.isInput ? this.options.loadingText : ('<span>' + this.options.loadingText + '</span>');
             if (this.options.loadingIcon && !this.isInput) {
                 if (this.options.loadingIconPosition === 'right') {
                     html += '&nbsp;<span class="' + this.options.loadingIcon + '"></span>';
@@ -8281,13 +8283,13 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
         }
     }
     $.fn.button = function(state) {
-        var buttonApis = [];
+        const buttonApis = [];
         this.each(function() {
-            var buttonApi = this.mui_plugin_button;
+            let buttonApi = this.mui_plugin_button;
             if (!buttonApi) {
-                var loadingText = this.getAttribute('data-loading-text');
-                var loadingIcon = this.getAttribute('data-loading-icon');
-                var loadingIconPosition = this.getAttribute('data-loading-icon-position');
+                const loadingText = this.getAttribute('data-loading-text');
+                const loadingIcon = this.getAttribute('data-loading-icon');
+                const loadingIconPosition = this.getAttribute('data-loading-icon-position');
                 this.mui_plugin_button = buttonApi = new Button(this, {
                     loadingText: loadingText,
                     loadingIcon: loadingIcon,

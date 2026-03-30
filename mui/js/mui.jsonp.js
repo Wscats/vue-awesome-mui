@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * MUI JSONP
  * varstion 1.0.0
@@ -7,18 +9,18 @@
 
 (function($, win, doc) {
 
-	var callbackIndex = 0;
+	let callbackIndex = 0;
 
 	//生成回调函数名
-	var createCallbackName = function() {
+	const createCallbackName = function() {
 		return 'mui_jsonp_callback_' + (callbackIndex++);
 	};
 
-	var container = doc.body;
+	const container = doc.body;
 
 	//导入 script 元素
-	var importScript = function(url) {
-		var element = doc.createElement('script');
+	const importScript = function(url) {
+		const element = doc.createElement('script');
 		element.src = url;
 		element.async = true;
 		element.defer = true;
@@ -27,13 +29,13 @@
 	};
 
 	//转换 URL，JSONP 只支持 get 方式的 queryString ,需将 data 拼入 url
-	var convertUrl = function(url, data, jsonpParam, callbacnName) {
+	const convertUrl = function(url, data, jsonpParam, callbacnName) {
 		if (jsonpParam) {
 			url = url.replace(jsonpParam + '=?', jsonpParam + '=' + callbacnName);
 		} else {
 			data['callback'] = callbacnName;
 		}
-		var buffer = [];
+		const buffer = [];
 		for (var key in data) {
 			buffer.push(key + '=' + encodeURIComponent(data[key]));
 		}
@@ -41,22 +43,22 @@
 	};
 
 	//获取 QueryString
-	var getQueryString = function(url) {
+	const getQueryString = function(url) {
 		url = url || location.search;
-		var splitIndex = url.indexOf('?');
-		var queryString = url.substr(splitIndex + 1);
-		var paramArray = queryString.split('&');
-		var result = {};
+		const splitIndex = url.indexOf('?');
+		const queryString = url.substr(splitIndex + 1);
+		const paramArray = queryString.split('&');
+		const result = {};
 		for (var i in paramArray) {
-			var params = paramArray[i].split('=');
+			const params = paramArray[i].split('=');
 			result[params[0]] = params[1];
 		}
 		return result;
 	}
 
 	//获取将传递给服务器的回调函数的请求参数名
-	var getJSONPParam = function(url) {
-		var query = getQueryString(url);
+	const getJSONPParam = function(url) {
+		const query = getQueryString(url);
 		for (var name in query) {
 			if (query[name] === '?') {
 				return name;
@@ -76,12 +78,12 @@
 		if (!url) {
 			throw "mui.getJSONP URL error!";
 		}
-		var jsonpParam = getJSONPParam(url);
-		var callbackName = createCallbackName();
+		const jsonpParam = getJSONPParam(url);
+		const callbackName = createCallbackName();
 		data = data || {};
 		callback = callback || $.noop;
 		url = convertUrl(url, data, jsonpParam, callbackName);
-		var scriptElement = null;
+		let scriptElement = null;
 		win[callbackName] = function(result) {
 			callback(result);
 			if (scriptElement) {
@@ -97,7 +99,7 @@
 	//为原 mui.getJSON 方法添加同 jQuery.getJSON 一样的 JSONP 支持
 	$.__getJSON = $.getJSON;
 	$.getJSON = function(url, data, callback) {
-		var isJSONP = getJSONPParam(url) != null;
+		const isJSONP = getJSONPParam(url) !== null;
 		if (isJSONP) {
 			return $.getJSONP(url, data, callback);
 		} else {

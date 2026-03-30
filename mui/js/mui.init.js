@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui.init
  * @param {type} $
@@ -25,7 +27,7 @@
 		$.options = $.extend(true, $.global, options);
 		return this;
 	};
-	var inits = {};
+	const inits = {};
 
 	/**
 	 * 单页配置 初始化
@@ -35,7 +37,7 @@
 		$.options = $.extend(true, $.global, options || {});
 		$.ready(function() {
 			$.doAction('inits', function(index, init) {
-				var isInit = !!(!inits[init.name] || init.repeat);
+				const isInit = !!(!inits[init.name] || init.repeat);
 				if (isInit) {
 					init.handle.call($);
 					inits[init.name] = true;
@@ -59,18 +61,18 @@
 		name: 'iframe',
 		index: 100,
 		handle: function() {
-			var options = $.options;
-			var subpages = options.subpages || [];
+			const options = $.options;
+			const subpages = options.subpages || [];
 			if (!$.os.plus && subpages.length) {
 				//暂时只处理单个subpage。后续可以考虑支持多个subpage
 				createIframe(subpages[0]);
 			}
 		}
 	});
-	var createIframe = function(options) {
-		var wrapper = document.createElement('div');
+	const createIframe = function(options) {
+		const wrapper = document.createElement('div');
 		wrapper.className = $.className('iframe-wrapper');
-		var styles = options.styles || {};
+		const styles = options.styles || {};
 		if (typeof styles.top !== 'string') {
 			styles.top = '0px';
 		}
@@ -79,7 +81,7 @@
 		}
 		wrapper.style.top = styles.top;
 		wrapper.style.bottom = styles.bottom;
-		var iframe = document.createElement('iframe');
+		const iframe = document.createElement('iframe');
 		iframe.src = options.url;
 		iframe.id = options.id || options.url;
 		iframe.name = iframe.id;
@@ -90,8 +92,8 @@
 	};
 
 	function handleScroll(wrapper, iframe) {
-		var key = 'MUI_SCROLL_POSITION_' + document.location.href + '_' + iframe.src;
-		var scrollTop = (parseFloat(localStorage.getItem(key)) || 0);
+		const key = 'MUI_SCROLL_POSITION_' + document.location.href + '_' + iframe.src;
+		let scrollTop = (parseFloat(localStorage.getItem(key)) || 0);
 		if (scrollTop) {
 			(function(y) {
 				iframe.onload = function() {
@@ -100,7 +102,7 @@
 			})(scrollTop);
 		}
 		setInterval(function() {
-			var _scrollTop = window.scrollY;
+			const _scrollTop = window.scrollY;
 			if (scrollTop !== _scrollTop) {
 				localStorage.setItem(key, _scrollTop + '');
 				scrollTop = _scrollTop;
@@ -108,8 +110,8 @@
 		}, 100);
 	};
 	$(function() {
-		var classList = document.body.classList;
-		var os = [];
+		const classList = document.body.classList;
+		const os = [];
 		if ($.os.ios) {
 			os.push({
 				os: 'ios',
@@ -132,8 +134,8 @@
 		}
 		if (os.length) {
 			$.each(os, function(index, osObj) {
-				var version = '';
-				var classArray = [];
+				let version = '';
+				const classArray = [];
 				if (osObj.version) {
 					$.each(osObj.version.split('.'), function(i, v) {
 						version = version + (version ? '-' : '') + v;

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Button
  * @param {type} $
@@ -6,19 +8,19 @@
  * @returns {undefined}
  */
 (function($, window, document) {
-    var CLASS_ICON = $.className('icon');
-    var CLASS_DISABLED = $.className('disabled');
+    const CLASS_ICON = $.className('icon');
+    const CLASS_DISABLED = $.className('disabled');
 
-    var STATE_RESET = 'reset';
-    var STATE_LOADING = 'loading';
+    const STATE_RESET = 'reset';
+    const STATE_LOADING = 'loading';
 
-    var defaultOptions = {
+    const defaultOptions = {
         loadingText: 'Loading...', //文案
         loadingIcon: $.className('spinner') + ' ' + $.className('spinner-white'), //图标，可为空
         loadingIconPosition: 'left' //图标所处位置，仅支持left|right
     };
 
-    var Button = function(element, options) {
+    const Button = function(element, options) {
         this.element = element;
         this.options = $.extend({}, defaultOptions, options);
         if (!this.options.loadingText) {
@@ -52,7 +54,7 @@
         } else if (state === STATE_LOADING) {
             this.element.disabled = true;
             this.element.classList.add(CLASS_DISABLED);
-            var html = this.isInput ? this.options.loadingText : ('<span>' + this.options.loadingText + '</span>');
+            let html = this.isInput ? this.options.loadingText : ('<span>' + this.options.loadingText + '</span>');
             if (this.options.loadingIcon && !this.isInput) {
                 if (this.options.loadingIconPosition === 'right') {
                     html += '&nbsp;<span class="' + this.options.loadingIcon + '"></span>';
@@ -71,13 +73,13 @@
         }
     }
     $.fn.button = function(state) {
-        var buttonApis = [];
+        const buttonApis = [];
         this.each(function() {
-            var buttonApi = this.mui_plugin_button;
+            let buttonApi = this.mui_plugin_button;
             if (!buttonApi) {
-                var loadingText = this.getAttribute('data-loading-text');
-                var loadingIcon = this.getAttribute('data-loading-icon');
-                var loadingIconPosition = this.getAttribute('data-loading-icon-position');
+                const loadingText = this.getAttribute('data-loading-text');
+                const loadingIcon = this.getAttribute('data-loading-icon');
+                const loadingIconPosition = this.getAttribute('data-loading-icon-position');
                 this.mui_plugin_button = buttonApi = new Button(this, {
                     loadingText: loadingText,
                     loadingIcon: loadingIcon,

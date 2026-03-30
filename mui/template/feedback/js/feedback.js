@@ -1,3 +1,5 @@
+'use strict';
+
 /*!
  * ======================================================
  * FeedBack Template For MUI (http://dev.dcloud.net.cn/mui)
@@ -6,17 +8,17 @@
  * @author:cuihongbao@dcloud.io
  */
 (function() {
-	var index = 1;
-	var size = null;
-	var imageIndexIdNum = 0;
-	var starIndex = 0;
-	var feedback = {
+	let index = 1;
+	let size = null;
+	let imageIndexIdNum = 0;
+	let starIndex = 0;
+	const feedback = {
 		question: document.getElementById('question'), 
 		contact: document.getElementById('contact'), 
 		imageList: document.getElementById('image-list'),
 		submitBtn: document.getElementById('submit')
 	};
-	var url = 'https://service.dcloud.net.cn/feedback';
+	const url = 'https://service.dcloud.net.cn/feedback';
 	feedback.files = [];
 	feedback.uploader = null;  
 	feedback.deviceInfo = null; 
@@ -66,19 +68,19 @@
 	 * 初始化图片域占位
 	 */
 	feedback.newPlaceholder = function() {
-		var fileInputArray = feedback.getFileInputArray();
+		const fileInputArray = feedback.getFileInputArray();
 		if (fileInputArray &&
 			fileInputArray.length > 0 &&
 			fileInputArray[fileInputArray.length - 1].parentNode.classList.contains('space')) {
 			return;
 		};
 		imageIndexIdNum++;
-		var placeholder = document.createElement('div');
+		const placeholder = document.createElement('div');
 		placeholder.setAttribute('class', 'image-item space');
-		var up = document.createElement("div");
+		const up = document.createElement("div");
 		up.setAttribute('class','image-up')
 		//删除图片
-		var closeButton = document.createElement('div');
+		const closeButton = document.createElement('div');
 		closeButton.setAttribute('class', 'image-close');
 		closeButton.innerHTML = 'X';
 		//小X的点击事件
@@ -90,16 +92,16 @@
 		}, false);
 		
 		//
-		var fileInput = document.createElement('div');
+		const fileInput = document.createElement('div');
 		fileInput.setAttribute('class', 'file');
 		fileInput.setAttribute('id', 'image-' + imageIndexIdNum);
 		fileInput.addEventListener('tap', function(event) {
-			var self = this;
-			var index = (this.id).substr(-1);
+			const self = this;
+			let index = (this.id).substr(-1);
 			
 			plus.gallery.pick(function(e) {
 //				console.log("event:"+e);
-				var name = e.substr(e.lastIndexOf('/') + 1);
+				const name = e.substr(e.lastIndexOf('/') + 1);
 				console.log("name:"+name);
 					
 				plus.zip.compressImage({
@@ -139,16 +141,16 @@
 	};
 	feedback.newPlaceholder();
 	feedback.submitBtn.addEventListener('tap', function(event) {
-		if (feedback.question.value == '' ||
-			(feedback.contact.value != '' &&
-				feedback.contact.value.search(/^(\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+)|([1-9]\d{4,9})$/) != 0)) {
+		if (feedback.question.value === '' ||
+			(feedback.contact.value !== '' &&
+				feedback.contact.value.search(/^(\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+)|([1-9]\d{4,9})$/) !== 0)) {
 			return mui.toast('信息填写不符合规范');
 		}
 		if (feedback.question.value.length > 200 || feedback.contact.value.length > 200) {
 			return mui.toast('信息超长,请重新填写~')
 		}
 		//判断网络连接
-		if(plus.networkinfo.getCurrentType()==plus.networkinfo.CONNECTION_NONE){
+		if(plus.networkinfo.getCurrentType()===plus.networkinfo.CONNECTION_NONE){
 			return mui.toast("连接网络失败，请稍后再试");
 		}
 		feedback.send(mui.extend({}, feedback.deviceInfo, {
@@ -164,8 +166,8 @@
 		}, function(upload, status) {
 //			plus.nativeUI.closeWaiting()
 			console.log("upload cb:"+upload.responseText);
-			if(status==200){
-				var data = JSON.parse(upload.responseText);
+			if(status===200){
+				const data = JSON.parse(upload.responseText);
 				//上传成功，重置表单
 				if (data.ret === 0 && data.desc === 'Success') {
 //					mui.toast('反馈成功~')
@@ -187,7 +189,7 @@
 		});
 		//添加上传文件
 		mui.each(feedback.files, function(index, element) {
-			var f = feedback.files[index];
+			const f = feedback.files[index];
 			console.log("addFile:"+JSON.stringify(f));
 			feedback.uploader.addFile(f.path, {
 				key: f.name
@@ -204,16 +206,16 @@
 	
 	 //应用评分
 	 mui('.icons').on('tap','i',function(){
-	  	var index = parseInt(this.getAttribute("data-index"));
-	  	var parent = this.parentNode;
-	  	var children = parent.children;
+	  	const index = parseInt(this.getAttribute("data-index"));
+	  	const parent = this.parentNode;
+	  	const children = parent.children;
 	  	if(this.classList.contains("mui-icon-star")){
-	  		for(var i=0;i<index;i++){
+	  		for(let i=0;i<index;i++){
   				children[i].classList.remove('mui-icon-star');
   				children[i].classList.add('mui-icon-star-filled');
 	  		}
 	  	}else{
-	  		for (var i = index; i < 5; i++) {
+	  		for (let i = index; i < 5; i++) {
 	  			children[i].classList.add('mui-icon-star')
 	  			children[i].classList.remove('mui-icon-star-filled')
 	  		}

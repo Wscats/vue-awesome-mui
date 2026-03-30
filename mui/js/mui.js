@@ -1,14 +1,16 @@
+'use strict';
+
 /**
  * MUI核心JS
  * @type _L4.$|Function
  */
-var mui = (function(document, undefined) {
-	var readyRE = /complete|loaded|interactive/;
-	var idSelectorRE = /^#([\w-]+)$/;
-	var classSelectorRE = /^\.([\w-]+)$/;
-	var tagSelectorRE = /^[\w-]+$/;
-	var translateRE = /translate(?:3d)?\((.+?)\)/;
-	var translateMatrixRE = /matrix(3d)?\((.+?)\)/;
+let mui = (function(document, undefined) {
+	const readyRE = /complete|loaded|interactive/;
+	const idSelectorRE = /^#([\w-]+)$/;
+	const classSelectorRE = /^\.([\w-]+)$/;
+	const tagSelectorRE = /^[\w-]+$/;
+	const translateRE = /translate(?:3d)?\((.+?)\)/;
+	const translateMatrixRE = /matrix(3d)?\((.+?)\)/;
 
 	var $ = function(selector, context) {
 		context = context || document;
@@ -26,7 +28,7 @@ var mui = (function(document, undefined) {
 			try {
 				selector = selector.trim();
 				if (idSelectorRE.test(selector)) {
-					var found = document.getElementById(RegExp.$1);
+					const found = document.getElementById(RegExp.$1);
 					return wrap(found ? [found] : []);
 				}
 				return wrap($.qsa(selector, context), selector);
@@ -35,7 +37,7 @@ var mui = (function(document, undefined) {
 		return wrap();
 	};
 
-	var wrap = function(dom, selector) {
+	const wrap = function(dom, selector) {
 		dom = dom || [];
 		Object.setPrototypeOf(dom, $.fn);
 		dom.selector = selector || '';
@@ -76,7 +78,7 @@ var mui = (function(document, undefined) {
 		}
 
 		for (; i < length; i++) {
-			if ((options = arguments[i]) != null) {
+			if ((options = arguments[i]) !== null) {
 				for (name in options) {
 					src = target[name];
 					copy = options[name];
@@ -119,7 +121,7 @@ var mui = (function(document, undefined) {
 	$.filter = [].filter;
 
 	$.type = function(obj) {
-		return obj == null ? String(obj) : class2type[{}.toString.call(obj)] || "object";
+		return obj === null ? String(obj) : class2type[{}.toString.call(obj)] || "object";
 	};
 	/**
 	 * mui isArray
@@ -133,8 +135,8 @@ var mui = (function(document, undefined) {
 	 * @param {Object} obj
 	 */
 	$.isArrayLike = function(obj) {
-		var length = !!obj && "length" in obj && obj.length;
-		var type = $.type(obj);
+		const length = !!obj && "length" in obj && obj.length;
+		const type = $.type(obj);
 		if (type === "function" || $.isWindow(obj)) {
 			return false;
 		}
@@ -145,7 +147,7 @@ var mui = (function(document, undefined) {
 	 * mui isWindow(需考虑obj为undefined的情况)
 	 */
 	$.isWindow = function(obj) {
-		return obj != null && obj === obj.window;
+		return obj !== null && obj === obj.window;
 	};
 	/**
 	 * mui isObject
@@ -213,9 +215,9 @@ var mui = (function(document, undefined) {
 	 */
 	$.buffer = function(fn, ms, context) {
 		var timer;
-		var lastStart = 0;
-		var lastEnd = 0;
-		var ms = ms || 150;
+		let lastStart = 0;
+		let lastEnd = 0;
+		const ms = ms || 150;
 
 		function run() {
 			if (timer) {
@@ -307,7 +309,7 @@ var mui = (function(document, undefined) {
 	 * @returns {styles}
 	 */
 	$.getStyles = function(element, property) {
-		var styles = element.ownerDocument.defaultView.getComputedStyle(element, null);
+		const styles = element.ownerDocument.defaultView.getComputedStyle(element, null);
 		if (property) {
 			return styles.getPropertyValue(property) || styles[property];
 		}
@@ -320,7 +322,7 @@ var mui = (function(document, undefined) {
 	 * @returns {Object}
 	 */
 	$.parseTranslate = function(translateString, position) {
-		var result = translateString.match(translateRE || '');
+		let result = translateString.match(translateRE || '');
 		if (!result || !result[1]) {
 			result = ['', '0,0,0'];
 		}
@@ -342,8 +344,8 @@ var mui = (function(document, undefined) {
 	 * @returns {Object}
 	 */
 	$.parseTranslateMatrix = function(translateString, position) {
-		var matrix = translateString.match(translateMatrixRE);
-		var is3D = matrix && matrix[1];
+		let matrix = translateString.match(translateMatrixRE);
+		const is3D = matrix && matrix[1];
 		if (matrix) {
 			matrix = matrix[2].split(",");
 			if (is3D === "3d")
@@ -355,7 +357,7 @@ var mui = (function(document, undefined) {
 		} else {
 			matrix = [0, 0, 0];
 		}
-		var result = {
+		const result = {
 			x: parseFloat(matrix[0]),
 			y: parseFloat(matrix[1]),
 			z: parseFloat(matrix[2])
@@ -367,7 +369,7 @@ var mui = (function(document, undefined) {
 	};
 	$.hooks = {};
 	$.addAction = function(type, hook) {
-		var hooks = $.hooks[type];
+		let hooks = $.hooks[type];
 		if (!hooks) {
 			hooks = [];
 		}
@@ -397,8 +399,8 @@ var mui = (function(document, undefined) {
 	 */
 	$.later = function(fn, when, context, data) {
 		when = when || 0;
-		var m = fn;
-		var d = data;
+		let m = fn;
+		const d = data;
 		var f;
 		var r;
 
@@ -422,7 +424,7 @@ var mui = (function(document, undefined) {
 	$.now = Date.now || function() {
 		return +new Date();
 	};
-	var class2type = {};
+	const class2type = {};
 	$.each(['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Object', 'Error'], function(i, name) {
 		class2type["[object " + name + "]"] = name.toLowerCase();
 	});

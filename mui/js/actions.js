@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * actions
  * @param {type} $
@@ -5,10 +7,10 @@
  * @returns {undefined}
  */
 (function($, name) {
-	var CLASS_ACTION = $.className('action');
+	const CLASS_ACTION = $.className('action');
 
-	var handle = function(event, target) {
-		var className = target.className || '';
+	const handle = function(event, target) {
+		let className = target.className || '';
 		if (typeof className !== 'string') { //svg className(SVGAnimatedString)
 			className = '';
 		}

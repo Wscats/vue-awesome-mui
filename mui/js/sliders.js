@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Slider (TODO resize)
  * @param {type} $
@@ -5,20 +7,20 @@
  * @returns {undefined}
  */
 (function($, window) {
-	var CLASS_SLIDER = $.className('slider');
-	var CLASS_SLIDER_GROUP = $.className('slider-group');
-	var CLASS_SLIDER_LOOP = $.className('slider-loop');
-	var CLASS_SLIDER_INDICATOR = $.className('slider-indicator');
-	var CLASS_ACTION_PREVIOUS = $.className('action-previous');
-	var CLASS_ACTION_NEXT = $.className('action-next');
-	var CLASS_SLIDER_ITEM = $.className('slider-item');
+	const CLASS_SLIDER = $.className('slider');
+	const CLASS_SLIDER_GROUP = $.className('slider-group');
+	const CLASS_SLIDER_LOOP = $.className('slider-loop');
+	const CLASS_SLIDER_INDICATOR = $.className('slider-indicator');
+	const CLASS_ACTION_PREVIOUS = $.className('action-previous');
+	const CLASS_ACTION_NEXT = $.className('action-next');
+	const CLASS_SLIDER_ITEM = $.className('slider-item');
 
-	var SELECTOR_SLIDER_ITEM = '.' + CLASS_SLIDER_ITEM;
-	var SELECTOR_SLIDER_INDICATOR = '.' + CLASS_SLIDER_INDICATOR;
-	var SELECTOR_SLIDER_PROGRESS_BAR = $.classSelector('.slider-progress-bar');
+	const SELECTOR_SLIDER_ITEM = '.' + CLASS_SLIDER_ITEM;
+	const SELECTOR_SLIDER_INDICATOR = '.' + CLASS_SLIDER_INDICATOR;
+	const SELECTOR_SLIDER_PROGRESS_BAR = $.classSelector('.slider-progress-bar');
 
 
-	var Slider = function(element, options) {
+	const Slider = function(element, options) {
 		this.element = element;
 		this.options = $.extend({
 			slideshowDelay: 0, //设置为0，则不定时轮播
@@ -33,7 +35,7 @@
 		this.initTimer();
 	};
 	Slider.prototype.refresh = function(options) {
-		var newOptions = $.extend({
+		const newOptions = $.extend({
 			slideshowDelay: 0, //设置为0，则不定时轮播
 			factor: 1
 		}, options);
@@ -46,16 +48,16 @@
 	};
 	//TODO 暂时不做自动clone
 	//	Slider.prototype.initDuplicate = function() {
-	//		var self = this;
-	//		var element = self.element;
+	//		let self = this;
+	//		let element = self.element;
 	//		if (element.classList.contains(CLASS_SLIDER_LOOP)) {
-	//			var duplicates = element.getElementsByClassName(CLASS_SLIDER_ITEM_DUPLICATE);
+	//			const duplicates = element.getElementsByClassName(CLASS_SLIDER_ITEM_DUPLICATE);
 	//		}
 	//	};
 	Slider.prototype.initEvent = function() {
-		var self = this;
-		var element = self.element;
-		var slider = element.parentNode;
+		let self = this;
+		const element = self.element;
+		let slider = element.parentNode;
 		self.translateX = 0;
 		self.sliderWidth = element.offsetWidth;
 		self.isLoop = element.classList.contains(CLASS_SLIDER_LOOP);
@@ -66,11 +68,11 @@
 			self.progressBarWidth = self.progressBar.offsetWidth;
 		}
 		//slider
-		var isDragable = false;
+		let isDragable = false;
 		self.isSwipeable = false;
 		slider.addEventListener('dragstart', function(event) {
-			var detail = event.detail;
-			var direction = detail.direction;
+			let detail = event.detail;
+			const direction = detail.direction;
 			if (direction === 'left' || direction === 'right') { //reset
 				isDragable = true;
 				self.translateX = self.lastTranslateX = 0;
@@ -83,7 +85,7 @@
 				}
 				self.maxTranslateX = ((self.sliderLength - 1) * self.sliderWidth);
 				event.detail.gesture.preventDefault();
-				var isStopPropagation = true;
+				let isStopPropagation = true;
 				if (!self.isLoop) {
 					if (direction === 'right' && self.scrollX === 0) {
 						isStopPropagation = false;
@@ -128,20 +130,20 @@
 			event.stopPropagation();
 		});
 		slider.addEventListener('slide', function(e) {
-			var detail = e.detail;
+			let detail = e.detail;
 			detail.slideNumber = detail.slideNumber || 0;
-			var number = slider.querySelector($.classSelector('.slider-indicator .number span'));
+			const number = slider.querySelector($.classSelector('.slider-indicator .number span'));
 			if (number) {
 				number.innerText = (detail.slideNumber + 1);
 			}
 
-			var indicators = slider.querySelectorAll($.classSelector('.slider-indicator .indicator'));
-			for (var i = 0, len = indicators.length; i < len; i++) {
+			const indicators = slider.querySelectorAll($.classSelector('.slider-indicator .indicator'));
+			for (let i = 0, len = indicators.length; i < len; i++) {
 				indicators[i].classList[i === detail.slideNumber ? 'add' : 'remove']($.className('active'));
 			}
 
-			var controlItems = slider.querySelectorAll($.classSelector('.control-item'));
-			for (var i = 0, len = controlItems.length; i < len; i++) {
+			const controlItems = slider.querySelectorAll($.classSelector('.control-item'));
+			for (let i = 0, len = controlItems.length; i < len; i++) {
 				controlItems[i].classList[i === detail.slideNumber ? 'add' : 'remove']($.className('active'));
 			}
 			e.stopPropagation();
@@ -150,10 +152,10 @@
 			self.gotoItem(-(e.detail.tabNumber || 0));
 		});
 		//indicator
-		var indicator = element.parentNode.querySelector(SELECTOR_SLIDER_INDICATOR);
+		const indicator = element.parentNode.querySelector(SELECTOR_SLIDER_INDICATOR);
 		if (indicator) {
 			indicator.addEventListener('tap', function(event) {
-				var target = event.target;
+				const target = event.target;
 				if (target.classList.contains(CLASS_ACTION_PREVIOUS) || target.classList.contains(CLASS_ACTION_NEXT)) {
 					self[target.classList.contains(CLASS_ACTION_PREVIOUS) ? 'prevItem' : 'nextItem']();
 					event.stopPropagation();
@@ -162,14 +164,14 @@
 		}
 	};
 	Slider.prototype.dragItem = function(event) {
-		var self = this;
-		var detail = event.detail;
+		let self = this;
+		const detail = event.detail;
 
 		if (detail.deltaX !== detail.lastDeltaX) {
-			var translate = (detail.deltaX * self.options.factor + self.scrollX);
+			let translate = (detail.deltaX * self.options.factor + self.scrollX);
 			self.element.style['-webkit-transition-duration'] = '0';
-			var min = 0;
-			var max = -self.maxTranslateX;
+			let min = 0;
+			let max = -self.maxTranslateX;
 			if (self.isLoop) {
 				min = self.sliderWidth;
 				max = max + min;
@@ -193,7 +195,7 @@
 
 	};
 	Slider.prototype.updateTranslate = function() {
-		var self = this;
+		let self = this;
 		if (self.lastTranslateX !== self.translateX) {
 			self.setTranslate(self.translateX);
 			self.lastTranslateX = self.translateX;
@@ -207,14 +209,14 @@
 		this.updateProcess(x);
 	};
 	Slider.prototype.updateProcess = function(translate) {
-		var progressBarWidth = this.progressBarWidth;
+		const progressBarWidth = this.progressBarWidth;
 		if (progressBarWidth) {
 			translate = Math.abs(translate);
 			this.setProcess(translate * (progressBarWidth / this.sliderWidth));
 		}
 	};
 	Slider.prototype.setProcess = function(translate) {
-		var progressBar = this.progressBar;
+		const progressBar = this.progressBar;
 		if (progressBar) {
 			progressBar.style.webkitTransform = 'translate3d(' + translate + 'px,0,0)';
 		}
@@ -242,9 +244,9 @@
 		if (!(slideNumber === 1 && this.getSlideNumber() === slideNumber)) {
 			slideNumber = slideNumber > 0 ? -slideNumber : slideNumber;
 		}
-		var self = this;
-		var slider = self.element;
-		var slideLength = self.sliderLength;
+		let self = this;
+		let slider = self.element;
+		let slideLength = self.sliderLength;
 		if (self.isLoop) { //循环轮播需减去2个过渡元素
 			slideLength = slideLength - 2;
 		} else {
@@ -256,12 +258,12 @@
 			cancelAnimationFrame(self.requestAnimationFrame);
 			self.requestAnimationFrame = null;
 		}
-		var offsetX = Math.max(slideNumber, -slideLength) * slider.offsetWidth;
+		const offsetX = Math.max(slideNumber, -slideLength) * slider.offsetWidth;
 		slider.style['-webkit-transition-duration'] = '.2s';
 		self.setTranslate(offsetX);
 		//		slider.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
 		//		self.updateProcess(offsetX);
-		var fixedLoop = function() {
+		const fixedLoop = function() {
 			slider.style['-webkit-transition-duration'] = '0';
 			slider.style.webkitTransform = 'translate3d(' + (slideNumber * slider.offsetWidth) + 'px,0,0)';
 			slider.removeEventListener('webkitTransitionEnd', fixedLoop);
@@ -299,10 +301,10 @@
 	 * @returns {Number}
 	 */
 	Slider.prototype.getScroll = function() {
-		var slider = this.element;
-		var scroll = 0;
+		let slider = this.element;
+		let scroll = 0;
 		if ('webkitTransform' in slider.style) {
-			var result = $.parseTranslate(slider.style.webkitTransform);
+			const result = $.parseTranslate(slider.style.webkitTransform);
 			scroll = result ? result.x : 0;
 		}
 		return scroll;
@@ -312,11 +314,11 @@
 	 * @returns {undefined}
 	 */
 	Slider.prototype.initTimer = function() {
-		var self = this;
-		var slideshowDelay = self.options.slideshowDelay;
+		const self = this;
+		const slideshowDelay = self.options.slideshowDelay;
 		if (slideshowDelay) {
-			var slider = self.element;
-			var slidershowTimer = slider.getAttribute('data-slidershowTimer');
+			let slider = self.element;
+			let slidershowTimer = slider.getAttribute('data-slidershowTimer');
 			slidershowTimer && window.clearTimeout(slidershowTimer);
 			slidershowTimer = window.setTimeout(function() {
 				if (!slider) {
@@ -336,13 +338,13 @@
 
 	$.fn.slider = function(options) {
 		//新增定时轮播 重要：remove该轮播时，请获取data-slidershowTimer然后手动clearTimeout
-		var slider = null;
+		let slider = null;
 		this.each(function() {
-			var sliderGroup = this;
+			let sliderGroup = this;
 			if (this.classList.contains(CLASS_SLIDER)) {
 				sliderGroup = this.querySelector('.' + CLASS_SLIDER_GROUP);
 			}
-			var id = sliderGroup.getAttribute('data-slider');
+			let id = sliderGroup.getAttribute('data-slider');
 			if (!id) {
 				id = ++$.uuid;
 				$.data[id] = slider = new Slider(sliderGroup, options);

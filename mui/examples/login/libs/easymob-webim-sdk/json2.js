@@ -209,7 +209,7 @@ if (typeof JSON !== 'object') {
 
         escapable.lastIndex = 0;
         return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
-            var c = meta[a];
+            const c = meta[a];
             return typeof c === 'string'
                 ? c
                 : '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);

@@ -1,25 +1,27 @@
+'use strict';
+
 (function($) {
-	var initializing = false,
+	let initializing = false,
 		fnTest = /xyz/.test(function() {
 			xyz;
 		}) ? /\b_super\b/ : /.*/;
 
-	var Class = function() {};
+	let Class = function() {};
 	Class.extend = function(prop) {
-		var _super = this.prototype;
+		let _super = this.prototype;
 		initializing = true;
-		var prototype = new this();
+		let prototype = new this();
 		initializing = false;
 		for (var name in prop) {
-			prototype[name] = typeof prop[name] == "function" &&
-				typeof _super[name] == "function" && fnTest.test(prop[name]) ?
+			prototype[name] = typeof prop[name] === "function" &&
+				typeof _super[name] === "function" && fnTest.test(prop[name]) ?
 				(function(name, fn) {
 					return function() {
-						var tmp = this._super;
+						const tmp = this._super;
 
 						this._super = _super[name];
 
-						var ret = fn.apply(this, arguments);
+						const ret = fn.apply(this, arguments);
 						this._super = tmp;
 
 						return ret;

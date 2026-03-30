@@ -1,13 +1,15 @@
+'use strict';
+
 (function($, window, document, undefined) {
-	var CLASS_SCROLL = $.className('scroll');
-	var CLASS_SCROLLBAR = $.className('scrollbar');
-	var CLASS_INDICATOR = $.className('scrollbar-indicator');
-	var CLASS_SCROLLBAR_VERTICAL = CLASS_SCROLLBAR + '-vertical';
-	var CLASS_SCROLLBAR_HORIZONTAL = CLASS_SCROLLBAR + '-horizontal';
+	const CLASS_SCROLL = $.className('scroll');
+	const CLASS_SCROLLBAR = $.className('scrollbar');
+	const CLASS_INDICATOR = $.className('scrollbar-indicator');
+	const CLASS_SCROLLBAR_VERTICAL = CLASS_SCROLLBAR + '-vertical';
+	const CLASS_SCROLLBAR_HORIZONTAL = CLASS_SCROLLBAR + '-horizontal';
 
-	var CLASS_ACTIVE = $.className('active');
+	const CLASS_ACTIVE = $.className('active');
 
-	var ease = {
+	const ease = {
 		quadratic: {
 			style: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
 			fn: function(k) {
@@ -27,7 +29,7 @@
 			style: 'cubic-bezier(0.165, 0.84, 0.44, 1)'
 		}
 	}
-	var Scroll = $.Class.extend({
+	let Scroll = $.Class.extend({
 		init: function(element, options) {
 			this.wrapper = this.element = element;
 			this.scroller = this.wrapper.children[0];
@@ -91,12 +93,12 @@
 			}
 		},
 		_initIndicators: function() {
-			var self = this;
+			let self = this;
 			self.indicators = [];
 			if (!this.options.indicators) {
 				return;
 			}
-			var indicators = [],
+			const indicators = [],
 				indicator;
 
 			// Vertical scrollbar
@@ -121,7 +123,7 @@
 				indicators.push(indicator);
 			}
 
-			for (var i = indicators.length; i--;) {
+			for (let i = indicators.length; i--;) {
 				this.indicators.push(new Indicator(this, indicators[i]));
 			}
 
@@ -129,18 +131,18 @@
 		_initSnap: function() {
 			this.currentPage = {};
 			this.pages = [];
-			var snaps = this.snaps;
-			var length = snaps.length;
-			var m = 0;
-			var n = -1;
-			var x = 0;
-			var leftX = 0;
-			var rightX = 0;
-			var snapX = 0;
-			for (var i = 0; i < length; i++) {
-				var snap = snaps[i];
-				var offsetLeft = snap.offsetLeft;
-				var offsetWidth = snap.offsetWidth;
+			let snaps = this.snaps;
+			let length = snaps.length;
+			let m = 0;
+			let n = -1;
+			let x = 0;
+			let leftX = 0;
+			let rightX = 0;
+			let snapX = 0;
+			for (let i = 0; i < length; i++) {
+				const snap = snaps[i];
+				const offsetLeft = snap.offsetLeft;
+				const offsetWidth = snap.offsetWidth;
 				if (i === 0 || offsetLeft <= snaps[i - 1].offsetLeft) {
 					m = 0;
 					n++;
@@ -173,7 +175,7 @@
 		},
 		_gotoPage: function(index) {
 			this.currentPage = this.pages[Math.min(index, this.pages.length - 1)][0];
-			for (var i = 0, len = this.snaps.length; i < len; i++) {
+			for (let i = 0, len = this.snaps.length; i < len; i++) {
 				if (i === index) {
 					this.snaps[i].classList.add(CLASS_ACTIVE);
 				} else {
@@ -189,15 +191,15 @@
 					pageX: 0
 				};
 			}
-			var i = 0;
-			var length = this.pages.length;
+			let i = 0;
+			const length = this.pages.length;
 			if (x > 0) {
 				x = 0;
 			} else if (x < this.maxScrollX) {
 				x = this.maxScrollX;
 			}
 			for (; i < length; i++) {
-				var nearestX = this.direction === 'left' ? this.pages[i][0].leftX : this.pages[i][0].rightX;
+				const nearestX = this.direction === 'left' ? this.pages[i][0].leftX : this.pages[i][0].rightX;
 				if (x >= nearestX) {
 					return this.pages[i][0];
 				}
@@ -208,7 +210,7 @@
 			};
 		},
 		_initEvent: function(detach) {
-			var action = detach ? 'removeEventListener' : 'addEventListener';
+			const action = detach ? 'removeEventListener' : 'addEventListener';
 			window[action]('orientationchange', this);
 			window[action]('resize', this);
 
@@ -224,7 +226,7 @@
 			if (this.options.scrollX) {
 				this.wrapper[action]('swiperight', this);
 			}
-			var segmentedControl = this.wrapper.querySelector($.classSelector('.segmented-control'));
+			const segmentedControl = this.wrapper.querySelector($.classSelector('.segmented-control'));
 			if (segmentedControl) { //靠，这个bug排查了一下午，阻止hash跳转，一旦hash跳转会导致可拖拽选项卡的tab不见
 				mui(segmentedControl)[detach ? 'off' : 'on']('click', 'a', $.preventDefault);
 			}
@@ -301,7 +303,7 @@
 			if (this.isInTransition) {
 				this.needReset = true;
 				this.isInTransition = false;
-				var pos = $.parseTranslateMatrix($.getStyles(this.scroller, 'webkitTransform'));
+				const pos = $.parseTranslateMatrix($.getStyles(this.scroller, 'webkitTransform'));
 				this.setTranslate(Math.round(pos.x), Math.round(pos.y));
 				//				this.resetPosition(); //reset
 				$.trigger(this.scroller, 'scrollend', this);
@@ -328,11 +330,11 @@
 			//				e.stopPropagation(); //disable parent drag(nested scroller)
 			//				return;
 			//			}
-			var detail = e.detail;
+			let detail = e.detail;
 			if (this.options.scrollY || detail.direction === 'up' || detail.direction === 'down') { //如果是竖向滚动或手势方向是上或下
 				//ios8 hack
 				if ($.os.ios && parseFloat($.os.version) >= 8) { //多webview时，离开当前webview会导致后续touch事件不触发
-					var clientY = detail.gesture.touches[0].clientY;
+					const clientY = detail.gesture.touches[0].clientY;
 					//下拉刷新 or 上拉加载
 					if ((clientY + 10) > window.innerHeight || clientY < 10) {
 						this.resetPosition(this.options.bounceTime);
@@ -340,8 +342,8 @@
 					}
 				}
 			}
-			var isPreventDefault = isReturn = false;
-			var direction = this._getDirectionByAngle(detail.angle);
+			let isPreventDefault = isReturn = false;
+			let direction = this._getDirectionByAngle(detail.angle);
 			if (detail.direction === 'left' || detail.direction === 'right') {
 				if (this.options.scrollX) {
 					isPreventDefault = true;
@@ -386,8 +388,8 @@
 			} else {
 				e.stopPropagation(); //move期间阻止冒泡(scroll嵌套)
 			}
-			var deltaX = 0;
-			var deltaY = 0;
+			let deltaX = 0;
+			let deltaY = 0;
 			if (!this.moved) { //start
 				deltaX = detail.deltaX;
 				deltaY = detail.deltaY;
@@ -395,8 +397,8 @@
 				deltaX = detail.deltaX - $.gestures.session.prevTouch.deltaX;
 				deltaY = detail.deltaY - $.gestures.session.prevTouch.deltaY;
 			}
-			var absDeltaX = Math.abs(detail.deltaX);
-			var absDeltaY = Math.abs(detail.deltaY);
+			const absDeltaX = Math.abs(detail.deltaX);
+			const absDeltaY = Math.abs(detail.deltaY);
 			if (absDeltaX > absDeltaY + this.options.directionLockThreshold) {
 				deltaY = 0;
 			} else if (absDeltaY >= absDeltaX + this.options.directionLockThreshold) {
@@ -405,8 +407,8 @@
 
 			deltaX = this.hasHorizontalScroll ? deltaX : 0;
 			deltaY = this.hasVerticalScroll ? deltaY : 0;
-			var newX = this.x + deltaX;
-			var newY = this.y + deltaY;
+			let newX = this.x + deltaX;
+			let newY = this.y + deltaY;
 			// Slow down if outside of the boundaries
 			if (newX > 0 || newX < this.maxScrollX) {
 				newX = this.options.bounce ? this.x + deltaX / 3 : newX > 0 ? 0 : this.maxScrollX;
@@ -432,14 +434,14 @@
 				return;
 			}
 			e.stopPropagation();
-			var detail = e.detail;
+			const detail = e.detail;
 			this._clearRequestAnimationFrame();
 			if (e.type === 'dragend' && detail.flick) { //dragend
 				return;
 			}
 
-			var newX = Math.round(this.x);
-			var newY = Math.round(this.y);
+			let newX = Math.round(this.x);
+			let newY = Math.round(this.y);
 
 			this.isInTransition = false;
 			// reset if we are outside of the boundaries
@@ -453,8 +455,8 @@
 				$.trigger(this.scroller, 'scrollend', this);
 				return;
 			}
-			var time = 0;
-			var easing = '';
+			let time = 0;
+			let easing = '';
 			// start momentum animation if needed
 			if (this.options.momentum && detail.flickTime < 300) {
 				momentumX = this.hasHorizontalScroll ? this._momentum(this.x, detail.flickDistanceX, detail.flickTime, this.maxScrollX, this.options.bounce ? this.wrapperWidth : 0, this.options.deceleration) : {
@@ -471,7 +473,7 @@
 				this.isInTransition = true;
 			}
 
-			if (newX != this.x || newY != this.y) {
+			if (newX !== this.x || newY !== this.y) {
 				if (newX > 0 || newX < this.maxScrollX || newY > 0 || newY < this.maxScrollY) {
 					easing = ease.quadratic;
 				}
@@ -489,7 +491,7 @@
 			}
 		},
 		_transitionEnd: function(e) {
-			if (e.target != this.scroller || !this.isInTransition) {
+			if (e.target !== this.scroller || !this.isInTransition) {
 				return;
 			}
 			this._transitionTime();
@@ -504,7 +506,7 @@
 			}
 		},
 		_resize: function() {
-			var that = this;
+			const that = this;
 			clearTimeout(that.resizeTimeout);
 			that.resizeTimeout = setTimeout(function() {
 				that.refresh();
@@ -523,7 +525,7 @@
 				}
 			}
 			if (this.indicators) {
-				for (var i = this.indicators.length; i--;) {
+				for (let i = this.indicators.length; i--;) {
 					this.indicators[i].transitionTime(time);
 				}
 			}
@@ -540,7 +542,7 @@
 				this.parallaxStyle['webkitTransitionDuration'] = easing;
 			}
 			if (this.indicators) {
-				for (var i = this.indicators.length; i--;) {
+				for (let i = this.indicators.length; i--;) {
 					this.indicators[i].transitionTimingFunction(easing);
 				}
 			}
@@ -556,7 +558,7 @@
 			}
 		},
 		_updateTranslate: function() {
-			var self = this;
+			let self = this;
 			if (self.x !== self.lastX || self.y !== self.lastY) {
 				self.setTranslate(self.x, self.y);
 			}
@@ -565,8 +567,8 @@
 			});
 		},
 		_createScrollBar: function(clazz) {
-			var scrollbar = document.createElement('div');
-			var indicator = document.createElement('div');
+			const scrollbar = document.createElement('div');
+			let indicator = document.createElement('div');
 			scrollbar.className = CLASS_SCROLLBAR + ' ' + clazz;
 			indicator.className = CLASS_INDICATOR;
 			scrollbar.appendChild(indicator);
@@ -605,11 +607,11 @@
 
 			//以防slider类嵌套使用
 			if (this.options.snap && typeof this.options.snap === 'string') {
-				var items = this.scroller.querySelectorAll(this.options.snap);
+				const items = this.scroller.querySelectorAll(this.options.snap);
 				this.itemLength = 0;
 				this.snaps = [];
-				for (var i = 0, len = items.length; i < len; i++) {
-					var item = items[i];
+				for (let i = 0, len = items.length; i < len; i++) {
+					const item = items[i];
 					if (item.parentNode === this.scroller) {
 						this.itemLength++;
 						this.snaps.push(item);
@@ -619,7 +621,7 @@
 			}
 		},
 		_momentum: function(current, distance, time, lowerMargin, wrapperSize, deceleration) {
-			var speed = parseFloat(Math.abs(distance) / time),
+			const speed = parseFloat(Math.abs(distance) / time),
 				destination,
 				duration;
 
@@ -656,8 +658,8 @@
 			this.y = y;
 			this.scrollerStyle['webkitTransform'] = this._getTranslateStr(x, y);
 			if (this.parallaxElement && this.options.scrollY) { //目前仅支持竖向视差效果
-				var parallaxY = y * this.options.parallaxRatio;
-				var scale = 1 + parallaxY / ((this.parallaxHeight - parallaxY) / 2);
+				const parallaxY = y * this.options.parallaxRatio;
+				const scale = 1 + parallaxY / ((this.parallaxHeight - parallaxY) / 2);
 				if (scale > 1) {
 					this.parallaxImgStyle['opacity'] = 1 - parallaxY / 100 * this.options.parallaxRatio;
 					this.parallaxStyle['webkitTransform'] = this._getTranslateStr(0, -parallaxY) + ' scale(' + scale + ',' + scale + ')';
@@ -667,7 +669,7 @@
 				}
 			}
 			if (this.indicators) {
-				for (var i = this.indicators.length; i--;) {
+				for (let i = this.indicators.length; i--;) {
 					this.indicators[i].updatePosition();
 				}
 			}
@@ -678,13 +680,13 @@
 		reLayout: function() {
 			this.wrapper.offsetHeight;
 
-			var paddingLeft = parseFloat($.getStyles(this.wrapper, 'padding-left')) || 0;
-			var paddingRight = parseFloat($.getStyles(this.wrapper, 'padding-right')) || 0;
-			var paddingTop = parseFloat($.getStyles(this.wrapper, 'padding-top')) || 0;
-			var paddingBottom = parseFloat($.getStyles(this.wrapper, 'padding-bottom')) || 0;
+			const paddingLeft = parseFloat($.getStyles(this.wrapper, 'padding-left')) || 0;
+			const paddingRight = parseFloat($.getStyles(this.wrapper, 'padding-right')) || 0;
+			const paddingTop = parseFloat($.getStyles(this.wrapper, 'padding-top')) || 0;
+			const paddingBottom = parseFloat($.getStyles(this.wrapper, 'padding-bottom')) || 0;
 
-			var clientWidth = this.wrapper.clientWidth;
-			var clientHeight = this.wrapper.clientHeight;
+			const clientWidth = this.wrapper.clientWidth;
+			const clientHeight = this.wrapper.clientHeight;
 
 			this.scrollerWidth = this.scroller.offsetWidth;
 			this.scrollerHeight = this.scroller.offsetHeight;
@@ -699,7 +701,7 @@
 			this._reLayout();
 		},
 		resetPosition: function(time) {
-			var x = this.x,
+			let x = this.x,
 				y = this.y;
 
 			time = time || 0;
@@ -715,7 +717,7 @@
 				y = this.maxScrollY;
 			}
 
-			if (x == this.x && y == this.y) {
+			if (x === this.x && y === this.y) {
 				return false;
 			}
 			this.scrollTo(x, y, time, this.options.scrollEasing);
@@ -723,8 +725,8 @@
 			return true;
 		},
 		_reInit: function() {
-			var groups = this.wrapper.querySelectorAll('.' + CLASS_SCROLL);
-			for (var i = 0, len = groups.length; i < len; i++) {
+			const groups = this.wrapper.querySelectorAll('.' + CLASS_SCROLL);
+			for (let i = 0, len = groups.length; i < len; i++) {
 				if (groups[i].parentNode === this.wrapper) {
 					this.scroller = groups[i];
 					break;
@@ -739,8 +741,8 @@
 			this.resetPosition();
 		},
 		scrollTo: function(x, y, time, easing) {
-			var easing = easing || ease.circular;
-			//			this.isInTransition = time > 0 && (this.lastX != x || this.lastY != y);
+			const easing = easing || ease.circular;
+			//			this.isInTransition = time > 0 && (this.lastX !== x || this.lastY !== y);
 			//暂不严格判断x,y，否则会导致部分版本上不正常触发轮播
 			this.isInTransition = time > 0;
 			if (this.isInTransition) {
@@ -767,8 +769,8 @@
 		}
 	});
 	//Indicator
-	var Indicator = function(scroller, options) {
-		this.wrapper = typeof options.el == 'string' ? document.querySelector(options.el) : options.el;
+	const Indicator = function(scroller, options) {
+		this.wrapper = typeof options.el === 'string' ? document.querySelector(options.el) : options.el;
 		this.wrapperStyle = this.wrapper.style;
 		this.indicator = this.wrapper.children[0];
 		this.indicatorStyle = this.indicator.style;
@@ -850,7 +852,7 @@
 		},
 
 		updatePosition: function() {
-			var x = this.options.listenX && Math.round(this.sizeRatioX * this.scroller.x) || 0,
+			let x = this.options.listenX && Math.round(this.sizeRatioX * this.scroller.x) || 0,
 				y = this.options.listenY && Math.round(this.sizeRatioY * this.scroller.y) || 0;
 
 			if (x < this.minBoundaryX) {
@@ -861,7 +863,7 @@
 				this.width = Math.max(this.indicatorWidth - (x - this.maxPosX), 8);
 				this.indicatorStyle.width = this.width + 'px';
 				x = this.maxPosX + this.indicatorWidth - this.width;
-			} else if (this.width != this.indicatorWidth) {
+			} else if (this.width !== this.indicatorWidth) {
 				this.width = this.indicatorWidth;
 				this.indicatorStyle.width = this.width + 'px';
 			}
@@ -874,7 +876,7 @@
 				this.height = Math.max(this.indicatorHeight - (y - this.maxPosY) * 3, 8);
 				this.indicatorStyle.height = this.height + 'px';
 				y = this.maxPosY + this.indicatorHeight - this.height;
-			} else if (this.height != this.indicatorHeight) {
+			} else if (this.height !== this.indicatorHeight) {
 				this.height = this.indicatorHeight;
 				this.indicatorStyle.height = this.height + 'px';
 			}
@@ -893,7 +895,7 @@
 			clearTimeout(this.fadeTimeout);
 			this.fadeTimeout = null;
 
-			var time = val ? 250 : 500,
+			const time = val ? 250 : 500,
 				delay = val ? 0 : 300;
 
 			val = val ? '1' : '0';
@@ -910,14 +912,14 @@
 	$.Scroll = Scroll;
 
 	$.fn.scroll = function(options) {
-		var scrollApis = [];
+		const scrollApis = [];
 		this.each(function() {
-			var scrollApi = null;
-			var self = this;
-			var id = self.getAttribute('data-scroll');
+			let scrollApi = null;
+			const self = this;
+			let id = self.getAttribute('data-scroll');
 			if (!id) {
 				id = ++$.uuid;
-				var _options = $.extend({}, options);
+				let _options = $.extend({}, options);
 				if (self.classList.contains($.className('segmented-control'))) {
 					_options = $.extend(_options, {
 						scrollY: false,

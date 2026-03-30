@@ -1,9 +1,11 @@
+'use strict';
+
 (function($, window, document, undefined) {
 
-	var CLASS_VISIBILITY = $.className('visibility');
-	var CLASS_HIDDEN = $.className('hidden');
+	const CLASS_VISIBILITY = $.className('visibility');
+	const CLASS_HIDDEN = $.className('hidden');
 
-	var PullRefresh = $.Scroll.extend($.extend({
+	const PullRefresh = $.Scroll.extend($.extend({
 		handleEvent: function(e) {
 			this._super(e);
 			if (e.type === 'scrollbottom') {
@@ -69,11 +71,11 @@
 			this.indicators.map(function(indicator) {
 				indicator.fade(0);
 			});
-			var callback = this.options.down.callback;
+			let callback = this.options.down.callback;
 			callback && callback.call(this);
 		},
 		endPulldownToRefresh: function() {
-			var self = this;
+			let self = this;
 			if (self.topPocket && self.loading && this.pulldown) {
 				self.scrollTo(0, 0, self.options.bounceTime, self.options.bounceEasing);
 				self.loading = false;
@@ -99,7 +101,7 @@
 			callback && callback.call(this);
 		},
 		endPullupToRefresh: function(finished) {
-			var self = this;
+			let self = this;
 			if (self.bottomPocket) { // && self.loading && !this.pulldown
 				self.loading = false;
 				if (finished) {
@@ -137,9 +139,9 @@
 	}, $.PullRefresh));
 	$.fn.pullRefresh = function(options) {
 		if (this.length === 1) {
-			var self = this[0];
-			var pullRefreshApi = null;
-			var id = self.getAttribute('data-pullrefresh');
+			const self = this[0];
+			let pullRefreshApi = null;
+			let id = self.getAttribute('data-pullrefresh');
 			if (!id && typeof options === 'undefined') {
 				return false;
 			}
@@ -158,7 +160,7 @@
 			}
 			//暂不提供这种调用方式吧			
 			//			if (typeof options === 'string') {
-			//				var methodValue = pullRefreshApi[options].apply(pullRefreshApi, $.slice.call(arguments, 1));
+			//				const methodValue = pullRefreshApi[options].apply(pullRefreshApi, $.slice.call(arguments, 1));
 			//				if (methodValue !== undefined) {
 			//					return methodValue;
 			//				}

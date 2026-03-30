@@ -1,3 +1,5 @@
+'use strict';
+
 (function($, window) {
 	/**
 	 * 输入对话框
@@ -28,7 +30,7 @@
 
 		} else {
 			//H5版本(确认index为0，取消index为1)
-			var result = window.prompt(text);
+			const result = window.prompt(text);
 			if (result) {
 				callback({
 					index: 0,

@@ -1,5 +1,5 @@
 (function($) {
-	var CLASS_PULL_TOP_TIPS = $.className('pull-top-tips');
+	const CLASS_PULL_TOP_TIPS = $.className('pull-top-tips');
 
 	$.PullToRefresh = $.PullToRefresh.extend({
 		init: function(element, options) {
@@ -25,10 +25,10 @@
 			});
 		},
 		initPullDownTips: function() {
-			var self = this;
+			const self = this;
 			if ($.isFunction(self.options.down.callback)) {
 				self.pullDownTips = (function() {
-					var element = document.querySelector('.' + CLASS_PULL_TOP_TIPS);
+					let element = document.querySelector('.' + CLASS_PULL_TOP_TIPS);
 					if (element) {
 						element.parentNode.removeChild(element);
 					}
@@ -51,14 +51,14 @@
 			this.canvasUtils.stopSpin();
 		},
 		pulling: function(deltaY) {
-			var ratio = Math.min(deltaY / (this.options.down.height * 1.5), 1);
-			var ratioPI = Math.min(1, ratio * 2);
+			let ratio = Math.min(deltaY / (this.options.down.height * 1.5), 1);
+			const ratioPI = Math.min(1, ratio * 2);
 			this.pullDownTips.style.webkitTransform = 'translate3d(0,' + (deltaY < 0 ? 0 : deltaY) + 'px,0)';
 			this.pullDownCanvas.style.opacity = ratioPI;
 			this.pullDownCanvas.style.webkitTransform = 'rotate(' + 300 * ratio + 'deg)';
-			var canvas = this.pullDownCanvas;
-			var ctx = this.pullDownCanvasCtx;
-			var size = this.options.down.tips.size;
+			const canvas = this.pullDownCanvas;
+			let ctx = this.pullDownCanvasCtx;
+			let size = this.options.down.tips.size;
 			ctx.lineWidth = this.options.down.tips.lineWidth;
 			ctx.fillStyle = '#' + this.options.down.tips.color;
 			ctx.strokeStyle = '#' + this.options.down.tips.color;
@@ -83,7 +83,7 @@
 			}
 		},
 		canvasUtils: (function() {
-			var canvasObj = null,
+			let canvasObj = null,
 				ctx = null,
 				size = 200,
 				lineWidth = 15,
@@ -113,24 +113,24 @@
 			}
 
 			function minmax(value, v0, v1) {
-				var min = Math.min(v0, v1);
-				var max = Math.max(v0, v1);
+				const min = Math.min(v0, v1);
+				const max = Math.max(v0, v1);
 				if (value < min)
 					return min;
 				if (value > max)
 					return min;
 				return value;
 			}
-			var drawHead = function(ctx, x0, y0, x1, y1, x2, y2, style) {
+			const drawHead = function(ctx, x0, y0, x1, y1, x2, y2, style) {
 				'use strict';
-				if (typeof(x0) == 'string') x0 = parseInt(x0);
-				if (typeof(y0) == 'string') y0 = parseInt(y0);
-				if (typeof(x1) == 'string') x1 = parseInt(x1);
-				if (typeof(y1) == 'string') y1 = parseInt(y1);
-				if (typeof(x2) == 'string') x2 = parseInt(x2);
-				if (typeof(y2) == 'string') y2 = parseInt(y2);
-				var radius = 3;
-				var twoPI = 2 * Math.PI;
+				if (typeof(x0) === 'string') x0 = parseInt(x0);
+				if (typeof(y0) === 'string') y0 = parseInt(y0);
+				if (typeof(x1) === 'string') x1 = parseInt(x1);
+				if (typeof(y1) === 'string') y1 = parseInt(y1);
+				if (typeof(x2) === 'string') x2 = parseInt(x2);
+				if (typeof(y2) === 'string') y2 = parseInt(y2);
+				const radius = 3;
+				const twoPI = 2 * Math.PI;
 				ctx.save();
 				ctx.beginPath();
 				ctx.moveTo(x0, y0);
@@ -138,7 +138,7 @@
 				ctx.lineTo(x2, y2);
 				switch (style) {
 					case 0:
-						var backdist = Math.sqrt(((x2 - x0) * (x2 - x0)) + ((y2 - y0) * (y2 - y0)));
+						let backdist = Math.sqrt(((x2 - x0) * (x2 - x0)) + ((y2 - y0) * (y2 - y0)));
 						ctx.arcTo(x1, y1, x0, y0, .55 * backdist);
 						ctx.fill();
 						break;
@@ -154,15 +154,15 @@
 						ctx.stroke();
 						break;
 					case 3:
-						var cpx = (x0 + x1 + x2) / 3;
-						var cpy = (y0 + y1 + y2) / 3;
+						const cpx = (x0 + x1 + x2) / 3;
+						const cpy = (y0 + y1 + y2) / 3;
 						ctx.quadraticCurveTo(cpx, cpy, x0, y0);
 						ctx.fill();
 						break;
 					case 4:
 						var cp1x, cp1y, cp2x, cp2y, backdist;
-						var shiftamt = 5;
-						if (x2 == x0) {
+						const shiftamt = 5;
+						if (x2 === x0) {
 							backdist = y2 - y0;
 							cp1x = (x1 + x0) / 2;
 							cp2x = (x1 + x0) / 2;
@@ -170,13 +170,13 @@
 							cp2y = y1 - backdist / shiftamt;
 						} else {
 							backdist = Math.sqrt(((x2 - x0) * (x2 - x0)) + ((y2 - y0) * (y2 - y0)));
-							var xback = (x0 + x2) / 2;
-							var yback = (y0 + y2) / 2;
-							var xmid = (xback + x1) / 2;
-							var ymid = (yback + y1) / 2;
-							var m = (y2 - y0) / (x2 - x0);
-							var dx = (backdist / (2 * Math.sqrt(m * m + 1))) / shiftamt;
-							var dy = m * dx;
+							const xback = (x0 + x2) / 2;
+							const yback = (y0 + y2) / 2;
+							const xmid = (xback + x1) / 2;
+							const ymid = (yback + y1) / 2;
+							const m = (y2 - y0) / (x2 - x0);
+							const dx = (backdist / (2 * Math.sqrt(m * m + 1))) / shiftamt;
+							const dy = m * dx;
 							cp1x = xmid - dx;
 							cp1y = ymid - dy;
 							cp2x = xmid + dx;
@@ -188,14 +188,14 @@
 				}
 				ctx.restore();
 			};
-			var drawArcedArrow = function(ctx, x, y, r, startangle, endangle, anticlockwise, style, which, angle, d, lineWidth, lineRatio) {
+			const drawArcedArrow = function(ctx, x, y, r, startangle, endangle, anticlockwise, style, which, angle, d, lineWidth, lineRatio) {
 				'use strict';
-				style = typeof(style) != 'undefined' ? style : 3;
-				which = typeof(which) != 'undefined' ? which : 1;
-				angle = typeof(angle) != 'undefined' ? angle : Math.PI / 8;
+				style = typeof(style) !== 'undefined' ? style : 3;
+				which = typeof(which) !== 'undefined' ? which : 1;
+				angle = typeof(angle) !== 'undefined' ? angle : Math.PI / 8;
 				lineWidth = lineWidth || 1;
 				lineRatio = lineRatio || 10;
-				d = typeof(d) != 'undefined' ? d : 10;
+				d = typeof(d) !== 'undefined' ? d : 10;
 				ctx.save();
 				ctx.lineWidth = lineWidth;
 				ctx.beginPath();
@@ -230,19 +230,19 @@
 				}
 				ctx.restore();
 			}
-			var drawArrow = function(ctx, x1, y1, x2, y2, style, which, angle, d) {
+			const drawArrow = function(ctx, x1, y1, x2, y2, style, which, angle, d) {
 				'use strict';
-				if (typeof(x1) == 'string') x1 = parseInt(x1);
-				if (typeof(y1) == 'string') y1 = parseInt(y1);
-				if (typeof(x2) == 'string') x2 = parseInt(x2);
-				if (typeof(y2) == 'string') y2 = parseInt(y2);
-				style = typeof(style) != 'undefined' ? style : 3;
-				which = typeof(which) != 'undefined' ? which : 1;
-				angle = typeof(angle) != 'undefined' ? angle : Math.PI / 8;
-				d = typeof(d) != 'undefined' ? d : 10;
-				var toDrawHead = typeof(style) != 'function' ? drawHead : style;
-				var dist = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-				var ratio = (dist - d / 3) / dist;
+				if (typeof(x1) === 'string') x1 = parseInt(x1);
+				if (typeof(y1) === 'string') y1 = parseInt(y1);
+				if (typeof(x2) === 'string') x2 = parseInt(x2);
+				if (typeof(y2) === 'string') y2 = parseInt(y2);
+				style = typeof(style) !== 'undefined' ? style : 3;
+				which = typeof(which) !== 'undefined' ? which : 1;
+				angle = typeof(angle) !== 'undefined' ? angle : Math.PI / 8;
+				d = typeof(d) !== 'undefined' ? d : 10;
+				const toDrawHead = typeof(style) !== 'function' ? drawHead : style;
+				const dist = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+				const ratio = (dist - d / 3) / dist;
 				var tox, toy, fromx, fromy;
 				if (which & 1) {
 					tox = Math.round(x1 + (x2 - x1) * ratio);
@@ -262,33 +262,33 @@
 				ctx.moveTo(fromx, fromy);
 				ctx.lineTo(tox, toy);
 				ctx.stroke();
-				var lineangle = Math.atan2(y2 - y1, x2 - x1);
-				var h = Math.abs(d / Math.cos(angle));
+				const lineangle = Math.atan2(y2 - y1, x2 - x1);
+				const h = Math.abs(d / Math.cos(angle));
 				if (which & 1) {
-					var angle1 = lineangle + Math.PI + angle;
-					var topx = x2 + Math.cos(angle1) * h;
-					var topy = y2 + Math.sin(angle1) * h;
-					var angle2 = lineangle + Math.PI - angle;
-					var botx = x2 + Math.cos(angle2) * h;
-					var boty = y2 + Math.sin(angle2) * h;
+					let angle1 = lineangle + Math.PI + angle;
+					let topx = x2 + Math.cos(angle1) * h;
+					let topy = y2 + Math.sin(angle1) * h;
+					let angle2 = lineangle + Math.PI - angle;
+					let botx = x2 + Math.cos(angle2) * h;
+					let boty = y2 + Math.sin(angle2) * h;
 					toDrawHead(ctx, topx, topy, x2, y2, botx, boty, style);
 				}
 				if (which & 2) {
-					var angle1 = lineangle + angle;
-					var topx = x1 + Math.cos(angle1) * h;
-					var topy = y1 + Math.sin(angle1) * h;
-					var angle2 = lineangle - angle;
-					var botx = x1 + Math.cos(angle2) * h;
-					var boty = y1 + Math.sin(angle2) * h;
+					const angle1 = lineangle + angle;
+					const topx = x1 + Math.cos(angle1) * h;
+					const topy = y1 + Math.sin(angle1) * h;
+					const angle2 = lineangle - angle;
+					const botx = x1 + Math.cos(angle2) * h;
+					const boty = y1 + Math.sin(angle2) * h;
 					toDrawHead(ctx, topx, topy, x1, y1, botx, boty, style);
 				}
 			};
 
-			var spinColors = function(currentIteration, totalIterations) {
-				var step = currentIteration % totalIterations;
+			const spinColors = function(currentIteration, totalIterations) {
+				const step = currentIteration % totalIterations;
 				if (step < oldStep)
 					colors.push(colors.shift());
-				var c0 = colors[0],
+				const c0 = colors[0],
 					c1 = colors[1],
 					r = minmax(easeLinear(step, c0.r, c1.r - c0.r, totalIterations), c0.r, c1.r),
 					g = minmax(easeLinear(step, c0.g, c1.g - c0.g, totalIterations), c0.g, c1.g),
@@ -298,8 +298,8 @@
 				return "rgb(" + parseInt(r) + "," + parseInt(g) + "," + parseInt(b) + ")";
 			}
 
-			var spin = function(t) {
-				var timeCurrent = t || (new Date).getTime();
+			const spin = function(t) {
+				const timeCurrent = t || (new Date).getTime();
 				if (!startTime) {
 					startTime = timeCurrent;
 				}
@@ -323,18 +323,18 @@
 
 				rAF = requestAnimationFrame(spin);
 			};
-			var startSpin = function() {
+			const startSpin = function() {
 				startTime = 0;
 				oldStep = 0;
 				rAF = requestAnimationFrame(spin);
 			};
-			var stopSpin = function() {
+			const stopSpin = function() {
 				rAF && cancelAnimationFrame(rAF);
 			}
-			var init = function(canvas, options) {
+			const init = function(canvas, options) {
 				canvasObj = canvas;
 				ctx = canvasObj.getContext('2d');
-				var options = $.extend(true, {}, options);
+				const options = $.extend(true, {}, options);
 				colors = options.colors;
 				duration = options.duration;
 				tail_duration = options.tail_duration;

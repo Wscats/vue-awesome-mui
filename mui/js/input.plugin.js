@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Input(TODO resize)
  * @param {type} $
@@ -6,23 +8,23 @@
  * @returns {undefined}
  */
 (function($, window, document) {
-	var CLASS_ICON = $.className('icon');
-	var CLASS_ICON_CLEAR = $.className('icon-clear');
-	var CLASS_ICON_SPEECH = $.className('icon-speech');
-	var CLASS_ICON_SEARCH = $.className('icon-search');
-	var CLASS_ICON_PASSWORD = $.className('icon-eye');
-	var CLASS_INPUT_ROW = $.className('input-row');
-	var CLASS_PLACEHOLDER = $.className('placeholder');
-	var CLASS_TOOLTIP = $.className('tooltip');
-	var CLASS_HIDDEN = $.className('hidden');
-	var CLASS_FOCUSIN = $.className('focusin');
-	var SELECTOR_ICON_CLOSE = '.' + CLASS_ICON_CLEAR;
-	var SELECTOR_ICON_SPEECH = '.' + CLASS_ICON_SPEECH;
-	var SELECTOR_ICON_PASSWORD = '.' + CLASS_ICON_PASSWORD;
-	var SELECTOR_PLACEHOLDER = '.' + CLASS_PLACEHOLDER;
-	var SELECTOR_TOOLTIP = '.' + CLASS_TOOLTIP;
+	const CLASS_ICON = $.className('icon');
+	const CLASS_ICON_CLEAR = $.className('icon-clear');
+	const CLASS_ICON_SPEECH = $.className('icon-speech');
+	const CLASS_ICON_SEARCH = $.className('icon-search');
+	const CLASS_ICON_PASSWORD = $.className('icon-eye');
+	const CLASS_INPUT_ROW = $.className('input-row');
+	const CLASS_PLACEHOLDER = $.className('placeholder');
+	const CLASS_TOOLTIP = $.className('tooltip');
+	const CLASS_HIDDEN = $.className('hidden');
+	const CLASS_FOCUSIN = $.className('focusin');
+	const SELECTOR_ICON_CLOSE = '.' + CLASS_ICON_CLEAR;
+	const SELECTOR_ICON_SPEECH = '.' + CLASS_ICON_SPEECH;
+	const SELECTOR_ICON_PASSWORD = '.' + CLASS_ICON_PASSWORD;
+	const SELECTOR_PLACEHOLDER = '.' + CLASS_PLACEHOLDER;
+	const SELECTOR_TOOLTIP = '.' + CLASS_TOOLTIP;
 
-	var findRow = function(target) {
+	const findRow = function(target) {
 		for (; target && target !== document; target = target.parentNode) {
 			if (target.classList && target.classList.contains(CLASS_INPUT_ROW)) {
 				return target;
@@ -30,7 +32,7 @@
 		}
 		return null;
 	};
-	var Input = function(element, options) {
+	const Input = function(element, options) {
 		this.element = element;
 		this.options = options || {
 			actions: 'clear'
@@ -63,9 +65,9 @@
 		this.initElementEvent();
 	};
 	Input.prototype.initAction = function() {
-		var self = this;
+		let self = this;
 
-		var row = self.element.parentNode;
+		let row = self.element.parentNode;
 		if (row) {
 			if (self.sliderActionClass) {
 				self.sliderAction = self.createAction(row, self.sliderActionClass, self.sliderActionSelector);
@@ -100,9 +102,9 @@
 		}
 	};
 	Input.prototype.createAction = function(row, actionClass, actionSelector) {
-		var action = row.querySelector(actionSelector);
+		let action = row.querySelector(actionSelector);
 		if (!action) {
-			var action = document.createElement('span');
+			let action = document.createElement('span');
 			action.className = actionClass;
 			if (actionClass === this.searchActionClass) {
 				action.innerHTML = '<span class="' + CLASS_ICON + ' ' + CLASS_ICON_SEARCH + '"></span><span>' + this.element.getAttribute('placeholder') + '</span>';
@@ -116,18 +118,18 @@
 		return action;
 	};
 	Input.prototype.initElementEvent = function() {
-		var element = this.element;
+		const element = this.element;
 
 		if (this.sliderActionClass) {
-			var tooltip = this.sliderAction;
-			var timer = null;
-			var showTip = function() { //每次重新计算是因为控件可能被隐藏，初始化时计算是不正确的
+			const tooltip = this.sliderAction;
+			let timer = null;
+			const showTip = function() { //每次重新计算是因为控件可能被隐藏，初始化时计算是不正确的
 				tooltip.classList.remove(CLASS_HIDDEN);
-				var offsetLeft = element.offsetLeft;
-				var width = element.offsetWidth - 28;
-				var tooltipWidth = tooltip.offsetWidth;
-				var distince = Math.abs(element.max - element.min);
-				var scaleWidth = (width / distince) * Math.abs(element.value - element.min);
+				const offsetLeft = element.offsetLeft;
+				const width = element.offsetWidth - 28;
+				const tooltipWidth = tooltip.offsetWidth;
+				const distince = Math.abs(element.max - element.min);
+				const scaleWidth = (width / distince) * Math.abs(element.value - element.min);
 				tooltip.style.left = (14 + offsetLeft + scaleWidth - tooltipWidth / 2) + 'px';
 				tooltip.innerText = element.value;
 				if (timer) {
@@ -144,7 +146,7 @@
 			});
 		} else {
 			if (this.clearActionClass) {
-				var action = this.clearAction;
+				const action = this.clearAction;
 				if (!action) {
 					return;
 				}
@@ -173,7 +175,7 @@
 	};
 	Input.prototype.setPlaceholder = function(text) {
 		if (this.searchActionClass) {
-			var placeholder = this.element.parentNode.querySelector(SELECTOR_PLACEHOLDER);
+			const placeholder = this.element.parentNode.querySelector(SELECTOR_PLACEHOLDER);
 			placeholder && (placeholder.getElementsByTagName('span')[1].innerText = text);
 		} else {
 			this.element.setAttribute('placeholder', text);
@@ -189,7 +191,7 @@
 		event.preventDefault();
 	};
 	Input.prototype.clearActionClick = function(event) {
-		var self = this;
+		let self = this;
 		self.element.value = '';
 		$.focus(self.element);
 		self.clearAction.classList.add(CLASS_HIDDEN);
@@ -197,8 +199,8 @@
 	};
 	Input.prototype.speechActionClick = function(event) {
 		if (window.plus) {
-			var self = this;
-			var oldValue = self.element.value;
+			const self = this;
+			const oldValue = self.element.value;
 			self.element.value = '';
 			document.body.classList.add(CLASS_FOCUSIN);
 			plus.speech.startRecognize({
@@ -224,15 +226,15 @@
 		event.preventDefault();
 	};
 	$.fn.input = function(options) {
-		var inputApis = [];
+		const inputApis = [];
 		this.each(function() {
-			var inputApi = null;
-			var actions = [];
-			var row = findRow(this.parentNode);
+			let inputApi = null;
+			const actions = [];
+			const row = findRow(this.parentNode);
 			if (this.type === 'range' && row.classList.contains($.className('input-range'))) {
 				actions.push('slider');
 			} else {
-				var classList = this.classList;
+				const classList = this.classList;
 				if (classList.contains($.className('input-clear'))) {
 					actions.push('clear');
 				}
@@ -246,13 +248,13 @@
 					actions.push('search');
 				}
 			}
-			var id = this.getAttribute('data-input-' + actions[0]);
+			let id = this.getAttribute('data-input-' + actions[0]);
 			if (!id) {
 				id = ++$.uuid;
 				inputApi = $.data[id] = new Input(this, {
 					actions: actions.join(',')
 				});
-				for (var i = 0, len = actions.length; i < len; i++) {
+				for (let i = 0, len = actions.length; i < len; i++) {
 					this.setAttribute('data-input-' + actions[i], id);
 				}
 			} else {

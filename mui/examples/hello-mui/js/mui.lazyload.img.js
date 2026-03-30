@@ -1,5 +1,7 @@
+'use strict';
+
 (function($, window, document) {
-	var ImageLazyload = $.Lazyload.extend({
+	const ImageLazyload = $.Lazyload.extend({
 		init: function(element, options) {
 			this._super(element, options);
 		},
@@ -25,7 +27,7 @@
 			return false;
 		},
 		_addPlaceHolder: function(element) {
-			var self = this;
+			let self = this;
 			if (element.tagName === 'IMG') {
 				self._counter++;
 				element.onload = function() {
@@ -41,15 +43,15 @@
 			}
 		},
 		addElement: function(element) {
-			var self = this;
-			var uri = element.getAttribute('data-lazyload');
+			let self = this;
+			let uri = element.getAttribute('data-lazyload');
 			if (uri) {
 				if (self._hasPlaceholder(element)) {
 					self.addCallback(element, self.handle);
 				} else {
 					self.onPlaceHolder = self._createLoader(function(callback) {
-						var img = new Image();
-						var placeholder = self.options.placeholder;
+						let img = new Image();
+						const placeholder = self.options.placeholder;
 						img.src = placeholder;
 						img.onload = img.onerror = function() {
 							callback(placeholder);
@@ -62,8 +64,8 @@
 			return false;
 		},
 		set: function(element, uri) {
-			var self = this;
-			var img = new Image();
+			let self = this;
+			const img = new Image();
 			img.onload = function() {
 				self._set(element, uri);
 				$.trigger(self.element, 'success', {
@@ -81,7 +83,7 @@
 			element.removeAttribute('data-lazyload'); //只尝试一次，后续可能支持多次尝试
 		},
 		handle: function(element, key) {
-			var uri = element.getAttribute('data-lazyload');
+			const uri = element.getAttribute('data-lazyload');
 			if (uri) {
 				this.set(element, uri);
 				//element.parentNode.parentNode.setAttribute('data-lazyload', 'true'); //debug
@@ -94,14 +96,14 @@
 
 	});
 	$.fn.imageLazyload = function(options) {
-		var lazyloadApis = [];
+		const lazyloadApis = [];
 		this.each(function() {
-			var self = this;
-			var lazyloadApi = null;
+			let self = this;
+			let lazyloadApi = null;
 			if (self === document || self === window) {
 				self = document.body;
 			}
-			var id = self.getAttribute('data-imageLazyload');
+			let id = self.getAttribute('data-imageLazyload');
 			if (!id) {
 				id = ++$.uuid;
 				$.data[id] = lazyloadApi = new ImageLazyload(self, options);

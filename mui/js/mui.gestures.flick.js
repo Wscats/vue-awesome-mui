@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui gesture flick[left|right|up|down]
  * @param {type} $
@@ -5,11 +7,11 @@
  * @returns {undefined}
  */
 (function($, name) {
-	var flickStartTime = 0;
-	var handle = function(event, touch) {
-		var session = $.gestures.session;
-		var options = this.options;
-		var now = $.now();
+	let flickStartTime = 0;
+	const handle = function(event, touch) {
+		const session = $.gestures.session;
+		const options = this.options;
+		const now = $.now();
 		switch (event.type) {
 			case $.EVENT_MOVE:
 				if (now - flickStartTime > 300) {

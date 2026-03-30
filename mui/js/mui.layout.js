@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui layout(offset[,position,width,height...])
  * @param {type} $
@@ -7,7 +9,7 @@
  */
 (function($, window, undefined) {
 	$.offset = function(element) {
-		var box = {
+		let box = {
 			top : 0,
 			left : 0
 		};

@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx --fix",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "lint:check": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "vue-awesome-mui",
@@ -45,7 +48,7 @@
     "webpack-dev-server": "^2.5.1"
   },
   "engines": {
-    "node": ">= 4.0.0",
+    "node": ">=18.0.0",
     "npm": ">= 3.0.0"
   },
   "browserslist": [
@@ -54,5 +57,13 @@
     "ios >= 7",
     "android > 4.4",
     "not ie <= 8"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wscats/vue-awesome-mui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wscats/vue-awesome-mui/issues"
+  },
+  "homepage": "https://github.com/wscats/vue-awesome-mui#readme"
 }

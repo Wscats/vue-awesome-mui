@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 选择列表插件
  * varstion 2.0.0
@@ -7,22 +9,22 @@
 
 (function($, window, document, undefined) {
 
-	var MAX_EXCEED = 30;
-	var VISIBLE_RANGE = 90;
-	var DEFAULT_ITEM_HEIGHT = 40;
-	var BLUR_WIDTH = 10;
+	const MAX_EXCEED = 30;
+	const VISIBLE_RANGE = 90;
+	const DEFAULT_ITEM_HEIGHT = 40;
+	const BLUR_WIDTH = 10;
 
-	var rad2deg = $.rad2deg = function(rad) {
+	let rad2deg = $.rad2deg = function(rad) {
 		return rad / (Math.PI / 180);
 	};
 
-	var deg2rad = $.deg2rad = function(deg) {
+	let deg2rad = $.deg2rad = function(deg) {
 		return deg * (Math.PI / 180);
 	};
 
-	var platform = navigator.platform.toLowerCase();
-	var userAgent = navigator.userAgent.toLowerCase();
-	var isIos = (userAgent.indexOf('iphone') > -1 ||
+	const platform = navigator.platform.toLowerCase();
+	const userAgent = navigator.userAgent.toLowerCase();
+	const isIos = (userAgent.indexOf('iphone') > -1 ||
 			userAgent.indexOf('ipad') > -1 ||
 			userAgent.indexOf('ipod') > -1) &&
 		(platform.indexOf('iphone') > -1 ||
@@ -30,8 +32,8 @@
 			platform.indexOf('ipod') > -1);
 	//alert(isIos);
 
-	var Picker = $.Picker = function(holder, options) {
-		var self = this;
+	let Picker = $.Picker = function(holder, options) {
+		let self = this;
 		self.holder = holder;
 		self.options = options || {};
 		self.init();
@@ -41,13 +43,13 @@
 	};
 
 	Picker.prototype.findElementItems = function() {
-		var self = this;
+		let self = this;
 		self.elementItems = [].slice.call(self.holder.querySelectorAll('li'));
 		return self.elementItems;
 	};
 
 	Picker.prototype.init = function() {
-		var self = this;
+		let self = this;
 		self.list = self.holder.querySelector('ul');
 		self.findElementItems();
 		self.height = self.holder.offsetHeight;
@@ -66,18 +68,18 @@
 	};
 
 	Picker.prototype.calcElementItemPostion = function(andGenerateItms) {
-		var self = this;
+		let self = this;
 		if (andGenerateItms) {
 			self.items = [];
 		}
 		self.elementItems.forEach(function(item) {
-			var index = self.elementItems.indexOf(item);
+			let index = self.elementItems.indexOf(item);
 			self.endAngle = self.itemAngle * index;
 			item.angle = self.endAngle;
 			item.style.webkitTransformOrigin = "center center -" + self.r + "px";
 			item.style.webkitTransform = "translateZ(" + self.r + "px) rotateX(" + (-self.endAngle) + "deg)";
 			if (andGenerateItms) {
-				var dataItem = {};
+				const dataItem = {};
 				dataItem.text = item.innerHTML || '';
 				dataItem.value = item.getAttribute('data-value') || dataItem.text;
 				self.items.push(dataItem);
@@ -88,22 +90,22 @@
 	};
 
 	Picker.prototype.calcAngle = function(c) {
-		var self = this;
-		var a = b = parseFloat(self.r);
+		let self = this;
+		const a = b = parseFloat(self.r);
 		//直径的整倍数部分直接乘以 180
 		c = Math.abs(c); //只算角度不关心正否值
-		var intDeg = parseInt(c / self.d) * 180;
+		const intDeg = parseInt(c / self.d) * 180;
 		c = c % self.d;
 		//余弦
-		var cosC = (a * a + b * b - c * c) / (2 * a * b);
-		var angleC = intDeg + rad2deg(Math.acos(cosC));
+		const cosC = (a * a + b * b - c * c) / (2 * a * b);
+		const angleC = intDeg + rad2deg(Math.acos(cosC));
 		return angleC;
 	};
 
 	Picker.prototype.calcElementItemVisibility = function(angle) {
-		var self = this;
+		let self = this;
 		self.elementItems.forEach(function(item) {
-			var difference = Math.abs(item.angle - angle);
+			const difference = Math.abs(item.angle - angle);
 			if (difference < self.hightlightRange) {
 				item.classList.add('highlight');
 			} else if (difference < self.visibleRange) {
@@ -117,17 +119,17 @@
 	};
 
 	Picker.prototype.setAngle = function(angle) {
-		var self = this;
+		let self = this;
 		self.list.angle = angle;
 		self.list.style.webkitTransform = "perspective(1000px) rotateY(0deg) rotateX(" + angle + "deg)";
 		self.calcElementItemVisibility(angle);
 	};
 
 	Picker.prototype.bindEvent = function() {
-		var self = this;
-		var lastAngle = 0;
-		var startY = null;
-		var isPicking = false;
+		let self = this;
+		let lastAngle = 0;
+		let startY = null;
+		let isPicking = false;
 		self.holder.addEventListener($.EVENT_START, function(event) {
 			isPicking = true;
 			event.preventDefault();
@@ -151,10 +153,10 @@
 				return;
 			}
 			event.preventDefault();
-			var endY = (event.changedTouches ? event.changedTouches[0] : event).pageY;
-			var dragRange = endY - startY;
-			var dragAngle = self.calcAngle(dragRange);
-			var newAngle = dragRange > 0 ? lastAngle - dragAngle : lastAngle + dragAngle;
+			const endY = (event.changedTouches ? event.changedTouches[0] : event).pageY;
+			const dragRange = endY - startY;
+			const dragAngle = self.calcAngle(dragRange);
+			let newAngle = dragRange > 0 ? lastAngle - dragAngle : lastAngle + dragAngle;
 			if (newAngle > self.endExceed) {
 				newAngle = self.endExceed
 			}
@@ -167,28 +169,28 @@
 		//--
 		self.list.addEventListener('tap', function(event) {
 			elementItem = event.target;
-			if (elementItem.tagName == 'LI') {
+			if (elementItem.tagName === 'LI') {
 				self.setSelectedIndex(self.elementItems.indexOf(elementItem), 200);
 			}
 		}, false);
 	};
 
 	Picker.prototype.initInertiaParams = function() {
-		var self = this;
+		let self = this;
 		self.lastMoveTime = 0;
 		self.lastMoveStart = 0;
 		self.stopInertiaMove = false;
 	};
 
 	Picker.prototype.updateInertiaParams = function(event, isStart) {
-		var self = this;
-		var point = event.changedTouches ? event.changedTouches[0] : event;
+		let self = this;
+		let point = event.changedTouches ? event.changedTouches[0] : event;
 		if (isStart) {
 			self.lastMoveStart = point.pageY;
 			self.lastMoveTime = event.timeStamp || Date.now();
 			self.startAngle = self.list.angle;
 		} else {
-			var nowTime = event.timeStamp || Date.now();
+			let nowTime = event.timeStamp || Date.now();
 			if (nowTime - self.lastMoveTime > 300) {
 				self.lastMoveTime = nowTime;
 				self.lastMoveStart = point.pageY;
@@ -198,21 +200,21 @@
 	};
 
 	Picker.prototype.startInertiaScroll = function(event) {
-		var self = this;
-		var point = event.changedTouches ? event.changedTouches[0] : event;
+		let self = this;
+		const point = event.changedTouches ? event.changedTouches[0] : event;
 		/** 
 		 * 缓动代码
 		 */
-		var nowTime = event.timeStamp || Date.now();
-		var v = (point.pageY - self.lastMoveStart) / (nowTime - self.lastMoveTime); //最后一段时间手指划动速度  
-		var dir = v > 0 ? -1 : 1; //加速度方向  
-		var deceleration = dir * 0.0006 * -1;
-		var duration = Math.abs(v / deceleration); // 速度消减至0所需时间  
-		var dist = v * duration / 2; //最终移动多少 
-		var startAngle = self.list.angle;
-		var distAngle = self.calcAngle(dist) * dir;
+		const nowTime = event.timeStamp || Date.now();
+		const v = (point.pageY - self.lastMoveStart) / (nowTime - self.lastMoveTime); //最后一段时间手指划动速度  
+		const dir = v > 0 ? -1 : 1; //加速度方向  
+		const deceleration = dir * 0.0006 * -1;
+		let duration = Math.abs(v / deceleration); // 速度消减至0所需时间  
+		const dist = v * duration / 2; //最终移动多少 
+		const startAngle = self.list.angle;
+		let distAngle = self.calcAngle(dist) * dir;
 		//----
-		var srcDistAngle = distAngle;
+		const srcDistAngle = distAngle;
 		if (startAngle + distAngle < self.beginExceed) {
 			distAngle = self.beginExceed - startAngle;
 			duration = duration * (distAngle / srcDistAngle) * 0.6;
@@ -222,7 +224,7 @@
 			duration = duration * (distAngle / srcDistAngle) * 0.6;
 		}
 		//----
-		if (distAngle == 0) {
+		if (distAngle === 0) {
 			self.endScroll();
 			return;
 		}
@@ -230,15 +232,15 @@
 	};
 
 	Picker.prototype.scrollDistAngle = function(nowTime, startAngle, distAngle, duration) {
-		var self = this;
+		let self = this;
 		self.stopInertiaMove = false;
 		(function(nowTime, startAngle, distAngle, duration) {
-			var frameInterval = 13;
-			var stepCount = duration / frameInterval;
-			var stepIndex = 0;
+			const frameInterval = 13;
+			const stepCount = duration / frameInterval;
+			let stepIndex = 0;
 			(function inertiaMove() {
 				if (self.stopInertiaMove) return;
-				var newAngle = self.quartEaseOut(stepIndex, startAngle, distAngle, stepCount);
+				const newAngle = self.quartEaseOut(stepIndex, startAngle, distAngle, stepCount);
 				self.setAngle(newAngle);
 				stepIndex++;
 				if (stepIndex > stepCount - 1 || newAngle < self.beginExceed || newAngle > self.endExceed) {
@@ -255,7 +257,7 @@
 	};
 
 	Picker.prototype.endScroll = function() {
-		var self = this;
+		let self = this;
 		if (self.list.angle < self.beginAngle) {
 			self.list.style.webkitTransition = "150ms ease-out";
 			self.setAngle(self.beginAngle);
@@ -263,7 +265,7 @@
 			self.list.style.webkitTransition = "150ms ease-out";
 			self.setAngle(self.endAngle);
 		} else {
-			var index = parseInt((self.list.angle / self.itemAngle).toFixed(0));
+			let index = parseInt((self.list.angle / self.itemAngle).toFixed(0));
 			self.list.style.webkitTransition = "100ms ease-out";
 			self.setAngle(self.itemAngle * index);
 		}
@@ -271,11 +273,11 @@
 	};
 
 	Picker.prototype.triggerChange = function(force) {
-		var self = this;
+		let self = this;
 		setTimeout(function() {
-			var index = self.getSelectedIndex();
-			var item = self.items[index];
-			if ($.trigger && (index != self.lastIndex || force === true)) {
+			const index = self.getSelectedIndex();
+			let item = self.items[index];
+			if ($.trigger && (index !== self.lastIndex || force === true)) {
 				$.trigger(self.holder, 'change', {
 					"index": index,
 					"item": item
@@ -288,7 +290,7 @@
 	};
 
 	Picker.prototype.correctAngle = function(angle) {
-		var self = this;
+		let self = this;
 		if (angle < self.beginAngle) {
 			return self.beginAngle;
 		} else if (angle > self.endAngle) {
@@ -299,9 +301,9 @@
 	};
 
 	Picker.prototype.setItems = function(items) {
-		var self = this;
+		let self = this;
 		self.items = items || [];
-		var buffer = [];
+		const buffer = [];
 		self.items.forEach(function(item) {
 			if (item !== null && item !== undefined) {
 				buffer.push('<li>' + (item.text || item) + '</li>');
@@ -315,21 +317,21 @@
 	};
 
 	Picker.prototype.getItems = function() {
-		var self = this;
+		let self = this;
 		return self.items;
 	};
 
 	Picker.prototype.getSelectedIndex = function() {
-		var self = this;
+		let self = this;
 		return parseInt((self.list.angle / self.itemAngle).toFixed(0));
 	};
 
 	Picker.prototype.setSelectedIndex = function(index, duration, callback) {
-		var self = this;
+		let self = this;
 		self.list.style.webkitTransition = '';
-		var angle = self.correctAngle(self.itemAngle * index);
+		const angle = self.correctAngle(self.itemAngle * index);
 		if (duration && duration > 0) {
-			var distAngle = angle - self.list.angle;
+			const distAngle = angle - self.list.angle;
 			self.scrollDistAngle(Date.now(), self.list.angle, distAngle, duration);
 		} else {
 			self.setAngle(angle);
@@ -338,25 +340,25 @@
 	};
 
 	Picker.prototype.getSelectedItem = function() {
-		var self = this;
+		let self = this;
 		return self.items[self.getSelectedIndex()];
 	};
 
 	Picker.prototype.getSelectedValue = function() {
-		var self = this;
+		let self = this;
 		return (self.items[self.getSelectedIndex()] || {}).value;
 	};
 
 	Picker.prototype.getSelectedText = function() {
-		var self = this;
+		let self = this;
 		return (self.items[self.getSelectedIndex()] || {}).text;
 	};
 
 	Picker.prototype.setSelectedValue = function(value, duration, callback) {
-		var self = this;
+		const self = this;
 		for (var index in self.items) {
-			var item = self.items[index];
-			if (item.value == value) {
+			const item = self.items[index];
+			if (item.value === value) {
 				self.setSelectedIndex(index, duration, callback);
 				return;
 			}
@@ -371,8 +373,8 @@
 				if (options) {
 					element.picker = new Picker(element, options);
 				} else {
-					var optionsText = element.getAttribute('data-picker-options');
-					var _options = optionsText ? JSON.parse(optionsText) : {};
+					const optionsText = element.getAttribute('data-picker-options');
+					const _options = optionsText ? JSON.parse(optionsText) : {};
 					element.picker = new Picker(element, _options);
 				}
 			});

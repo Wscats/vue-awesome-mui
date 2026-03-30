@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * $.os.plus
  * @param {type} $
@@ -6,7 +8,7 @@
 (function($, document) {
 	function detect(ua) {
 		this.os = this.os || {};
-		var plus = ua.match(/Html5Plus/i); //TODO 5\+Browser?
+		let plus = ua.match(/Html5Plus/i); //TODO 5\+Browser?
 		if (plus) {
 			this.os.plus = true;
 			$(function() {

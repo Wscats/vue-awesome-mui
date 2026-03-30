@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui back 5+
  * @param {type} $
@@ -17,12 +19,12 @@
 					return true;
 				}
 				//offcanvas
-				var offCanvas = document.querySelector($.classSelector('.off-canvas-wrap.active'));
+				const offCanvas = document.querySelector($.classSelector('.off-canvas-wrap.active'));
 				if (offCanvas) {
 					$(offCanvas).offCanvas('close');
 					return true;
 				}
-				var previewImage = $.isFunction($.getPreviewImage) && $.getPreviewImage();
+				const previewImage = $.isFunction($.getPreviewImage) && $.getPreviewImage();
 				if (previewImage && previewImage.isShown()) {
 					previewImage.close();
 					return true;
@@ -44,8 +46,8 @@
 			if (!window.plus) {
 				return false;
 			}
-			var wobj = plus.webview.currentWebview();
-			var parent = wobj.parent();
+			let wobj = plus.webview.currentWebview();
+			let parent = wobj.parent();
 			if (parent) {
 				parent.evalJS('mui&&mui.back();');
 			} else {
@@ -86,24 +88,24 @@
 
 
 	$.menu = function() {
-		var menu = document.querySelector($.classSelector('.action-menu'));
+		const menu = document.querySelector($.classSelector('.action-menu'));
 		if (menu) {
 			$.trigger(menu, $.EVENT_START); //临时处理menu无touchstart的话，找不到当前targets的问题
 			$.trigger(menu, 'tap');
 		} else { //执行父窗口的menu
 			if (window.plus) {
-				var wobj = $.currentWebview;
-				var parent = wobj.parent();
+				const wobj = $.currentWebview;
+				const parent = wobj.parent();
 				if (parent) { //又得evalJS
 					parent.evalJS('mui&&mui.menu();');
 				}
 			}
 		}
 	};
-	var __back = function() {
+	const __back = function() {
 		$.back();
 	};
-	var __menu = function() {
+	const __menu = function() {
 		$.menu();
 	};
 	//默认监听

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * mui gesture hold
  * @param {type} $
@@ -6,9 +8,9 @@
  */
 (function($, name) {
 	var timer;
-	var handle = function(event, touch) {
-		var session = $.gestures.session;
-		var options = this.options;
+	const handle = function(event, touch) {
+		const session = $.gestures.session;
+		const options = this.options;
 		switch (event.type) {
 			case $.EVENT_START:
 				if ($.options.gestureConfig.hold) {

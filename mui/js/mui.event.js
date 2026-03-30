@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 仅提供简单的on，off(仅支持事件委托，不支持当前元素绑定，当前元素绑定请直接使用addEventListener,removeEventListener)
  * @param {Object} $
@@ -17,24 +19,24 @@
 	$.EVENT_CANCEL = 'touchcancel';
 	$.EVENT_CLICK = 'click';
 
-	var _mid = 1;
-	var delegates = {};
+	let _mid = 1;
+	const delegates = {};
 	//需要wrap的函数
-	var eventMethods = {
+	const eventMethods = {
 		preventDefault: 'isDefaultPrevented',
 		stopImmediatePropagation: 'isImmediatePropagationStopped',
 		stopPropagation: 'isPropagationStopped'
 	};
 	//默认true返回函数
-	var returnTrue = function() {
+	const returnTrue = function() {
 		return true
 	};
 	//默认false返回函数
-	var returnFalse = function() {
+	const returnFalse = function() {
 		return false
 	};
 	//wrap浏览器事件
-	var compatible = function(event, target) {
+	const compatible = function(event, target) {
 		if (!event.detail) {
 			event.detail = {
 				currentTarget: target
@@ -43,7 +45,7 @@
 			event.detail.currentTarget = target;
 		}
 		$.each(eventMethods, function(name, predicate) {
-			var sourceMethod = event[name];
+			const sourceMethod = event[name];
 			event[name] = function() {
 				this[predicate] = returnTrue;
 				return sourceMethod && sourceMethod.apply(event, arguments)
@@ -53,19 +55,19 @@
 		return event;
 	};
 	//简单的wrap对象_mid
-	var mid = function(obj) {
+	const mid = function(obj) {
 		return obj && (obj._mid || (obj._mid = _mid++));
 	};
 	//事件委托对象绑定的事件回调列表
-	var delegateFns = {};
+	const delegateFns = {};
 	//返回事件委托的wrap事件回调
-	var delegateFn = function(element, event, selector, callback) {
+	const delegateFn = function(element, event, selector, callback) {
 		return function(e) {
 			//same event
-			var callbackObjs = delegates[element._mid][event];
-			var handlerQueue = [];
-			var target = e.target;
-			var selectorAlls = {};
+			const callbackObjs = delegates[element._mid][event];
+			const handlerQueue = [];
+			let target = e.target;
+			let selectorAlls = {};
 			for (; target && target !== document; target = target.parentNode) {
 				if (target === element) {
 					break;
@@ -73,7 +75,7 @@
 				if (~['click', 'tap', 'doubletap', 'longtap', 'hold'].indexOf(event) && (target.disabled || target.classList.contains($.className('disabled')))) {
 					break;
 				}
-				var matches = {};
+				const matches = {};
 				$.each(callbackObjs, function(selector, callbacks) { //same selector
 					selectorAlls[selector] || (selectorAlls[selector] = $.qsa(selector, element));
 					if (selectorAlls[selector] && ~(selectorAlls[selector]).indexOf(target)) {
@@ -93,7 +95,7 @@
 			e = compatible(e); //compatible event
 			$.each(handlerQueue, function(index, handler) {
 				target = handler.element;
-				var tagName = target.tagName;
+				let tagName = target.tagName;
 				if (event === 'tap' && (tagName !== 'INPUT' && tagName !== 'TEXTAREA' && tagName !== 'SELECT')) {
 					e.preventDefault();
 					e.detail && e.detail.gesture && e.detail.gesture.preventDefault();
@@ -112,13 +114,13 @@
 			}, true);
 		};
 	};
-	var findDelegateFn = function(element, event) {
-		var delegateCallbacks = delegateFns[mid(element)];
-		var result = [];
+	const findDelegateFn = function(element, event) {
+		let delegateCallbacks = delegateFns[mid(element)];
+		let result = [];
 		if (delegateCallbacks) {
 			result = [];
 			if (event) {
-				var filterFn = function(fn) {
+				const filterFn = function(fn) {
 					return fn.type === event;
 				}
 				return delegateCallbacks.filter(filterFn);
@@ -128,7 +130,7 @@
 		}
 		return result;
 	};
-	var preventDefaultException = /^(INPUT|TEXTAREA|BUTTON|SELECT)$/;
+	const preventDefaultException = /^(INPUT|TEXTAREA|BUTTON|SELECT)$/;
 	/**
 	 * mui delegate events
 	 * @param {type} event
@@ -138,23 +140,23 @@
 	 */
 	$.fn.on = function(event, selector, callback) { //仅支持简单的事件委托,主要是tap事件使用，类似mouse,focus之类暂不封装支持
 		return this.each(function() {
-			var element = this;
+			const element = this;
 			mid(element);
 			mid(callback);
-			var isAddEventListener = false;
-			var delegateEvents = delegates[element._mid] || (delegates[element._mid] = {});
-			var delegateCallbackObjs = delegateEvents[event] || ((delegateEvents[event] = {}));
+			let isAddEventListener = false;
+			const delegateEvents = delegates[element._mid] || (delegates[element._mid] = {});
+			const delegateCallbackObjs = delegateEvents[event] || ((delegateEvents[event] = {}));
 			if ($.isEmptyObject(delegateCallbackObjs)) {
 				isAddEventListener = true;
 			}
-			var delegateCallbacks = delegateCallbackObjs[selector] || (delegateCallbackObjs[selector] = []);
+			let delegateCallbacks = delegateCallbackObjs[selector] || (delegateCallbackObjs[selector] = []);
 			delegateCallbacks.push(callback);
 			if (isAddEventListener) {
-				var delegateFnArray = delegateFns[mid(element)];
+				let delegateFnArray = delegateFns[mid(element)];
 				if (!delegateFnArray) {
 					delegateFnArray = [];
 				}
-				var delegateCallback = delegateFn(element, event, selector, callback);
+				const delegateCallback = delegateFn(element, event, selector, callback);
 				delegateFnArray.push(delegateCallback);
 				delegateCallback.i = delegateFnArray.length - 1;
 				delegateCallback.type = event;
@@ -163,10 +165,10 @@
 				if (event === 'tap') { //TODO 需要找个更好的解决方案
 					element.addEventListener('click', function(e) {
 						if (e.target) {
-							var tagName = e.target.tagName;
+							const tagName = e.target.tagName;
 							if (!preventDefaultException.test(tagName)) {
 								if (tagName === 'A') {
-									var href = e.target.href;
+									const href = e.target.href;
 									if (!(href && ~href.indexOf('tel:'))) {
 										e.preventDefault();
 									}
@@ -182,7 +184,7 @@
 	};
 	$.fn.off = function(event, selector, callback) {
 		return this.each(function() {
-			var _mid = mid(this);
+			const _mid = mid(this);
 			if (!event) { //mui(selector).off();
 				delegates[_mid] && delete delegates[_mid];
 			} else if (!selector) { //mui(selector).off(event);
@@ -190,7 +192,7 @@
 			} else if (!callback) { //mui(selector).off(event,selector);
 				delegates[_mid] && delegates[_mid][event] && delete delegates[_mid][event][selector];
 			} else { //mui(selector).off(event,selector,callback);
-				var delegateCallbacks = delegates[_mid] && delegates[_mid][event] && delegates[_mid][event][selector];
+				const delegateCallbacks = delegates[_mid] && delegates[_mid][event] && delegates[_mid][event][selector];
 				$.each(delegateCallbacks, function(index, delegateCallback) {
 					if (mid(delegateCallback) === mid(callback)) {
 						delegateCallbacks.splice(index, 1);

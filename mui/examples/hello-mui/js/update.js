@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * 参考文档：http://ask.dcloud.net.cn/article/431
  * 升级文件为JSON格式数据，如下：
@@ -14,7 +16,7 @@
 * 无需升级
 {"status":0}
  */
-var server = "http://www.dcloud.io/check/update"; //获取升级描述文件服务器地址
+const server = "http://www.dcloud.io/check/update"; //获取升级描述文件服务器地址
 
 function update() {
 	mui.getJSON(server, {
@@ -24,7 +26,7 @@ function update() {
 	}, function(data) {
 		if (data.status) {
 			plus.nativeUI.confirm(data.note, function(event) {
-				if (0 == event.index) {
+				if (0 === event.index) {
 					plus.runtime.openURL(data.url);
 				}
 			}, data.title, ["立即更新", "取　　消"]);

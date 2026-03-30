@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * segmented-controllers
  * @param {type} $
@@ -8,15 +10,15 @@
  */
 (function($, window, document, name, undefined) {
 
-	var CLASS_CONTROL_ITEM = $.className('control-item');
-	var CLASS_SEGMENTED_CONTROL = $.className('segmented-control');
-	var CLASS_SEGMENTED_CONTROL_VERTICAL = $.className('segmented-control-vertical');
-	var CLASS_CONTROL_CONTENT = $.className('control-content');
-	var CLASS_TAB_BAR = $.className('bar-tab');
-	var CLASS_TAB_ITEM = $.className('tab-item');
-	var CLASS_SLIDER_ITEM = $.className('slider-item');
+	const CLASS_CONTROL_ITEM = $.className('control-item');
+	const CLASS_SEGMENTED_CONTROL = $.className('segmented-control');
+	const CLASS_SEGMENTED_CONTROL_VERTICAL = $.className('segmented-control-vertical');
+	const CLASS_CONTROL_CONTENT = $.className('control-content');
+	const CLASS_TAB_BAR = $.className('bar-tab');
+	const CLASS_TAB_ITEM = $.className('tab-item');
+	const CLASS_SLIDER_ITEM = $.className('slider-item');
 
-	var handle = function(event, target) {
+	const handle = function(event, target) {
 		if (target.classList && (target.classList.contains(CLASS_CONTROL_ITEM) || target.classList.contains(CLASS_TAB_ITEM))) {
 			if (target.parentNode && target.parentNode.classList && target.parentNode.classList.contains(CLASS_SEGMENTED_CONTROL_VERTICAL)) {
 				//vertical 如果preventDefault会导致无法滚动
@@ -39,16 +41,16 @@
 
 	window.addEventListener('tap', function(e) {
 
-		var targetTab = $.targets.tab;
+		const targetTab = $.targets.tab;
 		if (!targetTab) {
 			return;
 		}
 		var activeTab;
 		var activeBodies;
 		var targetBody;
-		var className = $.className('active');
-		var classSelector = '.' + className;
-		var segmentedControl = targetTab.parentNode;
+		const className = $.className('active');
+		const classSelector = '.' + className;
+		let segmentedControl = targetTab.parentNode;
 
 		for (; segmentedControl && segmentedControl !== document; segmentedControl = segmentedControl.parentNode) {
 			if (segmentedControl.classList.contains(CLASS_SEGMENTED_CONTROL)) {
@@ -63,7 +65,7 @@
 			activeTab.classList.remove(className);
 		}
 
-		var isLastActive = targetTab === activeTab;
+		const isLastActive = targetTab === activeTab;
 		if (targetTab) {
 			targetTab.classList.add(className);
 		}
@@ -83,18 +85,18 @@
 		if (isLastActive) { //same
 			return;
 		}
-		var parentNode = targetBody.parentNode;
+		const parentNode = targetBody.parentNode;
 		activeBodies = parentNode.querySelectorAll('.' + CLASS_CONTROL_CONTENT + classSelector);
-		for (var i = 0; i < activeBodies.length; i++) {
-			var activeBody = activeBodies[i];
+		for (let i = 0; i < activeBodies.length; i++) {
+			const activeBody = activeBodies[i];
 			activeBody.parentNode === parentNode && activeBody.classList.remove(className);
 		}
 
 		targetBody.classList.add(className);
 
-		var contents = [];
-		var _contents = parentNode.querySelectorAll('.' + CLASS_CONTROL_CONTENT);
-		for (var i = 0; i < _contents.length; i++) { //查找直属子节点
+		const contents = [];
+		const _contents = parentNode.querySelectorAll('.' + CLASS_CONTROL_CONTENT);
+		for (let i = 0; i < _contents.length; i++) { //查找直属子节点
 			_contents[i].parentNode === parentNode && (contents.push(_contents[i]));
 		}
 		$.trigger(targetBody, $.eventName('shown', name), {

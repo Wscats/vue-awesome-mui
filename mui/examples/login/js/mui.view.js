@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * <div id="app" class="mui-views">
 	<div class="mui-view">
@@ -11,33 +13,33 @@
  * @param {Object} window
  */
 (function($, window) {
-	var CLASS_LEFT = $.className('left');
-	var CLASS_CENTER = $.className('center');
-	var CLASS_RIGHT = $.className('right');
-	var CLASS_PAGE = $.className('page');
-	var CLASS_PAGE_LEFT = $.className('page-left');
-	var CLASS_PAGE_CENTER = $.className('page-center');
-	var CLASS_NAVBAR_LEFT = $.className('navbar-left');
-	var CLASS_NAVBAR_CENTER = $.className('navbar-center');
-	var CLASS_PAGE_SHADOW = $.className('page-shadow');
+	const CLASS_LEFT = $.className('left');
+	const CLASS_CENTER = $.className('center');
+	const CLASS_RIGHT = $.className('right');
+	const CLASS_PAGE = $.className('page');
+	const CLASS_PAGE_LEFT = $.className('page-left');
+	const CLASS_PAGE_CENTER = $.className('page-center');
+	const CLASS_NAVBAR_LEFT = $.className('navbar-left');
+	const CLASS_NAVBAR_CENTER = $.className('navbar-center');
+	const CLASS_PAGE_SHADOW = $.className('page-shadow');
 
-	var CLASS_TRANSITIONING = $.className('transitioning');
+	const CLASS_TRANSITIONING = $.className('transitioning');
 
-	var SELECTOR_LEFT = '.' + CLASS_LEFT;
-	var SELECTOR_CENTER = '.' + CLASS_CENTER;
-	var SELECTOR_RIGHT = '.' + CLASS_RIGHT;
+	const SELECTOR_LEFT = '.' + CLASS_LEFT;
+	const SELECTOR_CENTER = '.' + CLASS_CENTER;
+	const SELECTOR_RIGHT = '.' + CLASS_RIGHT;
 
-	var SELECTOR_ICON = $.classSelector('.icon');
-	var SELECTOR_NAVBAR = $.classSelector('.navbar');
-	var SELECTOR_NAVBAR_INNER = $.classSelector('.navbar-inner');
-	var SELECTOR_PAGES = $.classSelector('.pages');
-	var SELECTOR_BTN_NAV = $.classSelector('.btn-nav');
-	var SELECTOR_PAGE_LEFT = '.' + CLASS_PAGE_LEFT;
-	var SELECTOR_PAGE_CENTER = '.' + CLASS_PAGE_CENTER;
-	var SELECTOR_NAVBAR_LEFT = '.' + CLASS_NAVBAR_LEFT;
-	var SELECTOR_NAVBAR_CENTER = '.' + CLASS_NAVBAR_CENTER;
+	const SELECTOR_ICON = $.classSelector('.icon');
+	const SELECTOR_NAVBAR = $.classSelector('.navbar');
+	const SELECTOR_NAVBAR_INNER = $.classSelector('.navbar-inner');
+	const SELECTOR_PAGES = $.classSelector('.pages');
+	const SELECTOR_BTN_NAV = $.classSelector('.btn-nav');
+	const SELECTOR_PAGE_LEFT = '.' + CLASS_PAGE_LEFT;
+	const SELECTOR_PAGE_CENTER = '.' + CLASS_PAGE_CENTER;
+	const SELECTOR_NAVBAR_LEFT = '.' + CLASS_NAVBAR_LEFT;
+	const SELECTOR_NAVBAR_CENTER = '.' + CLASS_NAVBAR_CENTER;
 
-	var View = $.Class.extend({
+	const View = $.Class.extend({
 		init: function(element, options) {
 			this.view = this.element = element;
 			this.options = $.extend({
@@ -69,11 +71,11 @@
 			this.initEvent();
 		},
 		_initPageEventMethod: function() {
-			var self = this;
+			let self = this;
 			$.each(['onPageBeforeShow', 'onPageShow', 'onPageBeforeBack', 'onPageBack'], function(index, event) {
 				self[event + 'Callbacks'] = {};
 				self[event] = function(page, callback) {
-					var eventCallbacks = event + 'Callbacks';
+					let eventCallbacks = event + 'Callbacks';
 					if (!self[eventCallbacks].hasOwnProperty(page)) {
 						self[eventCallbacks][page] = [callback];
 					} else {
@@ -83,7 +85,7 @@
 			});
 		},
 		_initDefaultPage: function() {
-			var defaultPage = document.querySelector(this.options.defaultPage);
+			const defaultPage = document.querySelector(this.options.defaultPage);
 			if (defaultPage) {
 				this._appendPage(defaultPage);
 			} else {
@@ -117,7 +119,7 @@
 			}
 		},
 		shadow: function() {
-			var shadow = document.createElement('div');
+			const shadow = document.createElement('div');
 			shadow.className = CLASS_PAGE_SHADOW;
 			return shadow;
 		}(),
@@ -127,13 +129,13 @@
 			this._cleanPageClass(page);
 		},
 		_prependPage: function(page) {
-			var navbar = page.querySelector(SELECTOR_NAVBAR_INNER);
+			let navbar = page.querySelector(SELECTOR_NAVBAR_INNER);
 			this._prependNavbar(navbar);
 			page.classList.add(CLASS_PAGE_LEFT);
 			this.pages.insertBefore(page, this.pages.firstElementChild);
 		},
 		_appendPage: function(page) {
-			var navbar = page.querySelector(SELECTOR_NAVBAR_INNER);
+			const navbar = page.querySelector(SELECTOR_NAVBAR_INNER);
 			this._appendNavbar(navbar);
 			page.classList.add(CLASS_PAGE_CENTER);
 			this.pages.appendChild(page);
@@ -159,10 +161,10 @@
 			navbar.classList.remove(CLASS_NAVBAR_LEFT);
 		},
 		_tap: function(event) {
-			var target = event.target;
+			let target = event.target;
 			for (; target && target !== document; target = target.parentNode) {
 				if (target.tagName === 'A' && target.hash) {
-					var page = document.getElementById(target.hash.replace('#', ''));
+					let page = document.getElementById(target.hash.replace('#', ''));
 					if (page && page.classList.contains(CLASS_PAGE)) {
 						event.stopPropagation();
 						event.detail.gesture.preventDefault();
@@ -173,10 +175,10 @@
 			}
 		},
 		_click: function(event) {
-			var target = event.target;
+			let target = event.target;
 			for (; target && target !== document; target = target.parentNode) {
 				if (target.tagName === 'A' && target.hash) {
-					var page = document.getElementById(target.hash.replace('#', ''));
+					const page = document.getElementById(target.hash.replace('#', ''));
 					if (page && page.classList.contains(CLASS_PAGE)) {
 						event.preventDefault();
 						break;
@@ -202,9 +204,9 @@
 			this.previousPageClassList.remove(CLASS_TRANSITIONING);
 			this.activePageClassList.remove(CLASS_TRANSITIONING);
 
-			var self = this;
+			let self = this;
 			if ($.os.ios && this.options.animateNavbar && this.previousNavElements && this.activeNavElements) {
-				var isBack = this.isBack;
+				let isBack = this.isBack;
 				$.each(this.previousNavElements, function(i, el) {
 					el.classList.remove(CLASS_TRANSITIONING);
 					isBack && self._cleanStyle(el);
@@ -255,17 +257,17 @@
 
 		},
 		_trigger: function(eventType, page) {
-			var eventCallbacks = 'on' + eventType.charAt(0).toUpperCase() + eventType.slice(1) + 'Callbacks';
+			const eventCallbacks = 'on' + eventType.charAt(0).toUpperCase() + eventType.slice(1) + 'Callbacks';
 			if (this[eventCallbacks].hasOwnProperty(page.id)) {
-				var callbacks = this[eventCallbacks][page.id];
-				var event = new CustomEvent(eventType, {
+				const callbacks = this[eventCallbacks][page.id];
+				const event = new CustomEvent(eventType, {
 					detail: {
 						page: page
 					},
 					bubbles: true,
 					cancelable: true
 				});
-				for (var len = callbacks.length; len--;) {
+				for (let len = callbacks.length; len--;) {
 					callbacks[len].apply(this, event);
 				}
 			}
@@ -305,9 +307,9 @@
 		},
 		_initNavBar: function() {
 			if (this.options.animateNavbar && this.navbars) {
-				var inners = this.navbars.querySelectorAll(SELECTOR_NAVBAR_INNER);
+				const inners = this.navbars.querySelectorAll(SELECTOR_NAVBAR_INNER);
 				var inner, left, right, center, leftWidth, rightWidth, centerWidth, noLeft, onRight, currLeft, diff, navbarWidth;
-				for (var i = 0, len = inners.length; i < len; i++) {
+				for (let i = 0, len = inners.length; i < len; i++) {
 					inner = inners[i];
 					left = inner.querySelector(SELECTOR_LEFT);
 					right = inner.querySelector(SELECTOR_RIGHT);
@@ -328,7 +330,7 @@
 					if (!noLeft && !noRight) {
 						currLeft = (navbarWidth - rightWidth - centerWidth + leftWidth) / 2;
 					}
-					var requiredLeft = (navbarWidth - centerWidth) / 2;
+					let requiredLeft = (navbarWidth - centerWidth) / 2;
 					if (navbarWidth - leftWidth - rightWidth > centerWidth) {
 						if (requiredLeft < leftWidth) {
 							requiredLeft = leftWidth;
@@ -341,7 +343,7 @@
 						diff = 0;
 					}
 
-					var centerLeft = diff;
+					const centerLeft = diff;
 					if (center) {
 						center.style.marginLeft = -leftWidth + 'px';
 						center.mNavbarLeftOffset = -(currLeft + diff) + 30; //这个30是测出来的。后续要实际计算一下
@@ -369,7 +371,7 @@
 			if (this.isInTransition) {
 				return;
 			}
-			var detail = event.detail;
+			let detail = event.detail;
 			if (!this.dragging) {
 				if ((detail.start.x - this.view.offsetLeft) < this.options.swipeBackPageActiveArea) {
 					this.isBack = true;
@@ -377,7 +379,7 @@
 				}
 			}
 			if (this.dragging) {
-				var deltaX = 0;
+				let deltaX = 0;
 				if (!this.moved) { //start
 					deltaX = detail.deltaX;
 					$.gestures.touch.lockDirection = true; //锁定方向
@@ -385,7 +387,7 @@
 				} else { //move
 					deltaX = detail.deltaX - detail.lastDeltaX;
 				}
-				var newX = this.x + deltaX;
+				let newX = this.x + deltaX;
 				if (newX < 0 || newX > this.maxScrollX) {
 					newX = newX < 0 ? 0 : this.maxScrollX;
 				}
@@ -409,7 +411,7 @@
 
 			event.stopPropagation();
 
-			var detail = event.detail;
+			const detail = event.detail;
 
 			this._clearRequestAnimationFrame();
 
@@ -431,7 +433,7 @@
 			this.isInTransition = true;
 			this.previousPageClassList.add(CLASS_TRANSITIONING);
 			this.activePageClassList.add(CLASS_TRANSITIONING);
-			var self = this;
+			let self = this;
 			if (this.options.animateNavbar && this.previousNavElements && this.activeNavElements) {
 				this.previousNavbar.classList.add(CLASS_TRANSITIONING);
 				this.activeNavbar.classList.add(CLASS_TRANSITIONING);
@@ -467,7 +469,7 @@
 		},
 
 		_updateTranslate: function() {
-			var self = this;
+			let self = this;
 			if (self.x !== self.lastX || self.y !== self.lastY) {
 				self.setTranslate(self.x, self.y);
 			}
@@ -476,7 +478,7 @@
 			});
 		},
 		_setNavbarTranslate: function(x, y) {
-			var percentage = x / this.maxScrollX;
+			const percentage = x / this.maxScrollX;
 			//only for ios
 			if ($.os.ios && this.options.animateNavbar && this.previousNavElements && this.activeNavElements) {
 				var i, len, style, el;
@@ -485,7 +487,7 @@
 					style = el.style;
 					style.opacity = (1 - percentage * (el.classList.contains(CLASS_LEFT) ? 3.5 : 1.3));
 					if (!el.classList.contains(CLASS_RIGHT)) {
-						var activeNavTranslate = percentage * el.mNavbarRightOffset;
+						const activeNavTranslate = percentage * el.mNavbarRightOffset;
 						el.style.webkitTransform = ('translate3d(' + activeNavTranslate + 'px,0,0)');
 						if (el.classList.contains(CLASS_LEFT) && this.activeNavBackIcon) {
 							this.activeNavBackIcon.style.webkitTransform = ('translate3d(' + -activeNavTranslate + 'px,0,0)');
@@ -497,7 +499,7 @@
 					style = el.style;
 					style.opacity = percentage * 1.3 - 0.3;
 					if (!el.classList.contains(CLASS_RIGHT)) {
-						var previousNavTranslate = el.mNavbarLeftOffset * (1 - percentage);
+						const previousNavTranslate = el.mNavbarLeftOffset * (1 - percentage);
 						el.style.webkitTransform = ('translate3d(' + previousNavTranslate + 'px,0,0)');
 						if (el.classList.contains(CLASS_LEFT) && this.previousNavBackIcon) {
 							this.previousNavBackIcon.style.webkitTransform = ('translate3d(' + -previousNavTranslate + 'px,0,0)');
@@ -546,15 +548,15 @@
 			if (this.isInTransition) {
 				return;
 			}
-			var nextPage = document.querySelector(pageSelector);
+			const nextPage = document.querySelector(pageSelector);
 
 			if (nextPage) {
-				var nextNavbar = nextPage.querySelector(SELECTOR_NAVBAR_INNER);
+				const nextNavbar = nextPage.querySelector(SELECTOR_NAVBAR_INNER);
 
-				var previousNavbar = this.navbars.querySelector(SELECTOR_NAVBAR_LEFT);
-				var activeNavbar = this.navbars.querySelector(SELECTOR_NAVBAR_CENTER);
-				var previousPage = this.pages.querySelector(SELECTOR_PAGE_LEFT);
-				var activePage = this.pages.querySelector(SELECTOR_PAGE_CENTER);
+				const previousNavbar = this.navbars.querySelector(SELECTOR_NAVBAR_LEFT);
+				const activeNavbar = this.navbars.querySelector(SELECTOR_NAVBAR_CENTER);
+				const previousPage = this.pages.querySelector(SELECTOR_PAGE_LEFT);
+				const activePage = this.pages.querySelector(SELECTOR_PAGE_CENTER);
 
 				if (previousNavbar && previousPage) {
 					this._removePage(previousPage, previousNavbar);
@@ -598,9 +600,9 @@
 
 
 	$.fn.view = function(options) {
-		var self = this[0];
-		var viewApi = null;
-		var id = self.getAttribute('data-view');
+		const self = this[0];
+		let viewApi = null;
+		let id = self.getAttribute('data-view');
 		if (!id) {
 			id = ++$.uuid;
 			$.data[id] = viewApi = new View(self, options);

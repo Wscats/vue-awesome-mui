@@ -1,12 +1,14 @@
+'use strict';
+
 (function(mui, window, document, undefined) {
 	mui.init();
-	var get = function(id) {
+	const get = function(id) {
 		return document.getElementById(id);
 	};
-	var qsa = function(sel) {
+	const qsa = function(sel) {
 		return [].slice.call(document.querySelectorAll(sel));
 	};
-	var ui = {
+	const ui = {
 		question: get('question'),
 		contact: get('contact'),
 		imageList: get('image-list'),
@@ -22,27 +24,27 @@
 		return [].slice.call(ui.imageList.querySelectorAll('input[type="file"]'));
 	};
 	ui.getFileInputIdArray = function() {
-		var fileInputArray = ui.getFileInputArray();
-		var idArray = [];
+		let fileInputArray = ui.getFileInputArray();
+		const idArray = [];
 		fileInputArray.forEach(function(fileInput) {
-			if (fileInput.value != '') {
+			if (fileInput.value !== '') {
 				idArray.push(fileInput.getAttribute('id'));
 			}
 		});
 		return idArray;
 	};
-	var imageIndexIdNum = 0;
+	let imageIndexIdNum = 0;
 	ui.newPlaceholder = function() {
-		var fileInputArray = ui.getFileInputArray();
+		const fileInputArray = ui.getFileInputArray();
 		if (fileInputArray &&
 			fileInputArray.length > 0 &&
 			fileInputArray[fileInputArray.length - 1].parentNode.classList.contains('space')) {
 			return;
 		}
 		imageIndexIdNum++;
-		var placeholder = document.createElement('div');
+		const placeholder = document.createElement('div');
 		placeholder.setAttribute('class', 'image-item space');
-		var closeButton = document.createElement('div');
+		const closeButton = document.createElement('div');
 		closeButton.setAttribute('class', 'image-close');
 		closeButton.innerHTML = 'X';
 		closeButton.addEventListener('click', function(event) {
@@ -53,18 +55,18 @@
 			}, 0);
 			return false;
 		}, false);
-		var fileInput = document.createElement('input');
+		const fileInput = document.createElement('input');
 		fileInput.setAttribute('type', 'file');
 		fileInput.setAttribute('accept', 'image/*');
 		fileInput.setAttribute('id', 'image-' + imageIndexIdNum);
 		fileInput.addEventListener('change', function(event) {
-			var file = fileInput.files[0];
+			const file = fileInput.files[0];
 			if (file) {
-				var reader = new FileReader();
+				const reader = new FileReader();
 				reader.onload = function() {
 					//处理 android 4.1 兼容问题
-					var base64 = reader.result.split(',')[1];
-					var dataUrl = 'data:image/png;base64,' + base64;
+					const base64 = reader.result.split(',')[1];
+					const dataUrl = 'data:image/png;base64,' + base64;
 					//
 					placeholder.style.backgroundImage = 'url(' + dataUrl + ')';
 				}
@@ -79,9 +81,9 @@
 	};
 	ui.newPlaceholder();
 	ui.submit.addEventListener('tap', function(event) {
-		if (ui.question.value == '' ||
-			(ui.contact.value != '' &&
-				ui.contact.value.search(/^(\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+)|([1-9]\d{4,9})$/) != 0)) {
+		if (ui.question.value === '' ||
+			(ui.contact.value !== '' &&
+				ui.contact.value.search(/^(\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+)|([1-9]\d{4,9})$/) !== 0)) {
 			return mui.toast('信息填写不符合规范');
 		} 
 		plus.nativeUI.showWaiting();
