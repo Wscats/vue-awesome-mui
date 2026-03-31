@@ -51,10 +51,26 @@ import icons from "./components/examples/icons.vue";
 import iconsExtra from "./components/examples/icons-extra.vue";
 import input from "./components/examples/input.vue";
 import mediaList from "./components/examples/media-list.vue";
+//L
+import list from "./components/examples/list.vue";
 //N
 import nav from "./components/examples/nav.vue";
 import navTransparent from "./components/examples/nav_transparent.vue";
 import numbox from "./components/examples/numbox.vue";
+//O
+import offcanvas from "./components/examples/offcanvas.vue";
+//P
+import pagination from "./components/examples/pagination.vue";
+import popover from "./components/examples/popover.vue";
+import progressbar from "./components/examples/progressbar.vue";
+//R
+import radio from "./components/examples/radio.vue";
+import range from "./components/examples/range.vue";
+//S
+import switchComp from "./components/examples/switch.vue";
+//T
+import tabbar from "./components/examples/tabbar.vue";
+import typography from "./components/examples/typography.vue";
 
 var router = new VueRouter({
 	routes: [{
@@ -132,6 +148,36 @@ var router = new VueRouter({
 	}, {
 		path: '/numbox',
 		component: numbox,
+	}, {
+		path: '/offcanvas',
+		component: offcanvas,
+	}, {
+		path: '/pagination',
+		component: pagination,
+	}, {
+		path: '/popover',
+		component: popover,
+	}, {
+		path: '/progressbar',
+		component: progressbar,
+	}, {
+		path: '/radio',
+		component: radio,
+	}, {
+		path: '/range',
+		component: range,
+	}, {
+		path: '/switch',
+		component: switchComp,
+	}, {
+		path: '/list',
+		component: list,
+	}, {
+		path: '/tabbar',
+		component: tabbar,
+	}, {
+		path: '/typography',
+		component: typography,
 	}, {
 		path: '/',
 		redirect: '/index'

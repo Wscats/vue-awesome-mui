@@ -37,14 +37,42 @@ import "vue-awesome-mui/mui/examples/hello-mui/css/icons-extra.css";
 
 ## Example
 
-Give a few examples
-
 |Vue components|Mui document|
 |-|-|
 |[折叠面板](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/accordion.vue)|[Accordion](http://dev.dcloud.net.cn/mui/ui/#accordion)|
 |[操作表](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/actionsheet.vue)|[Actionsheet](http://dev.dcloud.net.cn/mui/ui/#actionsheet)|
 |[数字角标](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/badges.vue)|[Badges](http://dev.dcloud.net.cn/mui/ui/#badges)|
-|[按钮](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/buttons-with-badges.vue)|[Buttons](http://dev.dcloud.net.cn/mui/ui/#buttons)|
+|[按钮](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/buttons.vue)|[Buttons](http://dev.dcloud.net.cn/mui/ui/#buttons)|
+|[带图标按钮](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/buttons-with-icons.vue)|[Buttons](http://dev.dcloud.net.cn/mui/ui/#buttons)|
+|[带数字按钮](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/buttons-with-badges.vue)|[Buttons](http://dev.dcloud.net.cn/mui/ui/#buttons)|
+|[块级按钮](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/buttons-with-block.vue)|[Buttons](http://dev.dcloud.net.cn/mui/ui/#buttons)|
+|[加载中按钮](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/buttons-with-loading.vue)|[Buttons](http://dev.dcloud.net.cn/mui/ui/#buttons)|
+|[卡片视图](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/card.vue)|[Card](http://dev.dcloud.net.cn/mui/ui/#card)|
+|[复选框](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/checkbox.vue)|[Checkbox](http://dev.dcloud.net.cn/mui/ui/#checkbox)|
+|[日期时间](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/dtpicker.vue)|[Dtpicker](http://dev.dcloud.net.cn/mui/ui/#dtpicker)|
+|[消息框](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/dialog.vue)|[Dialog](http://dev.dcloud.net.cn/mui/ui/#dialog)|
+|[图片轮播](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/slider-default.vue)|[Slider](http://dev.dcloud.net.cn/mui/ui/#gallery)|
+|[图片轮播-标题](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/slider-with-title.vue)|[Slider](http://dev.dcloud.net.cn/mui/ui/#gallery)|
+|[图文表格](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/slider-table-default.vue)|[Slider](http://dev.dcloud.net.cn/mui/ui/#gallery)|
+|[9宫格](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/grid-default.vue)|[Grid](http://dev.dcloud.net.cn/mui/ui/#grid)|
+|[9宫格-分页](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/grid-pagination.vue)|[Grid](http://dev.dcloud.net.cn/mui/ui/#grid)|
+|[图标](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/icons.vue)|[Icon](http://dev.dcloud.net.cn/mui/ui/#icon)|
+|[扩展图标](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/icons-extra.vue)|[Icon](http://dev.dcloud.net.cn/mui/ui/#icon)|
+|[输入框](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/input.vue)|[Input](http://dev.dcloud.net.cn/mui/ui/#input)|
+|[列表](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/list.vue)|[List](http://dev.dcloud.net.cn/mui/ui/#list)|
+|[图文列表](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/media-list.vue)|[Media List](http://dev.dcloud.net.cn/mui/ui/#medialist)|
+|[导航栏](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/nav.vue)|[Navbar](http://dev.dcloud.net.cn/mui/ui/#navbar)|
+|[透明导航栏](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/nav_transparent.vue)|[Navbar](http://dev.dcloud.net.cn/mui/ui/#navbar)|
+|[数字输入框](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/numbox.vue)|[Numbox](http://dev.dcloud.net.cn/mui/ui/#numbox)|
+|[侧滑导航](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/offcanvas.vue)|[Off Canvas](http://dev.dcloud.net.cn/mui/ui/#offcanvas)|
+|[分页](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/pagination.vue)|[Pagination](http://dev.dcloud.net.cn/mui/ui/#pagination)|
+|[弹出菜单](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/popover.vue)|[Popover](http://dev.dcloud.net.cn/mui/ui/#popover)|
+|[进度条](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/progressbar.vue)|[Progress Bar](http://dev.dcloud.net.cn/mui/ui/#progressbar)|
+|[单选框](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/radio.vue)|[Radio](http://dev.dcloud.net.cn/mui/ui/#radio)|
+|[滑块](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/range.vue)|[Range](http://dev.dcloud.net.cn/mui/ui/#range)|
+|[开关](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/switch.vue)|[Switch](http://dev.dcloud.net.cn/mui/ui/#switch)|
+|[选项卡](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/tabbar.vue)|[Tab Bar](http://dev.dcloud.net.cn/mui/ui/#tabbar)|
+|[文字](https://github.com/Wscats/vue-awesome-mui/blob/master/app/components/examples/typography.vue)|[Typography](http://dev.dcloud.net.cn/mui/ui/#typography)|
 
 ## Browser Support
 

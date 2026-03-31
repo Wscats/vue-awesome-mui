@@ -80,23 +80,11 @@
 						checkbox（复选框）
 					</a>
 				</li>
-				<!--<li class="mui-table-view-cell mui-collapse">
-					<a class="mui-navigate-right" href="javascript:void(0);">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="#/dtpicker">
 						date time（日期时间）
 					</a>
-					<ul class="mui-table-view mui-table-view-chevron">
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="#/dtpicker">
-								H5模式
-							</a>
-						</li>
-						<li class="mui-table-view-cell mui-plus-visible">
-							<a class="mui-navigate-right" href="#/date">
-								native模式
-							</a>
-						</li>
-					</ul>
-				</li>-->
+				</li>
 
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right" href="#/dialog">
@@ -180,43 +168,11 @@
 						input（输入框）
 					</a>
 				</li>
-				<!--<li class="mui-table-view-cell mui-collapse">
-					<a class="mui-navigate-right" href="javascript:void(0);">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="#/list">
 						list（列表）
 					</a>
-					<ul class="mui-table-view mui-table-view-chevron">
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/tableviews.html">
-								普通列表
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/tableviews-with-badges.html">
-								右侧带数字角标
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/list-with-input.html">
-								列表带input类控件
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/list-triplex-row.html">
-								三行列表
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/tableviews-with-collapses.html">
-								二级列表
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/tableviews-with-swipe.html">
-								滑动触发列表项菜单
-							</a>
-						</li>
-					</ul>
-				</li>-->
+				</li>
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right" data-title-type="native" href="#/mediaList">
 						media list（图文列表）
@@ -248,231 +204,55 @@
 					</ul>
 				</li>
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" data-title-type="native" href="#/numbox">
+					<a class="mui-navigate-right" href="#/numbox">
 						number box（数字输入框）
 					</a>
 				</li>
-				<!--
-				<li class="mui-table-view-cell mui-collapse">
-					<a class="mui-navigate-right" href="javascript:void(0);">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="#/offcanvas">
 						off canvas（侧滑导航）
 					</a>
-					<ul class="mui-table-view mui-table-view-chevron">
-						<li class="mui-table-view-cell mui-plus-visible">
-							<a class="mui-navigate-right" open-type="common" href="examples/offcanvas-drag-right-plus-main.html">
-								webview模式右滑菜单
-							</a>
-						</li>
-						<li class="mui-table-view-cell mui-plus-visible">
-							<a class="mui-navigate-right" open-type="common" href="examples/offcanvas-drag-left-plus-main.html">
-								webview模式左滑菜单
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" open-type="common" href="examples/offcanvas-drag-right.html">
-								div模式右滑菜单
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" open-type="common" href="examples/offcanvas-drag-left.html">
-								div模式左滑菜单
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" open-type="common" href="examples/offcanvas-drag-down.html">
-								div模式下拉菜单
-							</a>
-						</li>
-					</ul>
 				</li>
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" data-title-type="native" href="examples/pagination.html">
+					<a class="mui-navigate-right" href="#/pagination">
 						pagination（分页）
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" data-title-type="native" href="examples/picker.html">
-						picker（选择器）
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/popovers.html">
+					<a class="mui-navigate-right" href="#/popover">
 						popover（弹出菜单）
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/progressbar.html">
+					<a class="mui-navigate-right" href="#/progressbar">
 						progress bar（进度条）
 					</a>
 				</li>
-				<li class="mui-table-view-cell mui-collapse">
-					<a href="javascript:void(0);" class="mui-navigate-right">pull to refresh（下拉刷新和上拉加载更多）</a>
-					<ul class="mui-table-view mui-table-view-chevron">
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/pullrefresh_main.html">
-								双webview模式
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/pullrefresh.html">
-								单webview模式
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/pullrefresh_with_tab.html">
-								选项卡切换+下拉刷新（div模式）
-							</a>
-						</li>
-					</ul>
-				</li>
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" data-title-type="native" href="examples/radio.html">
+					<a class="mui-navigate-right" href="#/radio">
 						radio（单选框）
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/range.html">
+					<a class="mui-navigate-right" href="#/range">
 						range（滑块）
 					</a>
 				</li>
-
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" data-title-type="native" href="examples/switches.html">
+					<a class="mui-navigate-right" href="#/switch">
 						switch（开关）
 					</a>
 				</li>
-				<li class="mui-table-view-cell mui-collapse">
-					<a class="mui-navigate-right" href="javascript:void(0);">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="#/tabbar">
 						tab bar（选项卡）
 					</a>
-					<ul class="mui-table-view mui-table-view-chevron">
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/tabbar.html">
-								底部选项卡-div模式
-							</a>
-						</li>
-						<li class="mui-table-view-cell mui-plus-visible">
-							<a class="mui-navigate-right" href="examples/tab-webview-main.html">
-								底部选项卡-webview模式
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/tabbar-with-submenus.html">
-								底部选项卡-二级菜单(div)
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/tab-with-segmented-control.html">
-								顶部选项卡-div模式
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/tab-with-viewpagerindicator.html">
-								顶部选项卡-可左右拖动(div)
-							</a>
-						</li>
-						<li class="mui-table-view-cell mui-plus-visible">
-							<a class="mui-navigate-right" data-wid="viewgroup" href="examples/tab-top-webview-main.html">
-								顶部选项卡-可左右拖动(webview)
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/tab-with-segmented-control-vertical.html">
-								左侧选项卡-div模式
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" data-title-type="native" href="examples/tab-vertical-scroll.html">
-								左侧选项卡-div模式-联动高亮
-							</a>
-						</li>
-					</ul>
 				</li>
-
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/typography.html">
+					<a class="mui-navigate-right" href="#/typography">
 						typography（文字）
 					</a>
 				</li>
-				<li class="mui-table-view-divider">模板</li>
-				<li class="mui-table-view-cell mui-plus-visible">
-					<a class="mui-navigate-right" href="examples/ad.html">
-						advertisement（广告模板）
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/echarts.html">
-						chart（EChart图表）
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-plus-visible">
-					<a class="mui-navigate-right" data-title-type="native" href="examples/im-chat.html">
-						chat（聊天窗口）
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-plus-visible">
-					<a class="mui-navigate-right" href="examples/clouddb_wilddog.html">
-						cloud DB（云端数据库）
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-plus-visible">
-					<a class="mui-navigate-right" href="examples/beecloud.html">
-						cloud Pay（云端支付）
-					</a>
-				</li>
-
-				<li class="mui-table-view-cell mui-plus-visible">
-					<a class="mui-navigate-right" href="examples/feedback.html">
-						feedback（问题反馈）
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/imageviewer.html">
-						image viewer（图片预览）
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-collapse">
-					<a class="mui-navigate-right" href="javascript:void(0);">
-						indexed list（索引列表）
-					</a>
-					<ul class="mui-table-view mui-table-view-chevron">
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/indexed-list.html">
-								展示模式
-							</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="examples/indexed-list-select.html">
-								选择模式
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" data-title-type="native" href="examples/lazyload-image.html">
-						lazyload（懒加载）
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" href="examples/locker-dom.html">
-						locker（手势图案锁屏）
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" data-title-type="native" href="examples/login.html">
-						login（登录）
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" open-type="common" href="examples/setting.html">
-						setting（设置）- div窗体切换示例
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" data-title-type="native" href="examples/best-practices/list-to-detail/listview.html">
-						列表到详情最佳实践
-					</a>
-				</li>-->
 
 			</ul>
 		</div>
