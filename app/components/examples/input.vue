@@ -51,8 +51,8 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			//语音识别完成事件
-			document.getElementById("search").addEventListener('recognized', function(e) {
-				console.log(e.detail.value);
+		document.getElementById("search").addEventListener('recognized', function(e) {
+				// Speech recognition result handled
 			});
 
 			var nativeWebview, imm, InputMethodManager;

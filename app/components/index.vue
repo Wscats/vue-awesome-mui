@@ -833,7 +833,6 @@
 						'action': 'show'
 					},
 					function(e) {
-						console.log(JSON.stringify(e));
 						if(e.id == _self.id) {}
 					}.bind(this)
 				)
@@ -896,7 +895,6 @@
 </script>
 <style scoped>
 	#list {
-		/*避免导航边框和列表背景边框重叠，看起来像两条边框似得；*/
 		margin-top: -1px;
 	}
 </style>

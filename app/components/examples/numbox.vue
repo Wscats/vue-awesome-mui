@@ -78,8 +78,8 @@
 				mui.alert('当前值: ' + document.getElementById("box").value, null, "提示");
 			});
 			var testBox = document.getElementById("test");
-			testBox.addEventListener('change', function() {
-				console.log(testBox.value);
+		testBox.addEventListener('change', function() {
+				// Value change handled
 			});
 		}
 	}
